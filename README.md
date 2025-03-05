@@ -66,12 +66,15 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## How To Run
--   Dự án được chạy bằng Xampp
-        -   Phiên bản PHP 8.2.12
-            ```bash
-            composer install
-            cp .env.example .env
-            npm install
-            php artisan key:generate
-            ```
+Dự án được chạy bằng **XAMPP** với phiên bản PHP **8.2.12**. Thực hiện các bước sau để khởi chạy dự án:
+
+```bash
+composer install
+
+cp .env.example .env
+
+npm install
+
+php artisan key:generate
+
 
