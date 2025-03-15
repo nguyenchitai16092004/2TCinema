@@ -6,7 +6,9 @@
 <!-- Main Header -->
 
 <header class="filmoja-header-area">
-
+<style>
+    
+</style>
     <!-- Header Top Area Start -->
     <div class="header-top-area">
         <div class="container">
@@ -26,11 +28,11 @@
                     <div class="header-top-menu">
                         <ul>
 
-                            <li><a href="cau-hoi-thuong-gap.html">FAQ's</a></li>
+                            <li><a href="{{ asset('/cau-hoi-thuong-gap') }}">FAQ's</a></li>
 
 
-                            <li><a href="dang-nhap.html" class="btn-member">Đăng nhập</a></li>
-                            <li><a href="dang-ky.html" class="btn-member">Đăng k&#253;</a></li>
+                            <li><a href="{{ asset('/dang-nhap') }}" class="btn-member">Đăng nhập</a></li>
+                            <li><a href="{{ asset('/dang-ky') }}" class="btn-member">Đăng k&#253;</a></li>
 
 
                             <script>
@@ -66,7 +68,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="site-logo">
-                        <a href="index.html">
+                        <a href="{{ asset('/') }}">
                             <img src="Content/img/logo.png" alt="filmoja" />
                         </a>
                     </div>
@@ -81,23 +83,23 @@
                             <ul id="responsive_navigation">
                                 <!-- Mobile Search Start -->
                                 <!-- Mobile Search End -->
-                                <li><a href="index.html">Trang chủ</a></li>
+                                <li><a href="{{ asset('/') }}">Trang chủ</a></li>
                                 <li>
-                                    <a href="lich-chieu.html">Lịch chiếu</a>
+                                    <a href="{{ asset('/lich-chieu') }}">Lịch chiếu</a>
                                 </li>
-                                <li><a href="packets.html">Mua Gói</a></li>
+                                <li><a href="{{ asset('/lich-chieu') }}">Mua Gói</a></li>
                                 <li>
-                                    <a href="#">Phim</a>
+                                    <a href="{{ asset('/phim-dang-chieu') }}">Phim</a>
                                     <ul>
-                                        <li><a href="phim.html">Phim Đang Chiếu</a></li>
-                                        <li><a href="phim-sap-chieu.html">Phim Sắp Chiếu</a></li>
+                                        <li><a href="{{ asset('/phim-dang-chieu') }}">Phim Đang Chiếu</a></li>
+                                        <li><a href="{{ asset('/phim-sap-chieu') }}">Phim Sắp Chiếu</a></li>
 
                                     </ul>
                                 </li>
-                                <li><a href="uu-dai.html">Khuyến Mãi</a></li>
-                                <li><a href="tin-tuc.html">Điện Ảnh</a></li>
-                                <li><a href="lien-he.html">Liên hệ</a></li>
-                                <li><a href="tuyen-dung.html">Tuyển dụng</a></li>
+                                <li><a href="{{ asset('/uu-dai') }}">Khuyến Mãi</a></li>
+                                <li><a href="{{ asset('/tin-tuc') }}">Điện Ảnh</a></li>
+                                <li><a href="{{ asset('/lien-he') }}">Liên hệ</a></li>
+                                <li><a href="{{ asset('/tuyen-dung') }}">Tuyển dụng</a></li>
                             </ul>
                         </nav>
                     </div>

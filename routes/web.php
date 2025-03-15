@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
+//==============================Frontend=====================================//
 Route::get('/', function () {
     return view('frontend.pages.home');
-});
+})->name('home');
+
 Route::get('/dang-nhap', function () {
     return view('frontend.pages.dang-nhap');
 });
@@ -60,3 +62,33 @@ Route::get('/dieu-khoan-chung', function () {
 Route::get('/kiem-hang-doi-tra-hoan-tien', function () {
     return view('frontend.pages.chinh-sach.kiem-hang-doi-tra-hoan-tien');
 });
+//===========================================================================//
+//===============================Backend=====================================//
+Route::get('/admin', function () {
+    return view('backend.pages.home');
+});
+Route::get('/admin/button', function () {
+    return view('backend.pages.button');
+});
+Route::get('/admin/cards', function () {
+    return view('backend.pages.cards');
+});
+Route::get('/admin/charts', function () {
+    return view('backend.pages.charts');
+});
+Route::get('/admin/forms', function () {
+    return view('backend.pages.forms');
+});
+Route::get('/admin/modals', function () {
+    return view('backend.pages.modals');
+});
+Route::get('/admin/tables', function () {
+    return view('backend.pages.tables');
+});
+Route::get('/admin/404', function () {
+    return view('backend.pages.404');
+});
+Route::get('/admin/login', function () {
+    return view('backend.layouts.login');
+});
+//===========================================================================//
