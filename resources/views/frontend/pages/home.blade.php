@@ -4,10 +4,7 @@
     <!-- Slider Area Start -->
     <section class="filmoja-slider-area fix">
         <div class="filmoja-slide owl-carousel">
-            <div class="filmoja-main-slide">
-                <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/cuoi-ma-hien-me-cho-quy.jpg"
-                    style="max-height:550px" />
-            </div>
+
             <a href="film/nha-gia-tien-t18/b046f0d2-c828-408e-9c89-a4cdb8db0daa.html">
                 <div class="filmoja-main-slide">
                     <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/nha-gia-tien.jpg" style="max-height:550px" />
@@ -23,10 +20,6 @@
             </a>
             <div class="filmoja-main-slide">
                 <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/nu-hon-bac-ty.jpg" style="max-height:550px" />
-            </div>
-            <div class="filmoja-main-slide">
-                <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/z6294096002251_9dd2f5e389876599f8d34572931657f8.jpg"
-                    style="max-height:550px" />
             </div>
         </div>
     </section>
@@ -1397,7 +1390,7 @@
 
     <!-- News Area End -->
 
-    <script>
+    {{-- <script>
         window.onload = function() {
             var modal = getCookie("key");
             if (modal != "") {
@@ -1436,5 +1429,5 @@
             } else
                 return ca;
         }
-    </script>
+    </script> --}}
 @stop

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-lg-4 col-sm-6">
                     <div class="single-footer-widget">
-                        <a href="#"><img src="Content/img/footer_logo.png" alt="footer logo" /></a>
+                        <a href="#"><img src="Content/img/logo_cinetick.png" alt="footer logo" /></a>
 
                         <div class="footer-contact">
                             <p>Support: <a href="#">support@starlight.vn</a></p>
@@ -48,13 +48,13 @@
                             <p>Tải ngay ứng dụng đặt vé online cho dế yêu của bạn !</p>
                             <ul class="apps-list">
                                 <li><a
-                                        href="https://play.google.com/store/apps/details?id=com.kingprocompany.starlightcinemas"><img
+                                        href="#"><img
                                             src="Content/img/app-1.jpg" alt="app image" /></a></li>
-                                <li><a href="https://apps.apple.com/us/app/starlight-cinemas/id1588865280"><img
+                                <li><a href="#"><img
                                             src="Content/img/app-2.jpg" alt="app image" /></a></li>
                             </ul>
                             <ul class="apps-list">
-                                <li><a href="http://online.gov.vn/Home/WebDetails/118483" target="_blank"><img
+                                <li><a href="#" target="_blank"><img
                                             alt="" title="" src="Content/img/congthuong.png"></a>
                                 </li>
                             </ul>
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="container">
-            <h3 style="color:#fff">CÔNG TY CỔ PHẦN ENTERTAINMENT 2020</h3>
+            {{-- <h3 style="color:#fff">CÔNG TY CỔ PHẦN ENTERTAINMENT 2020</h3>
             <p>
                 Giấy chứng nhận đăng kí doanh nghiệp công ty cổ phần: 0402021264 đăng ký lần đầu ngày 03/01/2020
             </p>
@@ -76,7 +76,7 @@
             </p>
             <p style="color:#fff">
                 Hotline (Đường dây nóng) : <a href="tel:19001722">19001722</a>
-            </p>
+            </p> --}}
         </div>
     </div>
     <div class="copyright-area">
@@ -84,7 +84,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="copyright-box">
-                        <p>2019 © StarLight. All rights reserved - Design by <a href="https://kingpro.vn/">KingPro</a>
+                        <p>2025 © CineTick. All rights reserved - Design by Double2T
                         </p>
                     </div>
                 </div>

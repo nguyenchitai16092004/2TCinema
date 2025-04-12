@@ -25633,7 +25633,7 @@ function btnMBooking() {
             .css("opacity", "1");
         });
         n("img").on("error", function () {
-          n(this).attr("src", "/Content/img/placeholder-img.png");
+          n(this).attr("src", "");
         });
         n(".top-movie-slider").owlCarousel({
           autoplay: !0,

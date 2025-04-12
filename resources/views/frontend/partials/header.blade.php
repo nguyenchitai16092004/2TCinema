@@ -6,9 +6,6 @@
 <!-- Main Header -->
 
 <header class="filmoja-header-area">
-<style>
-    
-</style>
     <!-- Header Top Area Start -->
     <div class="header-top-area">
         <div class="container">
@@ -69,7 +66,7 @@
                 <div class="col-lg-3">
                     <div class="site-logo">
                         <a href="{{ asset('/') }}">
-                            <img src="Content/img/logo.png" alt="filmoja" />
+                            <img style="margin-top: 8px;" src="Content/img/logo_cinetick.png" alt="filmoja" />
                         </a>
                     </div>
                     <!-- Responsive Menu Start -->
