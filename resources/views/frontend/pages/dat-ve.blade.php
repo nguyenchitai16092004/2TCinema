@@ -101,7 +101,7 @@
 
             <div class="screen-thumb">
                 <h4 class="screen">Màn hình</h4>
-                <img src="../pixner.net/boleto/demo/assets/images/movie/screen-thumb.png" alt="movie">
+                <img src="Content/img/screen-thumb.png" alt="movie">
             </div>
             <div class="clearfix row" style="position: relative; display: flex; justify-content: center;">
                 <p style="margin: 3px; width: 35px; height: 35px; background: url(content/img/seat-standard.png); background-size: contain; color: #333; text-align: center; float: left; font-size: 0.6rem; line-height: 35px; letter-spacing: 0.5px; cursor: pointer; "

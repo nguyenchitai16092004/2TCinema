@@ -6,7 +6,7 @@
         <div class="container register" style="max-width: 100% !important;">
             <div class="row">
                 <div class="col-md-3 register-left">
-                    <img src="Content/img/logo-white.png" alt="" />
+                    <img src="Content/img/logo_cinetick.png" alt="" />
                     <p>Đăng ký tài khoản thành viên và nhận ngay ưu đãi!</p>
                     <br>
                 </div>
