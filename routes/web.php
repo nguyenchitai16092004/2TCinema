@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use App\Models\Phim;
+use App\Http\Controllers\PhimController;
+
 
 //==============================Frontend=====================================//
-Route::get('/', function () {
-    return view('frontend.pages.home');
-})->name('home');
+Route::get('/', [PhimController::class, 'Index'])->name('home');
 
 Route::get('/dang-nhap', function () {
     return view('frontend.pages.dang-nhap');
@@ -62,6 +63,8 @@ Route::get('/dieu-khoan-chung', function () {
 Route::get('/kiem-hang-doi-tra-hoan-tien', function () {
     return view('frontend.pages.chinh-sach.kiem-hang-doi-tra-hoan-tien');
 });
+Route::get('/chi-tiet-phim/{id}', [PhimController::class, 'chiTiet'])->name('phim.chiTiet');
+
 //===========================================================================//
 //===============================Backend=====================================//
 Route::get('/admin', function () {

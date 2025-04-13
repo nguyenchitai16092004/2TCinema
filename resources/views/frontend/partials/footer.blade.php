@@ -8,7 +8,7 @@
                         <a href="#"><img src="Content/img/logo_cinetick.png" alt="footer logo" /></a>
 
                         <div class="footer-contact">
-                            <p>Support: <a href="#">support@starlight.vn</a></p>
+                            <p>Support: <a href="#">support@cinetick.vn</a></p>
                             <p>Hotline: <a href="tell:1900 1722">1900 1722</a></p>
                             <ul>
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -84,7 +84,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="copyright-box">
-                        <p>2025 © CineTick. All rights reserved - Design by Double2T
+                        <p>2025 © CineTick. All rights reserved - Design by T2Cinema
                         </p>
                     </div>
                 </div>
