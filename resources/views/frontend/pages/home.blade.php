@@ -13,8 +13,7 @@
             </a>
             <a href="film/nu-tu-bong-toi-t16/b3cab74d-6def-49c9-ae08-3ade07b0ef19.html">
                 <div class="filmoja-main-slide">
-                    <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/nu-tu-bong-toi.jpg"
-                        style="max-height:550px" />
+                    <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/nu-tu-bong-toi.jpg" style="max-height:550px" />
 
                 </div>
             </a>
@@ -137,10 +136,7 @@
                     <div class="amy-movie-carousel-2 ">
                         <div class="amy-movie-list">
                             <div class="amy-movie-items">
-
-
-
-                                <div class="amy-movie-item">
+                                {{-- <div class="amy-movie-item">
                                     <div class="amy-movie-item-inner">
                                         <div class="amy-movie-item-front">
                                             <div class="slick-arrows"></div>
@@ -325,69 +321,67 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="amy-movie-item">
-                                    <div class="amy-movie-item-inner">
-                                        <div class="amy-movie-item-front">
-                                            <div class="slick-arrows"></div>
-                                            <div class="amy-movie-item-poster">
-                                                <a href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html">
-                                                    <img width="258" height="387"
-                                                        src="Areas/Admin/Content/Fileuploads/images/Poster2024/ng-soi(1).jpg"
-                                                        class="attachment-258x444 size-258x444" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="amy-movie-item-back">
-                                            <div class="amy-movie-item-back-inner">
-                                                <div class="amy-movie-item-content">
-                                                    <span class="amy-movie-field-imdb">T18</span>
-                                                    <h3 class="amy-movie-field-title"><a
-                                                            href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html">NGƯỜI
-                                                            S&#211;I (T18)</a></h3>
-                                                    <div class="amy-movie-item-meta">
-                                                        <span class="amy-movie-field-mpaa">2D</span>
-                                                        <span class="amy-movie-field-duration"><i
-                                                                class="fa fa-clock-o"></i>1 giờ 43 ph&#250;t</span>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Kinh dị
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <label class="amy-movie-custom-field-label">Đạo diễn:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Leigh Whannell
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-release_date">
-                                                        <label class="amy-movie-custom-field-label">Diễn
-                                                            vi&#234;n:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Julia Garner, Christopher Abbott, Sam Jaeger
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-field-desc">
-                                                        <p style="color:#333">Một gia đ&#236;nh chuyển đến sinh sống
-                                                            tại một ng&#244;i nh&#224; của người cha bị mất t&#237;ch
-                                                            b&#237; ẩn. V&#224;o đ&#234;m trăng tr&#242;n, họ bị tấn
-                                                            c&#244;ng bởi một người s&#243;i, khiến người chồng bị
-                                                            c&#224;o v&#224;o tay. Khi cố t...</p>
-                                                    </div>
-                                                </div>
-                                                <div class="amy-movie-item-button">
-                                                    <a href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html"
-                                                        class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                        <i class="fa fa-ticket"></i>Đặt v&#233;
+                                </div> --}}
+                                @foreach ($dsPhimDangChieu as $phim)
+                                    <div class="amy-movie-item">
+                                        <div class="amy-movie-item-inner">
+                                            <div class="amy-movie-item-front">
+                                                <div class="slick-arrows"></div>
+                                                <div class="amy-movie-item-poster">
+                                                    <a href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html">
+                                                        <img width="258" height="387" src="{{ $phim->HinhAnh }}"
+                                                            class="attachment-258x444 size-258x444" alt="" />
                                                     </a>
+                                                </div>
+                                            </div>
+                                            <div class="amy-movie-item-back">
+                                                <div class="amy-movie-item-back-inner">
+                                                    <div class="amy-movie-item-content">
+                                                        <span class="amy-movie-field-imdb">{{ $phim->DoTuoi }}</span>
+                                                        <h3 class="amy-movie-field-title"><a
+                                                                href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html">{{ $phim->TenPhim }}</a>
+                                                        </h3>
+                                                        <div class="amy-movie-item-meta">
+                                                            <span class="amy-movie-field-mpaa">2D</span>
+                                                            <span class="amy-movie-field-duration"><i
+                                                                    class="fa fa-clock-o"></i>{{ $phim->ThoiLuong }}</span>
+                                                        </div>
+                                                        <div class="amy-movie-custom-field-group amy-movie-field-language">
+                                                            <div class="amy-movie-custom-field-content">
+                                                                Kinh dị
+                                                            </div>
+                                                        </div>
+                                                        <div class="amy-movie-custom-field-group amy-movie-field-language">
+                                                            <label class="amy-movie-custom-field-label">Đạo diễn:</label>
+                                                            <div class="amy-movie-custom-field-content">
+                                                                {{ $phim->DaoDien }}
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="amy-movie-custom-field-group amy-movie-field-release_date">
+                                                            <label class="amy-movie-custom-field-label">Diễn
+                                                                vi&#234;n:</label>
+                                                            <div class="amy-movie-custom-field-content">
+                                                                {{ $phim->DienVien }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="amy-movie-field-desc">
+                                                            <p style="color:#333">{{ $phim->MoTaPhim }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="amy-movie-item-button">
+                                                        <a href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html"
+                                                            class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
+                                                            <i class="fa fa-ticket"></i>Đặt v&#233;
+                                                        </a>
 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="amy-movie-item">
+                                @endforeach
+                                {{-- <div class="amy-movie-item">
                                     <div class="amy-movie-item-inner">
                                         <div class="amy-movie-item-front">
                                             <div class="slick-arrows"></div>
@@ -639,7 +633,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                             </div>
@@ -664,28 +658,32 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="top-movie-slider owl-carousel">
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a href="film/quy-nhap-trang-t18/79a0b163-7d6e-48e9-8d2b-0fbde3f36be9.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/quy-nhap-trang.jpg"
-                                            alt="quy-nhap-trang-t18" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=fQKxDM-hxoU"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
+                        @foreach ($dsPhimSapChieu as $phim)
+                            <div class="single-top-movie">
+                                <div class="top-movie-wrap">
+                                    <div class="top-movie-img">
+                                        <a href="{{ asset('/chi-tiet-phim') }}">
+                                            <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" />
+                                        </a>
+                                    </div>
+                                    <div class="thumb-hover">
+                                        <a class="play-video"
+                                            href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=fQKxDM-hxoU"><i
+                                                class="fa fa-play"></i></a>
+                                        <div class="thumb-date">
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="top-movie-details">
+                                    <h4><a
+                                            href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">{{ $phim->TenPhim }}</a>
+                                    </h4>
+
+
+                                </div>
                             </div>
-                            <div class="top-movie-details">
-                                <h4><a href="film/quy-nhap-trang-t18/79a0b163-7d6e-48e9-8d2b-0fbde3f36be9.html">QUỶ
-                                        NHẬP TR&#192;NG (T18)</a></h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
+                        @endforeach
+                        {{-- <div class="single-top-movie">
                             <div class="top-movie-wrap">
                                 <div class="top-movie-img">
                                     <a
@@ -879,8 +877,7 @@
                                 <h4><a href="film/am-duong-lo/ea9016ea-555b-4911-9bd3-006792eb39ff.html">&#194;M DƯƠNG
                                         LỘ</a></h4>
                             </div>
-                        </div>
-
+                        </div> --}}
 
                     </div>
                 </div>
