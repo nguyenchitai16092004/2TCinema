@@ -11,331 +11,95 @@
                     <br>
                 </div>
                 <div class="col-md-9 register-right">
-
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <h3 class="register-heading">Thông tin tài khoản</h3>
-                            <div class="row register-form">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="rgFullName"
-                                            placeholder="Họ &amp; t&#234;n(*)" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="rgAddress" placeholder="Địa chỉ(*)"
-                                            value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="rgCMND" placeholder="CMND(*)"
-                                            value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" id="rgBirthDay" class="form-control"
-                                            placeholder="Ng&#224;y sinh" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="tel" minlength="10" maxlength="10" id="rgPhone"
-                                            name="txtEmpPhone" class="form-control" placeholder="Điện thoại(*)"
-                                            value="">
-                                    </div>
-
+                    <h3 class="register-heading">Thông tin tài khoản</h3>
+                    <form id="registerForm" action="/dang-ky" method="POST">
+                        @csrf
+                        <div class="row register-form">
+                            <div class="col-md-6">
+                                <!-- ID CCCD -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="rgCCCD" name="ID_CCCD" placeholder="Số CCCD (*)" value="{{ old('ID_CCCD') }}" required pattern="^\d{12}$" title="Số CCCD chỉ có thể là 12 chữ số">
+                                    @error('ID_CCCD')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>                                
+                                <!-- Họ tên -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="rgFullName" name="HoTen" placeholder="Họ &amp; tên(*)" 
+                                           value="{{ old('HoTen') }}" required>
+                                    @error('HoTen')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="rgEmail" placeholder="Email (*)"
-                                            value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="rgUserName"
-                                            placeholder="Email / T&#234;n đăng nhập (*)" value="">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" id="rgPassword"
-                                            placeholder="Mật khẩu(*)" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" id="rgPasswordConfirm"
-                                            placeholder="Mật khẩu nhập lại(*)" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="maxl">
-                                            <label class="radio inline">
-                                                <input type="radio" id="rgGenderTrue" name="optradio" value="Nam"
-                                                    checked>
-                                                <span> Nam </span>
-                                            </label>
-                                            <label class="radio inline">
-                                                <input type="radio" id="rgGenderFalse" name="optradio" value="Nữ">
-                                                <span> Nữ </span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="maxl">
-                                            <select class="form-control" id="rgStore">
-                                                <option value="38">STARLIGHT BU&#212;N MA THUỘT</option>
-                                                <option value="39">STARLIGHT Đ&#192; NẴNG</option>
-                                                <option value="42">STARLIGHT QUY NHƠN</option>
-                                                <option value="43">STARLIGHT BẢO LỘC</option>
-                                                <option value="44">STARLIGHT LONG AN</option>
-                                                <option value="46">STARLIGHT GIA LAI</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <input type="submit" class="btnRegister" onclick="register()" value="Đăng k&#253;">
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="rgEmail" name="Email" placeholder="Email (*)" 
+                                           value="{{ old('Email') }}" required>
+                                    @error('Email')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <p style="color: #333;">Vui lòng nhập đầy đủ thông tin vào các trường có đánh dấu <b
-                                        style="color: red;">(*)</b></p>
+                                <!-- Số điện thoại -->
+                                <div class="form-group">
+                                    <input type="tel" class="form-control" id="rgPhone" name="SDT" placeholder="Điện thoại (*)" 
+                                           value="{{ old('SDT') }}" required pattern="\d{10,11}" 
+                                           title="Số điện thoại phải là dãy số từ 10 đến 11 chữ số">
+                                    @error('SDT')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <!-- Ngày sinh -->
+                                <div class="form-group">
+                                    <input type="date" id="rgBirthDay" name="NgaySinh" class="form-control" value="{{ old('NgaySinh') }}" required>
+                                    @error('NgaySinh')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
-
+                            <div class="col-md-6">
+                                <!-- Tên đăng nhập -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="rgUserName" name="TenDN" placeholder="Tên đăng nhập (*)" 
+                                           value="{{ old('TenDN') }}" required>
+                                    @error('TenDN')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <!-- Mật khẩu -->
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="rgPassword" name="MatKhau" placeholder="Mật khẩu(*)" required>
+                                    @error('MatKhau')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <!-- Mật khẩu nhập lại -->
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="rgPasswordConfirm" name="MatKhau_confirmation" placeholder="Mật khẩu nhập lại(*)" required>
+                                    @error('MatKhau_confirmation')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <!-- Giới tính -->
+                                <div class="form-group">
+                                    <label class="radio inline">
+                                        <input type="radio" name="GioiTinh" value="1" checked>
+                                        <span> Nam </span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" name="GioiTinh" value="0">
+                                        <span> Nữ </span>
+                                    </label>
+                                    @error('GioiTinh')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <input type="submit" class="btnRegister" value="Đăng ký">
+                            </div>
+                            <p style="color: #333;">Vui lòng nhập đầy đủ thông tin vào các trường có đánh dấu <b style="color: red;">(*)</b></p>
                         </div>
-
-                    </div>
+                    </form>
                 </div>
             </div>
-
         </div>
     </div>
-    <script>
-        function MemberRegisViewModel(userName, password, rePassword, address, identifi, phone, email, birthday, gender,
-            isActive, fullName, storeId) {
-            var t = this;
-            t.UserName = userName,
-                t.Password = password,
-                t.RePassword = rePassword,
-                t.Address = address,
-                t.Identifi = identifi,
-                t.Phone = phone,
-                t.Email = email,
-                t.BirthDay = birthday,
-                t.Gender = gender,
-                t.FullName = fullName,
-                t.DateCreated = null,
-                t.Isactive = isActive,
-                t.StoreId = storeId;
-        }
-
-        function register() {
-            $(".main-reloader").css("display", "block");
-            var fullName = $("#rgFullName").val();
-            var userName = $("#rgUserName").val();
-            var password = $("#rgPassword").val();
-            var rePassword = $("#rgPasswordConfirm").val();
-            var address = $("#rgAddress").val();
-            var identifi = $("#rgCMND").val();
-            var phone = $("#rgPhone").val();
-            var email = $("#rgEmail").val();
-            var birthday = $("#rgBirthDay").val();
-            var storeId = $("#rgStore").val();
-            var gender = "1";
-            var isActive = false;
-
-            if (fullName == "" || fullName == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập họ tên.',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-            if (address == "" || address == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập địa chỉ',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-            if (identifi == "" || identifi == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập cmnd',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-            if (email == "" || email == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập email',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-            if (phone == "" || phone == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập số điện thoại',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-            if (birthday == "" || birthday == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập ngày sinh',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-            if (userName == "" || userName == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập Tên đăng nhập.',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-            if (password == "" || password == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập mật khẩu.',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-            if (rePassword == "" || rePassword == undefined) {
-                $.sweetModal({
-                    content: 'Vui lòng nhập mật khẩu nhập lại',
-                    title: '',
-                    icon: $.sweetModal.ICON_WARNING,
-                    theme: $.sweetModal.THEME_DARK,
-                    buttons: {
-                        'OK': {
-                            classes: 'redB'
-                        }
-                    }
-                });
-                $(".main-reloader").css("display", "none");
-                return false;
-            }
-
-            //alert(userName + password+ rePassword+ address+ identifi+ phone+ email+ birthday+ gender+ isActive+ fullName);
-            if (document.getElementById("rgGenderTrue").checked == true) {
-                gender = "1";
-            } else {
-                gender = "0";
-            }
-
-            var data = JSON.stringify(new MemberRegisViewModel(userName, password, rePassword, address, identifi, phone,
-                email, birthday, gender, isActive, fullName, storeId));
-            //alert(data);
-            $.ajax({
-                url: "/MemberRegister/Register",
-                type: "POST",
-                data: data,
-                traditional: true,
-                datatype: "json",
-                contentType: 'application/json; charset=utf-8',
-                success: function(result) {
-                    //alert(result);
-                    if (result === "true" || result === true) {
-                        clearForm();
-                        $.sweetModal({
-                            content: 'Đăng ký thành công. Vui lòng kiểm tra Email để xác nhận việc đăng ký của bạn. Và đăng nhập <a href="/dang-nhap.html">tại đây</a>',
-                            title: 'Thông báo',
-                            icon: $.sweetModal.ICON_WARNING,
-                            theme: $.sweetModal.THEME_DARK,
-                            buttons: {
-                                'OK': {
-                                    classes: 'redB'
-                                }
-                            }
-                        }, function() {
-                            location.href = "dang-nhap.html";
-                        });
-                        setTimeout(function() {
-                            location.href = "dang-nhap.html";
-                        }, 500);
-
-                    } else {
-                        $.sweetModal({
-                            content: result,
-                            title: '',
-                            icon: $.sweetModal.ICON_WARNING,
-                            theme: $.sweetModal.THEME_DARK,
-                            buttons: {
-                                'OK': {
-                                    classes: 'redB'
-                                }
-                            }
-                        });
-                        $(".main-reloader").css("display", "none");
-                    }
-                },
-                error: function() {
-                    return false;
-                }
-            });
-        }
-
-        function clearForm() {
-            $("#rgFullName").val("");
-            $("#rgUserName").val("");
-            $("#rgPassword").val("");
-            $("#rgPasswordConfirm").val("");
-            $("#rgAddress").val("");
-            $("#rgCMND").val("");
-            $("#rgPhone").val("");
-            $("#rgEmail").val("");
-            $("#rgBirthDay").val("");
-        }
-    </script>
 @stop

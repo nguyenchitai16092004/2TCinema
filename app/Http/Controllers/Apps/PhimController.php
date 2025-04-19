@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Apps;
 
 use App\Models\Phim;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PhimController extends Controller
 {

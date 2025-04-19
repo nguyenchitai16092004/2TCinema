@@ -1,29 +1,37 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
-use App\Models\Phim;
-use App\Http\Controllers\PhimController;
 
+use App\Http\Controllers\Admin\AutController;
+use App\Http\Controllers\Admin\RapController;
+
+use App\Http\Controllers\Apps\PhimController;
+use App\Http\Controllers\Apps\AuthController;
 
 //==============================Frontend=====================================//
 Route::get('/', [PhimController::class, 'Index'])->name('home');
 
-Route::get('/dang-nhap', function () {
-    return view('frontend.pages.dang-nhap');
-});
-Route::get('/dang-ky', function () {
-    return view('frontend.pages.dang-ky');
-});
-Route::get('/404', function () {
-    return view('frontend.pages.404');
-});
+// Đăng ký
+Route::get('/dang-ky', [AuthController::class, 'DangKy'])->name('register.form');
+Route::post('/dang-ky', [AuthController::class, 'dang_ky']);
+
+// Đăng nhập
+Route::get('/dang-nhap', [AuthController::class, 'DangNhap'])->name('login.form');
+Route::post('/dang-nhap-tai-khoan', [AuthController::class, 'dang_nhap'])->name('login');
+
+Route::post('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/404', function () {return view('frontend.pages.404');});
+
+
 Route::get('/cau-hoi-thuong-gap', function () {
     return view('frontend.pages.cau-hoi-thuong-gap');
 });
+
 Route::get('/dat-ve', function () {
     return view('frontend.pages.dat-ve');
 });
+
 Route::get('/lich-chieu', function () {
     return view('frontend.pages.lich-chieu');
 });
@@ -65,11 +73,15 @@ Route::get('/kiem-hang-doi-tra-hoan-tien', function () {
 });
 Route::get('/chi-tiet-phim/{id}', [PhimController::class, 'chiTiet'])->name('phim.chiTiet');
 
+
 //===========================================================================//
-//===============================Backend=====================================//
+//===============================Admin=====================================//
 Route::get('/admin', function () {
-    return view('backend.pages.home');
+    return view('backend.login');
 });
+
+Route::post('/dang-nhap-quan-ly', [AutController::class, 'dang_nhap'])->name('login_admin');
+
 Route::get('/admin/button', function () {
     return view('backend.pages.button');
 });
@@ -94,4 +106,14 @@ Route::get('/admin/404', function () {
 Route::get('/admin/login', function () {
     return view('backend.layouts.login');
 });
+
+Route::prefix('admin/rap')->name('rap.')->group(function() {
+    Route::get('/', [RapController::class, 'index'])->name('index');
+    Route::get('/create', [RapController::class, 'create'])->name('create');
+    Route::post('/store', [RapController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [RapController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [RapController::class, 'update'])->name('update');
+    Route::delete('/destroy/{id}', [RapController::class, 'destroy'])->name('destroy');
+});
+
 //===========================================================================//
