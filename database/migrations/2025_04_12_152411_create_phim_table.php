@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('phim', function (Blueprint $table) {
             $table->id('ID_Phim');
             $table->string('TenPhim', 100);
+            $table->string('Slug', 255);
             $table->string('DaoDien', 100);
             $table->string('DienVien', 255);
             $table->integer('ThoiLuong');

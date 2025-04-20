@@ -70,16 +70,22 @@
             </li>
             <li class="relative px-6 py-3">
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="modals.html">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                        </path>
-                    </svg>
-                    <span class="ml-4">Modals</span>
+                    href="admin/rap">
+                    <!-- Biểu tượng Quản lý Rạp (Cinema) -->
+                    <i class="fas fa-video w-5 h-5"></i>
+                    <span class="ml-4">Quản lý Rạp</span>
                 </a>
             </li>
+
+            <li class="relative px-6 py-3">
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    href="phong-management.html">
+                    <!-- Biểu tượng Quản lý Phòng (Room) -->
+                    <i class="fas fa-door-closed w-5 h-5"></i>
+                    <span class="ml-4">Quản lý Phòng</span>
+                </a>
+            </li>
+
             <li class="relative px-6 py-3">
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="tables.html">
@@ -122,12 +128,6 @@
                         </li>
                         <li
                             class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="pages/create-account.html">
-                                Create account
-                            </a>
-                        </li>
-                        <li
-                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                             <a class="w-full" href="pages/forgot-password.html">
                                 Forgot password
                             </a>
@@ -144,22 +144,10 @@
                 </template>
             </li>
         </ul>
-        <div class="px-6 my-6">
-            <button
-                class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                Create account
-                <span class="ml-2" aria-hidden="true">+</span>
-            </button>
-        </div>
     </div>
 </aside>
 <!-- Mobile sidebar -->
 <!-- Backdrop -->
-<div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
-    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-    x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0"
-    class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"></div>
 <aside class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
     x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
     x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
@@ -310,12 +298,5 @@
                 </template>
             </li>
         </ul>
-        <div class="px-6 my-6">
-            <button
-                class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                Create account
-                <span class="ml-2" aria-hidden="true">+</span>
-            </button>
-        </div>
     </div>
 </aside>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ghe_ngoi', function (Blueprint $table) {
             $table->id('ID_Ghe');
             $table->string('TenGhe', 10);
-            $table->string('TrangThai', 50);
+            $table->integer("TrangThai");
             $table->string('LoaiGhe', 50);
             $table->unsignedBigInteger('ID_PhongChieu');
             $table->foreign('ID_PhongChieu')->references('ID_PhongChieu')->on('phong_chieu');

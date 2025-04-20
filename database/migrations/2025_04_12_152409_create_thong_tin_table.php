@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('thong_tin', function (Blueprint $table) {
             $table->unsignedBigInteger('ID_CCCD')->primary();
             $table->string('HoTen', 100);
-            $table->string('GioiTinh', 10);
+            $table->boolean('GioiTinh');
             $table->date('NgaySinh');
             $table->string('Email', 100);
             $table->string('SDT', 15);
