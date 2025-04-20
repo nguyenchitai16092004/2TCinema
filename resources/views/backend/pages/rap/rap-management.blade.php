@@ -31,16 +31,25 @@
                                 <tr>
                                     <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">{{ $rap->TenRap }}</td>
                                     <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">{{ $rap->DiaChi }}</td>
-                                    <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">{{ $rap->TrangThai }}
+                                    <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">
+                                        @if ($rap->TrangThai == 0)
+                                            Bảo trì
+                                        @elseif ($rap->TrangThai == 1)
+                                            Hoạt động
+                                        @else
+                                            Bảo trì
+                                        @endif
                                     </td>
                                     <td class="px-4 py-3">
-                                        <form action="{{ route('rap.edit', $rap->ID_Rap) }}" method="GET" class="inline-block" style="background: yellow">
+                                        <form action="{{ route('rap.edit', $rap->ID_Rap) }}" method="GET"
+                                            class="inline-block" style="background: yellow">
                                             @csrf
-                                            <button type="submit" class="px-3 py-1 text-sm font-medium bg-yellow-500 rounded hover:bg-yellow-600">
+                                            <button type="submit"
+                                                class="px-3 py-1 text-sm font-medium bg-yellow-500 rounded hover:bg-yellow-600">
                                                 Sửa
                                             </button>
                                         </form>
-                                        
+
                                         <form action="{{ route('rap.destroy', $rap->ID_Rap) }}" method="POST"
                                             class="inline-block" onsubmit="return confirm('Bạn có chắc muốn xoá?')">
                                             @csrf

@@ -27,31 +27,42 @@
 
                             <li><a href="{{ asset('/cau-hoi-thuong-gap') }}">FAQ's</a></li>
 
-
-                            <li><a href="{{ asset('/dang-nhap') }}" class="btn-member">Đăng nhập</a></li>
-                            <li><a href="{{ asset('/dang-ky') }}" class="btn-member">Đăng k&#253;</a></li>
-
-
+                            @if (session()->has('user_id'))
+                                <li class="user-loged" style="border: 1px solid #f37737;">
+                                    <a style="color:#fff" title="{{ session('user_fullname') }}"
+                                        href="#">{{ session('user_fullname') }}</a>
+                                    <ul class="info_option">
+                                        <li><a href="{{ asset('/thong-tin-tai-khoan') }}"><i
+                                                    class="fa fa-user"></i>&nbsp; Thông tin</a></li>
+                                        <li><a href="{{ asset('/') }}" onclick="logOut()"><i
+                                                    class="fa fa-sign-out"></i>&nbsp; Đăng xuất</a></li>
+                                    </ul>
+                                </li>
+                            @else
+                                <li><a href="{{ asset('/dang-nhap') }}" class="btn-member">Đăng nhập</a></li>
+                                <li><a href="{{ asset('/dang-ky') }}" class="btn-member">Đăng ký</a></li>
+                            @endif
                             <script>
                                 function logOut() {
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        }
+                                    });
+
                                     $.ajax({
-                                        url: "/MemberRegister/Logout",
+                                        url: "{{ route('logout') }}", // Route logout
                                         type: "POST",
-                                        traditional: true,
-                                        datatype: "json",
-                                        contentType: 'application/json; charset=utf-8',
                                         success: function(result) {
-                                            //alert(result);
-                                            if (result === "true" || result === true) {
-                                                location.href = "index.html";
-                                            } else {}
+                                            window.location.href = "{{ url('/') }}";
                                         },
-                                        error: function() {
-                                            return false;
+                                        error: function(xhr) {
+                                            console.error("Lỗi đăng xuất:", xhr.responseText);
                                         }
                                     });
                                 }
                             </script>
+
                         </ul>
                     </div>
                 </div>

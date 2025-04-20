@@ -7,6 +7,7 @@ use App\Models\ThongTin;
 use App\Models\TaiKhoan;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -31,6 +32,7 @@ class AuthController extends Controller
         ], [
             'ID_CCCD.unique' => 'Số CCCD này đã được sử dụng. Vui lòng nhập số CCCD khác.',
             'TenDN.unique' => 'Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.',
+            'MatKhau.confirmed' => 'Xác nhận mật khẩu không khớp.',
         ]);
 
         // Tạo bản ghi thông tin
@@ -49,6 +51,7 @@ class AuthController extends Controller
             'MatKhau' => Hash::make($request->MatKhau),
             'TrangThai' => true,
             'ID_CCCD' => $request->ID_CCCD,
+            'VaiTro' => 0,
         ]);
 
         return redirect()->route('login.form')->with('success', 'Đăng ký thành công! Mời đăng nhập.');
@@ -70,20 +73,23 @@ class AuthController extends Controller
 
         $user = TaiKhoan::where('TenDN', $request->TenDN)->first();
 
-        if (!$user || !Hash::check($request->MatKhau, $user->MatKhau)) {
-            return back()->withErrors(['login' => 'Sai tên đăng nhập hoặc mật khẩu']);
-        }      
+        if (!$user) {
+            return back()->withErrors(['login' => 'Tài khoản này chưa được đăng ký.']);
+        }
 
-        // Lưu thông tin vào session
+        if (!Hash::check($request->MatKhau, $user->MatKhau)) {
+            return back()->withErrors(['login' => 'Sai tên đăng nhập hoặc mật khẩu']);
+        }
+
         session([
-            'ID_CCCD' => $user->ID_CCCD,
-            'VaiTro' => $user->VaiTro,
-            'TenDN' => $user->TenDN,
+            'user_id' => $user->ID_TaiKhoan,
+            'user_name' => $user->TenDN,
+            'user_fullname' => $user->thongTin->HoTen ?? 'Người dùng',
+            'user_role' => $user->VaiTro,
         ]);
 
         return redirect()->route('home')->with('success', 'Đăng nhập thành công!');
     }
-
     // Đăng xuất
     public function logout()
     {

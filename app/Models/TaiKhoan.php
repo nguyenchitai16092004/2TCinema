@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TaiKhoan extends Model
+class TaiKhoan extends Authenticatable
 {
     use HasFactory;
 
@@ -22,7 +22,20 @@ class TaiKhoan extends Model
         'ID_CCCD',
     ];
 
-    // Quan hệ: Tài khoản thuộc về một thông tin (thong_tin)
+    protected $hidden = [
+        'MatKhau',
+    ];
+
+    public function getAuthPassword()
+    {
+        return $this->MatKhau; 
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return 'TenDN'; 
+    }
+
     public function thongTin()
     {
         return $this->belongsTo(ThongTin::class, 'ID_CCCD', 'ID_CCCD');
