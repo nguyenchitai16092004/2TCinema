@@ -328,7 +328,7 @@
                                             <div class="amy-movie-item-front">
                                                 <div class="slick-arrows"></div>
                                                 <div class="amy-movie-item-poster">
-                                                    <a href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html">
+                                                    <a href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">
                                                         <img width="258" height="387" src="{{ $phim->HinhAnh }}"
                                                             class="attachment-258x444 size-258x444" alt="" />
                                                     </a>
@@ -339,7 +339,7 @@
                                                     <div class="amy-movie-item-content">
                                                         <span class="amy-movie-field-imdb">{{ $phim->DoTuoi }}</span>
                                                         <h3 class="amy-movie-field-title"><a
-                                                                href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html">{{ $phim->TenPhim }}</a>
+                                                                href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">{{ $phim->TenPhim }}</a>
                                                         </h3>
                                                         <div class="amy-movie-item-meta">
                                                             <span class="amy-movie-field-mpaa">2D</span>

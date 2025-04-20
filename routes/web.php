@@ -11,6 +11,21 @@ use App\Http\Controllers\Apps\AuthController;
 //==============================Frontend=====================================//
 Route::get('/', [PhimController::class, 'Index'])->name('home');
 
+Route::get('/info', function () {
+    return view('frontend.pages.thong-tin-tai-khoan.info');
+});
+
+Route::get('/doi-mat-khau', function () {
+    return view('frontend.pages.thong-tin-tai-khoan.doi-mat-khau');
+});
+
+Route::get('/cap-nhat-thong-tin', function () {
+    return view('frontend.pages.thong-tin-tai-khoan.cap-nhat-thong-tin');
+});
+Route::get('/lich-su-giao-dich', function () {
+    return view('frontend.pages.thong-tin-tai-khoan.lich-su-giao-dich');
+});
+
 // Đăng ký
 Route::get('/dang-ky', [AuthController::class, 'DangKy'])->name('register.form');
 Route::post('/dang-ky', [AuthController::class, 'dang_ky']);
@@ -22,6 +37,7 @@ Route::post('/dang-nhap-tai-khoan', [AuthController::class, 'dang_nhap'])->name(
 Route::post('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/404', function () {return view('frontend.pages.404');});
+
 
 
 Route::get('/cau-hoi-thuong-gap', function () {

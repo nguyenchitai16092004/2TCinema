@@ -16,7 +16,7 @@ class RapController extends Controller
 
     public function create()
     {
-        return view('backend.pages.rap.them-rap');
+        return view('backend.pages.rap.quan-ly-rap');
     }
 
     public function store(Request $request)
@@ -33,8 +33,8 @@ class RapController extends Controller
 
     public function edit($id)
     {
-        $rap = Rap::where('ID_Rap' , '=' , $id)->get();
-        return view('backend.rap.edit', compact('rap'));
+        $rap = Rap::where('ID_Rap', '=', $id)->get();
+        return view('backend.pages.rap.quan-ly-rap', compact('rap'));
     }
 
     public function update(Request $request, $id)
@@ -45,7 +45,7 @@ class RapController extends Controller
             'TrangThai' => 'required|max:50',
         ]);
 
-        $rap = Rap::where('ID_Rap' , '=' , $id)->first();
+        $rap = Rap::where('ID_Rap', '=', $id)->first();
         $rap->update($request->all());
 
         return redirect()->route('rap.index')->with('success', 'Rạp đã sửa thêm thành công');
@@ -53,7 +53,7 @@ class RapController extends Controller
 
     public function destroy($id)
     {
-        $rap = Rap::where('ID_Rap' , '=' , $id);
+        $rap = Rap::where('ID_Rap', '=', $id);
         $rap->delete();
 
         return redirect()->route('rap.index')->with('success', 'Rạp đã được xóa thành công');
