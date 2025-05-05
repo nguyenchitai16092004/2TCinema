@@ -136,192 +136,6 @@
                     <div class="amy-movie-carousel-2 ">
                         <div class="amy-movie-list">
                             <div class="amy-movie-items">
-                                {{-- <div class="amy-movie-item">
-                                    <div class="amy-movie-item-inner">
-                                        <div class="amy-movie-item-front">
-                                            <div class="slick-arrows"></div>
-                                            <div class="amy-movie-item-poster">
-                                                <a href="film/lac-troi-p/83a20d0c-769a-4280-bc94-0233291c94b6.html">
-                                                    <img width="258" height="387"
-                                                        src="Areas/Admin/Content/Fileuploads/images/Poster2024/flow.jpg"
-                                                        class="attachment-258x444 size-258x444" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="amy-movie-item-back">
-                                            <div class="amy-movie-item-back-inner">
-                                                <div class="amy-movie-item-content">
-                                                    <span class="amy-movie-field-imdb">P</span>
-                                                    <h3 class="amy-movie-field-title"><a
-                                                            href="film/lac-troi-p/83a20d0c-769a-4280-bc94-0233291c94b6.html">LẠC
-                                                            TR&#212;I (P)</a></h3>
-                                                    <div class="amy-movie-item-meta">
-                                                        <span class="amy-movie-field-mpaa">2D</span>
-                                                        <span class="amy-movie-field-duration"><i
-                                                                class="fa fa-clock-o"></i>1 giờ 24 ph&#250;t</span>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Hoạt h&#236;nh
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <label class="amy-movie-custom-field-label">Đạo diễn:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Gints Zilbalodis
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-release_date">
-                                                        <label class="amy-movie-custom-field-label">Diễn
-                                                            vi&#234;n:</label>
-                                                        <div class="amy-movie-custom-field-content">
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-field-desc">
-                                                        <p style="color:#333">Trước bối cảnh hậu tận thế, ch&#250;
-                                                            m&#232;o x&#225;m nh&#250;t nh&#225;t, vốn lu&#244;n sợ nước
-                                                            phải rời bỏ v&#249;ng an to&#224;n khi căn nh&#224;
-                                                            th&#226;n y&#234;u bị cuốn tr&#244;i bởi cơn lũ dữ.
-                                                            Tr&#234;n h&#224;nh tr&#236;nh vượt đại dương m&#234;nh
-                                                            m&#244;...</p>
-                                                    </div>
-                                                </div>
-                                                <div class="amy-movie-item-button">
-                                                    <a href="film/lac-troi-p/83a20d0c-769a-4280-bc94-0233291c94b6.html"
-                                                        class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                        <i class="fa fa-ticket"></i>Đặt v&#233;
-                                                    </a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="amy-movie-item">
-                                    <div class="amy-movie-item-inner">
-                                        <div class="amy-movie-item-front">
-                                            <div class="slick-arrows"></div>
-                                            <div class="amy-movie-item-poster">
-                                                <a
-                                                    href="film/cuoc-dao-tau-tren-khong-t16/c5ebbe96-dcfb-4955-86d1-a564c24b436f.html">
-                                                    <img width="258" height="387"
-                                                        src="Areas/Admin/Content/Fileuploads/images/Poster2024/cuoc-dao-tau-tren-ko.jpg"
-                                                        class="attachment-258x444 size-258x444" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="amy-movie-item-back">
-                                            <div class="amy-movie-item-back-inner">
-                                                <div class="amy-movie-item-content">
-                                                    <span class="amy-movie-field-imdb">T16</span>
-                                                    <h3 class="amy-movie-field-title"><a
-                                                            href="film/cuoc-dao-tau-tren-khong-t16/c5ebbe96-dcfb-4955-86d1-a564c24b436f.html">CUỘC
-                                                            Đ&#192;O TẨU TR&#202;N KH&#212;NG (T16)</a></h3>
-                                                    <div class="amy-movie-item-meta">
-                                                        <span class="amy-movie-field-mpaa">2D</span>
-                                                        <span class="amy-movie-field-duration"><i
-                                                                class="fa fa-clock-o"></i>1 giờ 32 ph&#250;t</span>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <div class="amy-movie-custom-field-content">
-                                                            H&#224;nh Động
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <label class="amy-movie-custom-field-label">Đạo diễn:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Mel Gibson
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-release_date">
-                                                        <label class="amy-movie-custom-field-label">Diễn
-                                                            vi&#234;n:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Mark Wahlberg, Michelle Dockery, Topher Grace, ...
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-field-desc">
-                                                        <p style="color:#333">Một phi c&#244;ng chịu tr&#225;ch nhiệm
-                                                            đưa Thống chế Kh&#244;ng qu&#226;n đến &#225;p giải một kẻ
-                                                            chạy trốn về hầu t&#242;a. Khi cả ba bay qua địa phận
-                                                            Alaska, căng thẳng leo thang, niềm tin bị thử th&#225;ch,
-                                                            bởi ...</p>
-                                                    </div>
-                                                </div>
-                                                <div class="amy-movie-item-button">
-                                                    <a href="film/cuoc-dao-tau-tren-khong-t16/c5ebbe96-dcfb-4955-86d1-a564c24b436f.html"
-                                                        class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                        <i class="fa fa-ticket"></i>Đặt v&#233;
-                                                    </a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="amy-movie-item">
-                                    <div class="amy-movie-item-inner">
-                                        <div class="amy-movie-item-front">
-                                            <div class="slick-arrows"></div>
-                                            <div class="amy-movie-item-poster">
-                                                <a
-                                                    href="film/cuoi-ma-hien-me-cho-quy-t18/b6a87f4d-c1d4-494d-adfa-f0373598b34d.html">
-                                                    <img width="258" height="387"
-                                                        src="Areas/Admin/Content/Fileuploads/images/Poster2024/cuoi-ma.jpg"
-                                                        class="attachment-258x444 size-258x444" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="amy-movie-item-back">
-                                            <div class="amy-movie-item-back-inner">
-                                                <div class="amy-movie-item-content">
-                                                    <span class="amy-movie-field-imdb">T18</span>
-                                                    <h3 class="amy-movie-field-title"><a
-                                                            href="film/cuoi-ma-hien-me-cho-quy-t18/b6a87f4d-c1d4-494d-adfa-f0373598b34d.html">CƯỚI
-                                                            MA HIẾN MẸ CHO QUỶ (T18)</a></h3>
-                                                    <div class="amy-movie-item-meta">
-                                                        <span class="amy-movie-field-mpaa">2D</span>
-                                                        <span class="amy-movie-field-duration"><i
-                                                                class="fa fa-clock-o"></i>1 giờ 37 ph&#250;t</span>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Kinh dị
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <label class="amy-movie-custom-field-label">Đạo diễn:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Azhar Kinoi Lubis
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-release_date">
-                                                        <label class="amy-movie-custom-field-label">Diễn
-                                                            vi&#234;n:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Taskya Namya, Wafda Saifan Lubis, Arla Ailani
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-field-desc">
-                                                        <p style="color:#333">Mỗi ng&#224;y trong cuộc sống Ranti đều
-                                                            xoay quanh bởi sự cay nghiệt của mẹ chồng c&#249;ng những
-                                                            lời vu c&#225;o của em d&#226;u khiến c&#244; v&#244;
-                                                            c&#249;ng thống khổ. Mọi việc trở n&#234;n b&#249;ng nổ khi
-                                                            họ lần lượt p...</p>
-                                                    </div>
-                                                </div>
-                                                <div class="amy-movie-item-button">
-                                                    <a href="film/cuoi-ma-hien-me-cho-quy-t18/b6a87f4d-c1d4-494d-adfa-f0373598b34d.html"
-                                                        class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                        <i class="fa fa-ticket"></i>Đặt v&#233;
-                                                    </a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
                                 @foreach ($dsPhimDangChieu as $phim)
                                     <div class="amy-movie-item">
                                         <div class="amy-movie-item-inner">
@@ -917,7 +731,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="uu-dai/bang-gia-ve-ap-dung-hien-hanh-cac-rap-starlight-cinema-1043.html"
+                            <a href="#"
                                 style="cursor:pointer">
                                 <img src="Areas/Admin/Content/Fileuploads/images/POSTER/bang%20gia%20ve(1).jpg">
                             </a>
@@ -935,7 +749,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="uu-dai/bang-gia-ve-starlight-kid-18.html" style="cursor:pointer">
+                            <a href="#" style="cursor:pointer">
                                 <img src="Areas/Admin/Content/Fileuploads/images/POSTER/BANG%20GIA.jpg">
                             </a>
                         </div>
