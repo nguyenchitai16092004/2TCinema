@@ -32,10 +32,10 @@
                                     <a style="color:#fff" title="{{ session('user_fullname') }}"
                                         href="#">{{ session('user_fullname') }}</a>
                                     <ul class="info_option">
-                                        <li><a href="{{ asset('/thong-tin-tai-khoan') }}"><i
-                                                    class="fa fa-user"></i>&nbsp; Thông tin</a></li>
+                                        <li><a href="{{ asset('/thong-tin-tai-khoan') }}"><i class="fa fa-user"></i>
+                                                Thông tin</a></li>
                                         <li><a href="{{ asset('/') }}" onclick="logOut()"><i
-                                                    class="fa fa-sign-out"></i>&nbsp; Đăng xuất</a></li>
+                                                    class="fa fa-sign-out"></i> Đăng xuất</a></li>
                                     </ul>
                                 </li>
                             @else
