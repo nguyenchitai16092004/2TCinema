@@ -1,21 +1,21 @@
 @extends('frontend.layouts.master')
 @section('title', '404')
 @section('main')
+    <link rel="stylesheet" href="{{ asset('frontend/Content/css/404.css') }}">
     <div style="display:none" class="main-reloader">
         <div class="loader">Loading...</div>
     </div>
-    <section class="filmoja-notfound-area section_70" style="background: url(Content/img/bg.jpg);background-size: 100%;height: 100%;">
-        <div class="container" style="background: #fff;height: 100%;">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="notfound-box">
-                        <h1>4<span class="fa fa-frown-o"></span>4</h1>
-                        <h3 style="font-family:Arial">
-                            Xin lỗi, chúng tôi không thể tìm thấy nội dung bạn đang tìm kiếm.
-                        </h3>
-                    </div>
-                </div>
-            </div>
+    <div class="content">
+        <h1 class="title-404">404</h1>
+        <img class="img-404" class="img-404" src="Content/img/error.gif" alt="">
+        <div class="text-404">
+            <h2>Có vẻ bạn đang tìm gì đó?</h2>
+            <p>Trang bạn đang tìm kiếm hiện <b> không tồn tại</b>. Vui lòng thử <b>tải lại trang</b> hoặc quay lại <b>Trang
+                    chủ!</b></p>
+            <!-- From Uiverse.io by catraco -->
+
+
+
         </div>
-    </section>
+    </div>
 @stop

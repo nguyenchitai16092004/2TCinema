@@ -13,9 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title')</title>
 
-    <link
-        href="https://fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,bold,100,200,300,400,500,600,700,800"
-        rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
     <!-- External CSS -->
     <link href="Content/Stylebf25.css" rel="stylesheet" />
 
