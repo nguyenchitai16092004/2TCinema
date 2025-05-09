@@ -1,6 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Lịch chiếu')
 @section('main')
+
     <section class="filmoja-blog-page section_30 bg-main" style="min-height: 500px; background: #e6e7e9; max-width: 100% !important; border-top: 1px solid; ">
         <div class="container">
             <div class="row">

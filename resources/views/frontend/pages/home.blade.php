@@ -7,23 +7,26 @@
 
             <a href="film/nha-gia-tien-t18/b046f0d2-c828-408e-9c89-a4cdb8db0daa.html">
                 <div class="filmoja-main-slide">
-                    <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/nha-gia-tien.jpg" style="max-height:550px" />
+                    <img style="height: 560px;" src="Areas/Admin/Content/Fileuploads/images/Slide2024/nha-gia-tien.jpg"
+                        style="max-height:400px" />
 
                 </div>
             </a>
             <a href="film/nu-tu-bong-toi-t16/b3cab74d-6def-49c9-ae08-3ade07b0ef19.html">
                 <div class="filmoja-main-slide">
-                    <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/nu-tu-bong-toi.jpg" style="max-height:550px" />
+                    <img style="height: 560px;" src="Areas/Admin/Content/Fileuploads/images/Slide2024/nu-tu-bong-toi.jpg"
+                        style="max-height:400px" />
 
                 </div>
             </a>
             <div class="filmoja-main-slide">
-                <img src="Areas/Admin/Content/Fileuploads/images/Slide2024/nu-hon-bac-ty.jpg" style="max-height:550px" />
+                <img style="height: 560px;" src="Areas/Admin/Content/Fileuploads/images/Slide2024/tham-tu-kien.jpg"
+                    style="max-height:400px" />
             </div>
         </div>
     </section>
     <!-- Slider Area End -->
-    <div class="booking-form" style="">
+    <div class="booking-form">
         <div class="col-lg-12">
             <div class="booking-form-item" style="width:20%;">
                 <div class="select-box slTheater">
@@ -704,7 +707,7 @@
 
 
     <section class="filmoja-top-movies-area section_30"
-        style=" background: url(Content/img/bgs5.jpg) no-repeat scroll 0 0; background-size: cover;">
+       >
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -731,8 +734,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="#"
-                                style="cursor:pointer">
+                            <a href="#" style="cursor:pointer">
                                 <img src="Areas/Admin/Content/Fileuploads/images/POSTER/bang%20gia%20ve(1).jpg">
                             </a>
                         </div>
@@ -760,7 +762,7 @@
     </section>
     <!-- Top Movies Area End -->
     <!-- Top Movies Area Start -->
-    <section class="filmoja-top-movies-area section_30" style="background: #22272b;">
+    <section class="filmoja-top-movies-area section_30" >
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -1029,7 +1031,7 @@
     <!-- Top Movies Area End -->
     <!-- News Area Start -->
     <section class="filmoja-news-area section_70">
-        <div class="container">
+        <div style="positon-relative; right: 200px;" class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="filmoja-heading">

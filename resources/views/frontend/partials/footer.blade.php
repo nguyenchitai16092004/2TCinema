@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-lg-4 col-sm-6">
                     <div class="single-footer-widget">
-                        <a href="#"><img src="Content/img/logo_cinetick.png" alt="footer logo" /></a>
+                        <a href="#"><img width="300px" src="Content/img/logoCineTick.png" alt="footer logo" /></a>
 
                         <div class="footer-contact">
                             <p>Support: <a href="#">support@cinetick.vn</a></p>
@@ -37,6 +37,9 @@
                             <li><a href="chinh-sach/kiem-hang-doi-tra-hoan-tien-5.html"><i
                                         class="fa fa-angle-double-right"></i>Kiểm H&#224;ng, đổi trả/ho&#224;n
                                     tiền</a></li>
+                            <li><a href="{{ asset('/cau-hoi-thuong-gap') }}"><i
+                                        class="fa fa-angle-double-right"></i>Câu hỏi thường gặp</a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -47,15 +50,12 @@
                         <div class="footer-app-box">
                             <p>Tải ngay ứng dụng đặt vé online cho dế yêu của bạn !</p>
                             <ul class="apps-list">
-                                <li><a
-                                        href="#"><img
-                                            src="Content/img/app-1.jpg" alt="app image" /></a></li>
-                                <li><a href="#"><img
-                                            src="Content/img/app-2.jpg" alt="app image" /></a></li>
+                                <li><a href="#"><img src="Content/img/app-1.jpg" alt="app image" /></a></li>
+                                <li><a href="#"><img src="Content/img/app-2.jpg" alt="app image" /></a></li>
                             </ul>
                             <ul class="apps-list">
-                                <li><a href="#" target="_blank"><img
-                                            alt="" title="" src="Content/img/congthuong.png"></a>
+                                <li><a href="#" target="_blank"><img alt="" title=""
+                                            src="Content/img/congthuong.png"></a>
                                 </li>
                             </ul>
                         </div>
@@ -167,4 +167,3 @@
     </div>
 </div>
 <script src="Scripts/Style88a8?v=_f8__VSi4vuTzCN0MMHUM1jt_vaACvuT1VJNbzQ6qPY1"></script>
-

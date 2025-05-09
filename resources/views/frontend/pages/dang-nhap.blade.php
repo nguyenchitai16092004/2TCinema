@@ -2,10 +2,10 @@
 @section('title', 'Đăng nhập')
 @section('main')
     <div class="sign section--bg" style="background: #e6e7e9; max-width: 100%; border-top: 1px solid;">
-        <div class="container register" style="max-width: 100%;">
+        <div class="contain er register" style="max-width: 100%;">
             <div class="row">
                 <div class="col-md-3 register-left">
-                    <img src="Content/img/logo_cinetick.png" alt="Logo" />
+                    <img src="Content/img/logoCineTick.png" alt="Logo" />
                     <p>Đăng nhập với tài khoản của bạn!</p>
                 </div>
                 <div class="col-md-9 register-right">
@@ -29,7 +29,9 @@
 
                                         <div class="form-group">
                                             <ul style="display: flex; gap: 10px; padding-left: 0; list-style: none;">
-                                                <li><a href="{{ route('register.form') }}">Đăng ký</a></li>
+                                                <li><a href="{{ asset('/dang-ky') }}">Đăng ký</a></li>
+ 
+
                                                 <li><a href="#">/ Quên mật khẩu?</a></li>
                                             </ul>
                                         </div>
@@ -38,7 +40,6 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
