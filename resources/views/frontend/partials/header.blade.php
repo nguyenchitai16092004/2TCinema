@@ -24,9 +24,6 @@
                 <div class="col-lg-7 col-md-9 col-sm-12">
                     <div class="header-top-menu">
                         <ul>
-
-                            <li><a href="{{ asset('/cau-hoi-thuong-gap') }}">FAQ's</a></li>
-
                             @if (session()->has('user_id'))
                                 <li class="user-loged" style="border: 1px solid #f37737;">
                                     <a style="color:#fff" title="{{ session('user_fullname') }}"
@@ -39,8 +36,12 @@
                                     </ul>
                                 </li>
                             @else
-                                <li><a href="{{ asset('/dang-nhap') }}" class="btn-member">Đăng nhập</a></li>
-                                <li><a href="{{ asset('/dang-ky') }}" class="btn-member">Đăng ký</a></li>
+                            <li style="display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
+                                <img src="{{ asset('frontend/Content/img/user.svg') }}" alt="">
+                                <a href="{{ asset('/dang-nhap') }}" class="btn-member">Đăng nhập</a>
+                            </li>
+                            
+                            
                             @endif
                             <script>
                                 function logOut() {
@@ -77,7 +78,7 @@
                 <div class="col-lg-3">
                     <div class="site-logo">
                         <a href="{{ asset('/') }}">
-                            <img style="margin-top: 8px;" src="Content/img/logo_cinetick.png" alt="filmoja" />
+                            <img width="120px" src="Content/img/logoCineTick.png" alt="filmoja" />
                         </a>
                     </div>
                     <!-- Responsive Menu Start -->

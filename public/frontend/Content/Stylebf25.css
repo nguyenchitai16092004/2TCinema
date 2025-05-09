@@ -72,7 +72,6 @@ body {
     max-width: 95%;
     /* background: url(img/bgs6.jpg); */
     background-size: contain;
-    box-shadow: 0 0 10px rgb(0 0 0 / 84%);
     letter-spacing: 1.5px;
 }
 
@@ -17159,12 +17158,13 @@ li {
 
 .filmoja-heading h2 {
     font-family: "Nunito Sans", sans-serif;
-    text-transform: capitalize;
-    font-weight: 500;
+    text-transform: uppercase; /* Changed from capitalize to uppercase */
+    font-weight: bold;
     color: #111;
-    font-size: 30px;
+    font-size: 40px;
     position: relative;
     padding-left: 15px;
+    text-align: center;
 }
 
 /*.filmoja-heading h2:before {
@@ -17325,12 +17325,12 @@ li {
 }
 
 .slicknav_menu .slicknav_icon-bar {
-    background-color: #333333;
 }
 
 .filmoja-header-area.stick-top.sticky .slicknav_menu .slicknav_icon-bar,
 .filmoja-header-area.home-3-page .slicknav_menu .slicknav_icon-bar {
     background-color: #333333;
+
 }
 
 /*================================================
@@ -17492,7 +17492,7 @@ li {
 ==================================================*/
 
 .header-top-area {
-    background: #22272b none repeat scroll 0 0;
+    background: -webkit-linear-gradient(left, #171e38, #5841a7);
     padding: 10px 0;
 }
 
@@ -17532,8 +17532,9 @@ li {
 }
 
 .main-header-area {
-    background: #fff none repeat scroll 0 0;
-    box-shadow: 0 5px 10px rgba(17, 17, 17, 0.54);
+    /* background: #fff none repeat scroll 0 0; */
+    background: -webkit-linear-gradient(left, #171e38, #5841a7);
+
 }
 
 .site-logo {
@@ -17553,7 +17554,7 @@ li {
 
 .mainmenu ul > li > a {
     display: block;
-    color: #13212d;
+    color: #fff;
     text-transform: capitalize;
     padding: 30px 10px;
     position: relative;
@@ -17618,7 +17619,7 @@ li {
 
 .mainmenu nav > ul > li > a:hover,
 .mainmenu nav > ul > li.active > a {
-    color: black;
+    color: #fff;
     /* background: #f37a3b; */
 }
 
@@ -18591,10 +18592,6 @@ li {
 12 - BLOG CSS
 ==================================================*/
 
-.filmoja-news-area {
-    background: #e2e2e2 none repeat scroll 0 0;
-}
-
 .news-side-list {
     margin-top: 30px;
     box-shadow: 0px 0px 4px 1px #3333338a;
@@ -18971,9 +18968,13 @@ ul.company-desc-list li i {
 ==================================================*/
 
 .filmoja-footer-area {
-    /* background: url(img/bgs2.jpg) no-repeat scroll 0 0/cover; */
-    background-color: #333333;
+    background: -webkit-linear-gradient(to right, #171e38, #5842a8, #171e38); 
+    background: linear-gradient(to right, #171e38, #5842a8, #171e38);         
+    width: 100%;
+    padding: 20px 0;
+    color: white;
 }
+
 
 .single-footer-widget h3 {
     font-size: 17px;
@@ -20668,11 +20669,12 @@ ul.company-desc-list li i {
 }
 
 .filmoja-top-movies-area {
-    background: url(img/bgs4.jpg) no-repeat scroll 0 0;
-    background-size: cover;
+    /* background: url(img/bgs4.jpg) no-repeat scroll 0 0; */
+    /* background-size: cover; */
+    background-color: #171e38;
 }
 
-.filmoja-top-movies-area .filmoja-heading h2 {
+.filmoja-heading h2 {
     color: #fff;
 }
 
@@ -20695,12 +20697,7 @@ ul.company-desc-list li i {
     color: #fff;
 }
 
-.btn-member {
-    padding: 2px 5px 2px 5px;
-    background: #f37737;
-    border-radius: 3px;
-    color: #fff !important;
-}
+
 /*Booking Form*/
 .booking-form {
     height: auto;
@@ -22969,7 +22966,7 @@ h3.no-underline {
 }
 /*Login/Register Form*/
 .register {
-    background: -webkit-linear-gradient(left, #f27737, #f7ac85);
+    background: -webkit-linear-gradient(left, #171e38, #f7ac85);
     padding: 3%;
 }
 
@@ -23049,6 +23046,7 @@ h3.no-underline {
     padding: 10%;
     margin-top: 7%;
     justify-content: center;
+
 }
 
 .btnRegister {
