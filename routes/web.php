@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AutController;
 use App\Http\Controllers\Admin\RapController;
+use App\Http\Controllers\Admin\GheNgoiController;
+use App\Http\Controllers\Admin\PhongChieuController;
 
 use App\Http\Controllers\Apps\PhimController;
 use App\Http\Controllers\Apps\AuthController;
@@ -36,9 +38,9 @@ Route::post('/dang-nhap-tai-khoan', [AuthController::class, 'dang_nhap'])->name(
 
 Route::post('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/404', function () {return view('frontend.pages.404');});
-
-
+Route::get('/404', function () {
+    return view('frontend.pages.404');
+});
 
 Route::get('/cau-hoi-thuong-gap', function () {
     return view('frontend.pages.cau-hoi-thuong-gap');
@@ -92,44 +94,40 @@ Route::get('/chi-tiet-phim/{id}', [PhimController::class, 'chiTiet'])->name('phi
 
 //===========================================================================//
 //===============================Admin=====================================//
+// Login admin (không cần middleware)
 Route::get('/admin', function () {
     return view('backend.login');
 });
+Route::get('/admin/login', fn() => view('backend.login'));
 
 Route::post('/dang-nhap-quan-ly', [AutController::class, 'dang_nhap'])->name('login_admin');
 
-Route::get('/admin/button', function () {
-    return view('backend.pages.button');
-});
-Route::get('/admin/cards', function () {
-    return view('backend.pages.cards');
-});
-Route::get('/admin/charts', function () {
-    return view('backend.pages.charts');
-});
-Route::get('/admin/forms', function () {
-    return view('backend.pages.forms');
-});
-Route::get('/admin/modals', function () {
-    return view('backend.pages.modals');
-});
-Route::get('/admin/tables', function () {
-    return view('backend.pages.tables');
-});
-Route::get('/admin/404', function () {
-    return view('backend.pages.404');
-});
-Route::get('/admin/login', function () {
-    return view('backend.layouts.login');
-});
+Route::post('/admin/dang-xuat', [AutController::class, 'dang_xuat'])->name('logout_admin');
 
-Route::prefix('admin/rap')->name('rap.')->group(function() {
-    Route::get('/', [RapController::class, 'index'])->name('index');
-    Route::get('/create', [RapController::class, 'create'])->name('create');
-    Route::post('/store', [RapController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [RapController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [RapController::class, 'update'])->name('update');
-    Route::delete('/destroy/{id}', [RapController::class, 'destroy'])->name('destroy');
-});
+Route::get('/admin/404', fn() => view('backend.pages.404'));
 
-//===========================================================================//
+Route::get('/admin/charts', fn() => view('backend.pages.charts'));
+
+Route::prefix('admin')->middleware(['admin'])->group(function () {
+    // Rap
+    Route::prefix('rap')->name('rap.')->group(function () {
+        Route::get('/', [RapController::class, 'index'])->name('index');
+        Route::get('/create', [RapController::class, 'create'])->name('create');
+        Route::post('/store', [RapController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [RapController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [RapController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [RapController::class, 'destroy'])->name('destroy');
+    });
+
+    // Phòng chiếu
+    Route::prefix('phong-chieu')->name('phong-chieu.')->group(function () {
+        Route::get('/', [PhongChieuController::class, 'index'])->name('index');
+        Route::get('/create', [PhongChieuController::class, 'create'])->name('create');
+        Route::post('/store', [PhongChieuController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [PhongChieuController::class, 'show'])->name('show');
+        Route::put('/update/{id}', [PhongChieuController::class, 'update'])->name('update');
+        Route::delete('/{id}', [PhongChieuController::class, 'destroy'])->name('destroy');
+    });
+
+    // Thêm các route admin khác ở đây...
+});

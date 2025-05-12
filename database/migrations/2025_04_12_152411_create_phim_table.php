@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('DoTuoi');
             $table->string('DoHoa', 50);
             $table->string('NgonNgu', 50);
-            $table->string('TrangThai', 50);
+            $table->boolean('TrangThai');
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ class RapController extends Controller
     public function index()
     {
         $raps = Rap::all();
-        return view('backend.pages.rap.rap-management', compact('raps'));
+        return view('backend.pages.rap.rap', compact('raps'));
     }
 
     public function create()
