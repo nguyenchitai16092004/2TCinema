@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SuatChieuController;
 
 use App\Http\Controllers\Apps\PhimController;
 use App\Http\Controllers\Apps\AuthController;
+use App\Http\Controllers\Apps\DatVeController;
 
 //==============================Frontend=====================================//
 Route::get('/', [PhimController::class, 'Index'])->name('home');
@@ -47,9 +48,7 @@ Route::get('/cau-hoi-thuong-gap', function () {
     return view('frontend.pages.cau-hoi-thuong-gap');
 });
 
-Route::get('/dat-ve', function () {
-    return view('frontend.pages.dat-ve');
-});
+Route::get('/dat-ve/{id}', [DatVeController::class, 'show'])->name('dat-ve.show');
 
 Route::get('/lich-chieu', function () {
     return view('frontend.pages.lich-chieu');
@@ -92,7 +91,8 @@ Route::get('/kiem-hang-doi-tra-hoan-tien', function () {
 });
 Route::get('/chi-tiet-phim/{id}', [PhimController::class, 'chiTiet'])->name('phim.chiTiet');
 
-
+Route::post('/thanh-toan', [DatVeController::class, 'thanhToan'])->name('thanh-toan');
+Route::post('/check-seat', [DatVeController::class, 'checkSeat'])->name('check-seat');
 //===========================================================================//
 //===============================Admin=====================================//
 // Login admin (không cần middleware)
