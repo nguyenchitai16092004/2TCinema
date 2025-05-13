@@ -50,6 +50,21 @@
                 </a>
             </li>
             <li class="relative px-6 py-3">
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    href="{{ route('phim.index') }}">
+                    <i class="fas fa-film w-5 h-5"></i>
+                    <span class="ml-4">Quản lý Phim</span>
+                </a>
+            </li>
+            <li class="relative px-6 py-3">
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    href="{{ route('suat-chieu.index') }}">
+                    <i class="fas fa-calendar-alt w-5 h-5"></i>
+                    <span class="ml-4">Quản lý suất chiếu</span>
+                </a>
+            </li>
+
+            <li class="relative px-6 py-3">
                 <form action="{{ route('logout_admin') }}" method="post">
                     @csrf
                     <button type="submit"

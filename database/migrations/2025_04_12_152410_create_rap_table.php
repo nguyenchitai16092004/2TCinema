@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('ID_Rap');
             $table->string('TenRap', 100);
             $table->string('DiaChi', 255);
-            $table->string('TrangThai', 50);
+            $table->boolean('TrangThai');
             $table->timestamps();
         });
     }

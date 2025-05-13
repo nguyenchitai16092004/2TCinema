@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AutController;
 use App\Http\Controllers\Admin\RapController;
-use App\Http\Controllers\Admin\GheNgoiController;
+use App\Http\Controllers\Admin\AdminPhimController;
 use App\Http\Controllers\Admin\PhongChieuController;
+use App\Http\Controllers\Admin\SuatChieuController;
 
 use App\Http\Controllers\Apps\PhimController;
 use App\Http\Controllers\Apps\AuthController;
@@ -129,5 +130,25 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
         Route::delete('/{id}', [PhongChieuController::class, 'destroy'])->name('destroy');
     });
 
-    // Thêm các route admin khác ở đây...
+    Route::prefix('phim')->name('phim.')->group(function () {
+        Route::get('/', [AdminPhimController::class, 'index'])->name('index');
+        Route::get('/create', [AdminPhimController::class, 'create'])->name('create');
+        Route::post('/store', [AdminPhimController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [AdminPhimController::class, 'show'])->name('show');
+        Route::put('/update/{id}', [AdminPhimController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AdminPhimController::class, 'destroy'])->name('destroy');
+        Route::get('phim/change-status/{id}', [AdminPhimController::class, 'changeStatus'])->name('change-status');
+    });
+
+    Route::prefix('suat-chieu')->name('suat-chieu.')->group(function () {
+        Route::get('/', [SuatChieuController::class, 'index'])->name('index');
+        Route::get('/create', [SuatChieuController::class, 'create'])->name('create');
+        Route::post('/store', [SuatChieuController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [SuatChieuController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [SuatChieuController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [SuatChieuController::class, 'update'])->name('update');
+        Route::delete('/{id}', [SuatChieuController::class, 'destroy'])->name('destroy');
+        Route::get('/filter-date', [SuatChieuController::class, 'filterByDate'])->name('filter.date');
+        Route::get('/filter-phim', [SuatChieuController::class, 'filterByPhim'])->name('filter.phim');
+    });
 });

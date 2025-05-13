@@ -19,14 +19,19 @@ return new class extends Migration
             $table->string('DienVien', 255);
             $table->integer('ThoiLuong');
             $table->date('NgayKhoiChieu');
+            $table->date('NgayKetThuc');
             $table->text('MoTaPhim');
             $table->string('Trailer', 255)->nullable();
             $table->string('HinhAnh', 255)->nullable();
             $table->integer('DoTuoi');
-            $table->string('DoHoa', 50);
+            $table->string('DoHoa', 3);
             $table->string('NgonNgu', 50);
             $table->boolean('TrangThai');
+            $table->unsignedBigInteger('ID_TheLoaiPhim');
+
             $table->timestamps();
+
+            $table->foreign('ID_TheLoaiPhim')->references('ID_TheLoaiPhim')->on('the_loai_phim')->onDelete('cascade');
         });
     }
 
