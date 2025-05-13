@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('NgayXem');
             $table->string('DiaChi', 255);
             $table->decimal('GiaVe', 10, 2);
-            $table->string('TrangThai', 50);
+            $table->boolean('TrangThai');
             $table->unsignedBigInteger('ID_SuatChieu');
             $table->unsignedBigInteger('ID_HoaDon');
             $table->unsignedBigInteger('ID_Ghe')->unique();

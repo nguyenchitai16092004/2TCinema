@@ -31,7 +31,8 @@
                             @csrf
                             <label class="block text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Tên đăng nhập</span>
-                                <input name="TenDN" required class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                <input name="TenDN" required
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     placeholder="nguyenvana" />
                             </label>
                             <label class="block mt-4 text-sm">
@@ -40,7 +41,28 @@
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     placeholder="***************" />
                             </label>
+                            @if (session('error'))
+                                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                                    <p>{{ session('error') }}</p>
+                                </div>
+                            @endif
 
+                            @if (session('success'))
+                                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4"
+                                    role="alert">
+                                    <p>{{ session('success') }}</p>
+                                </div>
+                            @endif
+
+                            @if ($errors->any())
+                                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <button type="submit"
                                 class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                 Đăng nhập </button>

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\TaiKhoan;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
 class AutController extends Controller
@@ -12,34 +12,62 @@ class AutController extends Controller
     // Xử lý đăng nhập
     public function dang_nhap(Request $request)
     {
-        $request->validate([
-            'TenDN' => 'required|string',
-            'MatKhau' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            'TenDN' => 'required',
+            'MatKhau' => 'required',
+        ], [
+            'TenDN.required' => 'Tên đăng nhập không được để trống',
+            'MatKhau.required' => 'Mật khẩu không được để trống',
         ]);
 
-        $user = TaiKhoan::where('TenDN', $request->TenDN)->first();
-
-        if (!$user || !Hash::check($request->MatKhau, $user->MatKhau)) {
-            return back()->withErrors(['login' => 'Sai tên đăng nhập hoặc mật khẩu']);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        session([
-            'VaiTro' => $user->VaiTro,
-            'TenDN' => $user->TenDN,
-        ]);
+        // Hạn chế số lần đăng nhập sai
+        if (session('login_attempts', 0) >= 5) {
+            if (time() - session('last_attempt', 0) < 1800) { // 30 phút
+                return redirect()->back()->with('error', 'Quá nhiều lần đăng nhập sai. Vui lòng thử lại sau 30 phút.');
+            }
+            session(['login_attempts' => 0]);
+        }
 
-        if (session('VaiTro') >= 1) {
-            return view('backend.pages.home')->with('success', 'Đăng nhập thành công!');
+        // Sử dụng tên cột phù hợp với bảng tai_khoan
+        $credentials = [
+            'TenDN' => $request->TenDN,
+            'password' => $request->MatKhau,
+        ];
+
+        if (Auth::attempt($credentials)) {
+            if (Auth::user()->VaiTro == 1) { // 1 = Admin
+                if (!Auth::user()->TrangThai) {
+                    Auth::logout();
+                    return redirect()->back()->with('error', 'Tài khoản đã bị vô hiệu hóa!');
+                }
+
+                // Reset số lần đăng nhập sai
+                session(['login_attempts' => 0]);
+
+                return view('backend.pages.home')->with('success', 'Đăng nhập thành công!');
+            } else {
+                Auth::logout();
+                return redirect()->back()->with('error', 'Bạn không có quyền truy cập vào trang quản trị!');
+            }
         }
-        else{
-            return back()->withErrors(['login' => 'Bạn không đủ thẩm quyền']);
-        }
+
+        // Tăng số lần đăng nhập sai
+        session(['login_attempts' => session('login_attempts', 0) + 1]);
+        session(['last_attempt' => time()]);
+
+        return redirect()->back()->with('error', 'Tên đăng nhập hoặc mật khẩu không chính xác!');
     }
 
     // Đăng xuất
-    public function logout()
+    public function dang_xuat()
     {
-        session()->flush();
-        return redirect()->route('login.form')->with('success', 'Bạn đã đăng xuất!');
+        Auth::logout();
+        return redirect('/admin')->with('success', 'Đăng xuất thành công!');
     }
 }

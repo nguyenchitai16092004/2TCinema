@@ -16,8 +16,17 @@ class Rap extends Model
     protected $fillable = [
         'TenRap', 'DiaChi', 'TrangThai'
     ];
+
+
+    public function phongChieu()
+    {
+        return $this->hasMany(PhongChieu::class, 'ID_Rap', 'ID_Rap');
+    }
+}
+
     public function suatChieu()
     {
         return $this->belongsTo(Rap::class, 'ID_Rap', 'ID_Rap');
     }
 }
+

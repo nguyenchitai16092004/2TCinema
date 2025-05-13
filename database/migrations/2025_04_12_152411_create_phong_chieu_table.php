@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('phong_chieu', function (Blueprint $table) {
             $table->id('ID_PhongChieu');
             $table->string('TenPhongChieu', 100);
-            $table->string('TrangThai', 50);
+            $table->boolean('TrangThai');
             $table->integer('SoLuongGhe');
-            $table->unsignedBigInteger('ID_Rap');
-            
+            $table->json('HangLoiDi')-> nullable();
+            $table->json('CotLoiDi')-> nullable();
             $table->foreign('ID_Rap')->references('ID_Rap')->on('rap');
             $table->timestamps();
         });
