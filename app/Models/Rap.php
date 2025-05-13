@@ -16,4 +16,8 @@ class Rap extends Model
     protected $fillable = [
         'TenRap', 'DiaChi', 'TrangThai'
     ];
+    public function suatChieu()
+    {
+        return $this->belongsTo(Rap::class, 'ID_Rap', 'ID_Rap');
+    }
 }

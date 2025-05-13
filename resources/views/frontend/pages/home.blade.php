@@ -159,7 +159,7 @@
                                                                 href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">{{ $phim->TenPhim }}</a>
                                                         </h3>
                                                         <div class="amy-movie-item-meta">
-                                                            <span class="amy-movie-field-mpaa">2D</span>
+                                                            <span class="amy-movie-field-mpaa">{{ $phim->DoHoa }}</span>
                                                             <span class="amy-movie-field-duration"><i
                                                                     class="fa fa-clock-o"></i>{{ $phim->ThoiLuong }}</span>
                                                         </div>
@@ -198,261 +198,6 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                {{-- <div class="amy-movie-item">
-                                    <div class="amy-movie-item-inner">
-                                        <div class="amy-movie-item-front">
-                                            <div class="slick-arrows"></div>
-                                            <div class="amy-movie-item-poster">
-                                                <a href="film/nha-gia-tien-t18/b046f0d2-c828-408e-9c89-a4cdb8db0daa.html">
-                                                    <img width="258" height="387"
-                                                        src="Areas/Admin/Content/Fileuploads/images/Poster2024/NGT.jpg"
-                                                        class="attachment-258x444 size-258x444" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="amy-movie-item-back">
-                                            <div class="amy-movie-item-back-inner">
-                                                <div class="amy-movie-item-content">
-                                                    <span class="amy-movie-field-imdb">T18</span>
-                                                    <h3 class="amy-movie-field-title"><a
-                                                            href="film/nha-gia-tien-t18/b046f0d2-c828-408e-9c89-a4cdb8db0daa.html">NH&#192;
-                                                            GIA TI&#202;N (T18)</a></h3>
-                                                    <div class="amy-movie-item-meta">
-                                                        <span class="amy-movie-field-mpaa">2D</span>
-                                                        <span class="amy-movie-field-duration"><i
-                                                                class="fa fa-clock-o"></i>1 giờ 57 ph&#250;t</span>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Gia Đ&#236;nh, H&#224;i
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <label class="amy-movie-custom-field-label">Đạo diễn:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Huỳnh Lập
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-release_date">
-                                                        <label class="amy-movie-custom-field-label">Diễn
-                                                            vi&#234;n:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Huỳnh Lập, Phương Mỹ Chi, NSƯT Hạnh Thu&#253;, NSƯT Huỳnh
-                                                            Đ&#244;ng, Puka, Đ&#224;o Anh Tuấn, Trung D&#226;n, Kiều
-                                                            Linh, L&#234; Nam, Ch&#237; T&#226;m, Thanh Thức, Tr&#225;c
-                                                            Thu&#253; Mi&#234;u, Mai Thế Hiệp, NS Mạnh Dung, NSƯT Thanh
-                                                            Dậu, NS Thanh Hiền, Nguyễn Anh T&#250;,…
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-field-desc">
-                                                        <p style="color:#333">Nh&#224; Gia Ti&#234;n xoay quanh
-                                                            c&#226;u chuyện đa g&#243;c nh&#236;n về c&#225;c thế hệ
-                                                            kh&#225;c nhau trong một gia đ&#236;nh, c&#243; hai
-                                                            nh&#226;n vật ch&#237;nh l&#224; Gia Minh (Huỳnh Lập)
-                                                            v&#224; Mỹ Ti&#234;n (Phương Mỹ Chi). Trở về căn nh&#224;
-                                                            ...</p>
-                                                    </div>
-                                                </div>
-                                                <div class="amy-movie-item-button">
-                                                    <a href="film/nha-gia-tien-t18/b046f0d2-c828-408e-9c89-a4cdb8db0daa.html"
-                                                        class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                        <i class="fa fa-ticket"></i>Đặt v&#233;
-                                                    </a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="amy-movie-item">
-                                    <div class="amy-movie-item-inner">
-                                        <div class="amy-movie-item-front">
-                                            <div class="slick-arrows"></div>
-                                            <div class="amy-movie-item-poster">
-                                                <a
-                                                    href="film/nu-tu-bong-toi-t16/b3cab74d-6def-49c9-ae08-3ade07b0ef19.html">
-                                                    <img width="258" height="387"
-                                                        src="Areas/Admin/Content/Fileuploads/images/Poster2024/dark%20nun.jpg"
-                                                        class="attachment-258x444 size-258x444" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="amy-movie-item-back">
-                                            <div class="amy-movie-item-back-inner">
-                                                <div class="amy-movie-item-content">
-                                                    <span class="amy-movie-field-imdb">T16</span>
-                                                    <h3 class="amy-movie-field-title"><a
-                                                            href="film/nu-tu-bong-toi-t16/b3cab74d-6def-49c9-ae08-3ade07b0ef19.html">NỮ
-                                                            TU B&#211;NG TỐI (T16)</a></h3>
-                                                    <div class="amy-movie-item-meta">
-                                                        <span class="amy-movie-field-mpaa">2D</span>
-                                                        <span class="amy-movie-field-duration"><i
-                                                                class="fa fa-clock-o"></i>1 giờ 54 ph&#250;t</span>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Kinh dị
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <label class="amy-movie-custom-field-label">Đạo diễn:</label>
-                                                        <div class="amy-movie-custom-field-content">
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-release_date">
-                                                        <label class="amy-movie-custom-field-label">Diễn
-                                                            vi&#234;n:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Song Hye-kyo; Jeon Yeo-been; Lee Jin-wook
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-field-desc">
-                                                        <p style="color:#333">Hai nữ tu Junia (Song Hye-kyo) v&#224;
-                                                            Michaela (Jeon Yeo-been) d&#249;ng mọi nỗ lực thực hiện nghi
-                                                            lễ trừ t&#224; để cứu rỗi cậu b&#233; Hee Joon đang bị linh
-                                                            hồn t&#224; &#225;c chiếm giữ. Một cuộc chiến kh&#244;n...
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="amy-movie-item-button">
-                                                    <a href="film/nu-tu-bong-toi-t16/b3cab74d-6def-49c9-ae08-3ade07b0ef19.html"
-                                                        class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                        <i class="fa fa-ticket"></i>Đặt v&#233;
-                                                    </a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="amy-movie-item">
-                                    <div class="amy-movie-item-inner">
-                                        <div class="amy-movie-item-front">
-                                            <div class="slick-arrows"></div>
-                                            <div class="amy-movie-item-poster">
-                                                <a
-                                                    href="film/rider-giao-hang-cho-ma-lt-t16/731bb75c-a9eb-488d-95e9-7a5315f4970a.html">
-                                                    <img width="258" height="387"
-                                                        src="Areas/Admin/Content/Fileuploads/images/Poster2024/giao-hang-cho-ma.jpg"
-                                                        class="attachment-258x444 size-258x444" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="amy-movie-item-back">
-                                            <div class="amy-movie-item-back-inner">
-                                                <div class="amy-movie-item-content">
-                                                    <span class="amy-movie-field-imdb">T16</span>
-                                                    <h3 class="amy-movie-field-title"><a
-                                                            href="film/rider-giao-hang-cho-ma-lt-t16/731bb75c-a9eb-488d-95e9-7a5315f4970a.html">RIDER
-                                                            GIAO H&#192;NG CHO MA (LT) - (T16)</a></h3>
-                                                    <div class="amy-movie-item-meta">
-                                                        <span class="amy-movie-field-mpaa">2D</span>
-                                                        <span class="amy-movie-field-duration"><i
-                                                                class="fa fa-clock-o"></i>1 giờ 44 ph&#250;t</span>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <div class="amy-movie-custom-field-content">
-                                                            H&#224;i, Kinh Dị
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <label class="amy-movie-custom-field-label">Đạo diễn:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Nitivat Cholvanichsiri
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-release_date">
-                                                        <label class="amy-movie-custom-field-label">Diễn
-                                                            vi&#234;n:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            MARIO MAURER, FREEN SAROCHA CHANKIMHA, MARUT CHUENSOMBOON,
-                                                            PUWANET SEECHOMPU
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-field-desc">
-                                                        <p style="color:#333">Nat, một người giao h&#224;ng trẻ,
-                                                            t&#236;nh cờ quen một c&#244; g&#225;i xinh đẹp t&#234;n
-                                                            Pie, nhưng khi Pie biến mất một c&#225;ch b&#237; ẩn, Nat
-                                                            v&#224; hai người bạn giao h&#224;ng kh&#225;c đ&#227; đi
-                                                            t&#236;m c&#244; ấy.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="amy-movie-item-button">
-                                                    <a href="film/rider-giao-hang-cho-ma-lt-t16/731bb75c-a9eb-488d-95e9-7a5315f4970a.html"
-                                                        class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                        <i class="fa fa-ticket"></i>Đặt v&#233;
-                                                    </a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="amy-movie-item">
-                                    <div class="amy-movie-item-inner">
-                                        <div class="amy-movie-item-front">
-                                            <div class="slick-arrows"></div>
-                                            <div class="amy-movie-item-poster">
-                                                <a
-                                                    href="film/phi-vu-nghin-can-lt-p/ceac535a-eb7c-440e-bbae-68f86824f09f.html">
-                                                    <img width="258" height="387"
-                                                        src="Areas/Admin/Content/Fileuploads/images/Poster2024/phi-vu-nghin-can.jpg"
-                                                        class="attachment-258x444 size-258x444" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="amy-movie-item-back">
-                                            <div class="amy-movie-item-back-inner">
-                                                <div class="amy-movie-item-content">
-                                                    <span class="amy-movie-field-imdb">P</span>
-                                                    <h3 class="amy-movie-field-title"><a
-                                                            href="film/phi-vu-nghin-can-lt-p/ceac535a-eb7c-440e-bbae-68f86824f09f.html">PHI
-                                                            VỤ NGH&#204;N C&#194;N (LT) - (P)</a></h3>
-                                                    <div class="amy-movie-item-meta">
-                                                        <span class="amy-movie-field-mpaa">2D</span>
-                                                        <span class="amy-movie-field-duration"><i
-                                                                class="fa fa-clock-o"></i>1 giờ 25 ph&#250;t</span>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Hoạt h&#236;nh
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-language">
-                                                        <label class="amy-movie-custom-field-label">Đạo diễn:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Cinzia Angelini, David Feiss
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-custom-field-group amy-movie-field-release_date">
-                                                        <label class="amy-movie-custom-field-label">Diễn
-                                                            vi&#234;n:</label>
-                                                        <div class="amy-movie-custom-field-content">
-                                                            Jason Sudeikis, Lilly Singh, Rainn Wilson
-                                                        </div>
-                                                    </div>
-                                                    <div class="amy-movie-field-desc">
-                                                        <p style="color:#333">C&#226;u chuyện xoay quanh ch&#250; heo
-                                                            Qu&#253; Hợi chuy&#234;n nghề t&#236;m kiếm th&#250; đi lạc
-                                                            trả về cho chủ. Mọi chuyện vẫn diễn ra &#234;m đềm cho đến
-                                                            ng&#224;y Qu&#253; Hợi nhận lời &#244;ng chủ g&#225;nh xiếc
-                                                            đi t&#236;m b&#233; voi Dư...</p>
-                                                    </div>
-                                                </div>
-                                                <div class="amy-movie-item-button">
-                                                    <a href="film/phi-vu-nghin-can-lt-p/ceac535a-eb7c-440e-bbae-68f86824f09f.html"
-                                                        class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                        <i class="fa fa-ticket"></i>Đặt v&#233;
-                                                    </a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
-
                             </div>
 
                         </div>
@@ -500,202 +245,6 @@
                                 </div>
                             </div>
                         @endforeach
-                        {{-- <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a
-                                        href="film/emma-va-vuong-quoc-ti-hon-p-long-tieng/543c21ef-d9ee-4334-85ec-9dc57ee19b88.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/emma.jpg"
-                                            alt="emma-va-vuong-quoc-ti-hon-p-long-tieng" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=kraUpgr_IE4"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a
-                                        href="film/emma-va-vuong-quoc-ti-hon-p-long-tieng/543c21ef-d9ee-4334-85ec-9dc57ee19b88.html">EMMA
-                                        V&#192; VƯƠNG QUỐC T&#205; HON (P) (Lồng tiếng)</a></h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a
-                                        href="film/sat-thu-vo-cung-cuc-hai-pd-t16/126573c3-7e88-4385-8b9e-5ca87d51e8fa.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/hitman2.jpg"
-                                            alt="sat-thu-vo-cung-cuc-hai-pd-t16" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=II4FHZN83ck"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a
-                                        href="film/sat-thu-vo-cung-cuc-hai-pd-t16/126573c3-7e88-4385-8b9e-5ca87d51e8fa.html">S&#193;T
-                                        THỦ V&#212; C&#217;NG CỰC H&#192;I (PĐ) - (T16)</a></h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a href="film/mickey-17/6e3d8f4f-57d1-4871-8e4c-eff9edd0a6cb.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/mickey-17.jpg"
-                                            alt="mickey-17" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=VFjVjNhEq2A"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a href="film/mickey-17/6e3d8f4f-57d1-4871-8e4c-eff9edd0a6cb.html">MICKEY 17</a>
-                                </h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a
-                                        href="film/sat-thu-vo-cung-cuc-hai-lt-t16/45779aa2-fc0a-49bf-8030-4db587f600b9.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/sat-thu-vo-cung-cuc-hai.jpg"
-                                            alt="sat-thu-vo-cung-cuc-hai-lt-t16" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=II4FHZN83ck"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a
-                                        href="film/sat-thu-vo-cung-cuc-hai-lt-t16/45779aa2-fc0a-49bf-8030-4db587f600b9.html">S&#193;T
-                                        THỦ V&#212; C&#217;NG CỰC H&#192;I (LT) - (T16)</a></h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a href="film/anh-khong-dau/43fdadd5-9d3f-4c0e-b5e7-0bc66e6a52f7.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/anh-ko-dau.jpg"
-                                            alt="anh-khong-dau" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=FNBbFHgPzyY"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a href="film/anh-khong-dau/43fdadd5-9d3f-4c0e-b5e7-0bc66e6a52f7.html">ANH
-                                        KH&#212;NG ĐAU</a></h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a href="film/nang-bach-tuyet/c86a1d81-e930-4385-a591-5bad8d87463e.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/snow-white.jpg"
-                                            alt="nang-bach-tuyet" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=_lSVVn1Os0o"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a href="film/nang-bach-tuyet/c86a1d81-e930-4385-a591-5bad8d87463e.html">N&#192;NG
-                                        BẠCH TUYẾT</a></h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a href="film/nghi-le-truc-quy-t18/242e4a97-afbe-4857-ae34-cfc2b479173e.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/nghi-le-truc-quy.jpg"
-                                            alt="nghi-le-truc-quy-t18" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=2ccFBW62x9o"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a href="film/nghi-le-truc-quy-t18/242e4a97-afbe-4857-ae34-cfc2b479173e.html">NGHI
-                                        LỄ TRỤC QUỶ (T18)</a></h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a href="film/nghe-sieu-kho-noi/9c2bd502-9e30-4216-9094-760fc1d8c299.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/nghe-siu-kho-noi.jpg"
-                                            alt="nghe-sieu-kho-noi" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=rfopcf05HCE"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a href="film/nghe-sieu-kho-noi/9c2bd502-9e30-4216-9094-760fc1d8c299.html">NGHỀ
-                                        SI&#202;U KH&#211; N&#211;I</a></h4>
-                            </div>
-                        </div>
-                        <div class="single-top-movie">
-                            <div class="top-movie-wrap">
-                                <div class="top-movie-img">
-                                    <a href="film/am-duong-lo/ea9016ea-555b-4911-9bd3-006792eb39ff.html">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/am-duong-lo.jpg"
-                                            alt="am-duong-lo" />
-                                    </a>
-                                </div>
-                                <div class="thumb-hover">
-                                    <a class="play-video"
-                                        href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=e3B4opKG3Ts"><i
-                                            class="fa fa-play"></i></a>
-                                    <div class="thumb-date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-movie-details">
-                                <h4><a href="film/am-duong-lo/ea9016ea-555b-4911-9bd3-006792eb39ff.html">&#194;M DƯƠNG
-                                        LỘ</a></h4>
-                            </div>
-                        </div> --}}
-
                     </div>
                 </div>
             </div>
@@ -706,8 +255,7 @@
     <!-- Top Movies Area Start -->
 
 
-    <section class="filmoja-top-movies-area section_30"
-       >
+    <section class="filmoja-top-movies-area section_30">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -762,12 +310,12 @@
     </section>
     <!-- Top Movies Area End -->
     <!-- Top Movies Area Start -->
-    <section class="filmoja-top-movies-area section_30" >
+    <section class="filmoja-top-movies-area section_30">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="filmoja-heading">
-                        <h2>Phim hot :<span> Tháng 3</span></h2>
+                        <h2>Phim hot :<span> Tháng {{ \Carbon\Carbon::now()->month }}</span></h2>
                     </div>
                 </div>
             </div>
@@ -777,250 +325,43 @@
                         <div id="Mon" aria-labelledby="ui-id-1"
                             class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-hidden="false"
                             style="display: block;">
-                            <div class="row movie-tabs">
-                                <div class="col-md-2 col-sm-12">
-                                    <a href="film/lac-troi-p/83a20d0c-769a-4280-bc94-0233291c94b6.html"
-                                        title="The end of days">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/flow.jpg"
-                                            alt="The end of days">
-                                    </a>
-                                </div>
-                                <div class="col-md-10 col-sm-12">
-
-                                    <header>
-                                        <h3 class="no-underline">LẠC TR&#212;I (P)</h3>
-                                    </header>
-                                    <span class="title">
-                                        Hoạt h&#236;nh
-                                    </span>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <p class="time">2D</p>&nbsp;<p class="time red">P</p>
-                                    </div>
-                                    <p class="desc">
-                                        <b>Đạo diễn: </b>Gints Zilbalodis
-                                    </p>
-                                    <p class="desc">
-                                        <b>Diễn vi&#234;n: </b>
-                                    </p>
-                                    <p>
-                                        <b>Mô tả: </b> Trước bối cảnh hậu tận thế, ch&#250; m&#232;o x&#225;m nh&#250;t
-                                        nh&#225;t, vốn lu&#244;n sợ nước phải rời bỏ v&#249;ng an to&#224;n khi căn
-                                        nh&#224; th&#226;n y&#234;u bị cuốn tr&#244;i bởi cơn lũ dữ. Tr&#234;n h&#224;nh
-                                        tr&#236;nh vượt đại dương m&#234;nh m&#244;ng, ch&#250; m&#232;o c&#249;ng những
-                                        người bạn đồng h&#224;nh (Capybara, ch&#243; Labrador Ret...
-                                    </p>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <a href="film/lac-troi-p/83a20d0c-769a-4280-bc94-0233291c94b6.html">
-                                            <p class="time red">&nbsp;<i class="fa fa-ticket"></i> &nbsp;Đặt
-                                                v&#233;&nbsp;&nbsp;</p>
+                            @foreach ($dsPhimTheoThang as $phim)
+                                <div class="row movie-tabs">
+                                    <div class="col-md-2 col-sm-12">
+                                        <a href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">
+                                            <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}"
+                                                class="movie-poster">
                                         </a>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row movie-tabs">
-                                <div class="col-md-2 col-sm-12">
-                                    <a href="film/cuoc-dao-tau-tren-khong-t16/c5ebbe96-dcfb-4955-86d1-a564c24b436f.html"
-                                        title="The end of days">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/cuoc-dao-tau-tren-ko.jpg"
-                                            alt="The end of days">
-                                    </a>
-                                </div>
-                                <div class="col-md-10 col-sm-12">
+                                    <div class="col-md-10 col-sm-12">
 
-                                    <header>
-                                        <h3 class="no-underline">CUỘC Đ&#192;O TẨU TR&#202;N KH&#212;NG (T16)</h3>
-                                    </header>
-                                    <span class="title">
-                                        H&#224;nh Động
-                                    </span>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <p class="time">2D</p>&nbsp;<p class="time red">T16</p>
-                                    </div>
-                                    <p class="desc">
-                                        <b>Đạo diễn: </b>Mel Gibson
-                                    </p>
-                                    <p class="desc">
-                                        <b>Diễn vi&#234;n: </b>Mark Wahlberg, Michelle Dockery, Topher Grace, ...
-                                    </p>
-                                    <p>
-                                        <b>Mô tả: </b> Một phi c&#244;ng chịu tr&#225;ch nhiệm đưa Thống chế Kh&#244;ng
-                                        qu&#226;n đến &#225;p giải một kẻ chạy trốn về hầu t&#242;a. Khi cả ba bay qua
-                                        địa phận Alaska, căng thẳng leo thang, niềm tin bị thử th&#225;ch, bởi
-                                        kh&#244;ng phải ai tr&#234;n m&#225;y bay cũng như họ nghĩ.
-                                    </p>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <a
-                                            href="film/cuoc-dao-tau-tren-khong-t16/c5ebbe96-dcfb-4955-86d1-a564c24b436f.html">
-                                            <p class="time red">&nbsp;<i class="fa fa-ticket"></i> &nbsp;Đặt
-                                                v&#233;&nbsp;&nbsp;</p>
-                                        </a>
+                                        <header>
+                                            <h3 class="no-underline">{{ $phim->TenPhim }} T{{ $phim->DoTuoi }}</h3>
+                                        </header>
+                                        <span class="title">
+                                            {{ $phim->TheLoai }}
+                                        </span>
+                                        <div class="col-lg-12" style="padding-left:0 !important">
+                                            <p class="time">{{ $phim->DoHoa }}</p>&nbsp;<p class="time red">
+                                                T{{ $phim->DoTuoi }}</p>
+                                        </div>
+                                        <p class="desc">
+                                            <b>Đạo diễn: </b>{{ $phim->DaoDien }}
+                                        </p>
+                                        <p class="desc">
+                                            <b>Diễn viên: </b>{{ $phim->DienVien }}
+                                        </p>
+                                        <p>
+                                            <b>Mô tả: </b> {{ $phim->MoTaPhim }}
+                                        </p>
+                                        <div class="col-lg-12" style="padding-left:0 !important">
+                                            <a href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">
+                                                <p class="time red">&nbsp;<i class="fa fa-ticket"></i> &nbsp;Đặt vé</p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row movie-tabs">
-                                <div class="col-md-2 col-sm-12">
-                                    <a href="film/cuoi-ma-hien-me-cho-quy-t18/b6a87f4d-c1d4-494d-adfa-f0373598b34d.html"
-                                        title="The end of days">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/cuoi-ma.jpg"
-                                            alt="The end of days">
-                                    </a>
-                                </div>
-                                <div class="col-md-10 col-sm-12">
-
-                                    <header>
-                                        <h3 class="no-underline">CƯỚI MA: HIẾN MẸ CHO QUỶ (T18)</h3>
-                                    </header>
-                                    <span class="title">
-                                        Kinh dị
-                                    </span>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <p class="time">2D</p>&nbsp;<p class="time red">T18</p>
-                                    </div>
-                                    <p class="desc">
-                                        <b>Đạo diễn: </b>Azhar Kinoi Lubis
-                                    </p>
-                                    <p class="desc">
-                                        <b>Diễn vi&#234;n: </b>Taskya Namya, Wafda Saifan Lubis, Arla Ailani
-                                    </p>
-                                    <p>
-                                        <b>Mô tả: </b> Mỗi ng&#224;y trong cuộc sống Ranti đều xoay quanh bởi sự cay
-                                        nghiệt của mẹ chồng c&#249;ng những lời vu c&#225;o của em d&#226;u khiến
-                                        c&#244; v&#244; c&#249;ng thống khổ. Mọi việc trở n&#234;n b&#249;ng nổ khi họ
-                                        lần lượt phớt lờ việc cứu lấy c&#244; con g&#225;i gặp tai nạn, th&#250;c đẩy
-                                        Ranti phải “ tiến...
-                                    </p>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <a
-                                            href="film/cuoi-ma-hien-me-cho-quy-t18/b6a87f4d-c1d4-494d-adfa-f0373598b34d.html">
-                                            <p class="time red">&nbsp;<i class="fa fa-ticket"></i> &nbsp;Đặt
-                                                v&#233;&nbsp;&nbsp;</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row movie-tabs">
-                                <div class="col-md-2 col-sm-12">
-                                    <a href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html"
-                                        title="The end of days">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/ng-soi(1).jpg"
-                                            alt="The end of days">
-                                    </a>
-                                </div>
-                                <div class="col-md-10 col-sm-12">
-
-                                    <header>
-                                        <h3 class="no-underline">NGƯỜI S&#211;I (T18)</h3>
-                                    </header>
-                                    <span class="title">
-                                        Kinh dị
-                                    </span>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <p class="time">2D</p>&nbsp;<p class="time red">T18</p>
-                                    </div>
-                                    <p class="desc">
-                                        <b>Đạo diễn: </b>Leigh Whannell
-                                    </p>
-                                    <p class="desc">
-                                        <b>Diễn vi&#234;n: </b>Julia Garner, Christopher Abbott, Sam Jaeger
-                                    </p>
-                                    <p>
-                                        <b>Mô tả: </b> Một gia đ&#236;nh chuyển đến sinh sống tại một ng&#244;i nh&#224;
-                                        của người cha bị mất t&#237;ch b&#237; ẩn. V&#224;o đ&#234;m trăng tr&#242;n, họ
-                                        bị tấn c&#244;ng bởi một người s&#243;i, khiến người chồng bị c&#224;o v&#224;o
-                                        tay. Khi cố thủ trong nh&#224;, anh bắt đầu biến đổi th&#224;nh một sinh vật
-                                        đ&#225;ng sợ, đe dọa ...
-                                    </p>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <a href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html">
-                                            <p class="time red">&nbsp;<i class="fa fa-ticket"></i> &nbsp;Đặt
-                                                v&#233;&nbsp;&nbsp;</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row movie-tabs">
-                                <div class="col-md-2 col-sm-12">
-                                    <a href="film/nha-gia-tien-t18/b046f0d2-c828-408e-9c89-a4cdb8db0daa.html"
-                                        title="The end of days">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/NGT.jpg"
-                                            alt="The end of days">
-                                    </a>
-                                </div>
-                                <div class="col-md-10 col-sm-12">
-
-                                    <header>
-                                        <h3 class="no-underline">NH&#192; GIA TI&#202;N (T18)</h3>
-                                    </header>
-                                    <span class="title">
-                                        Gia Đ&#236;nh, H&#224;i
-                                    </span>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <p class="time">2D</p>&nbsp;<p class="time red">T18</p>
-                                    </div>
-                                    <p class="desc">
-                                        <b>Đạo diễn: </b>Huỳnh Lập
-                                    </p>
-                                    <p class="desc">
-                                        <b>Diễn vi&#234;n: </b>Huỳnh Lập, Phương Mỹ Chi, NSƯT Hạnh Thu&#253;, NSƯT Huỳnh
-                                        Đ&#244;ng, Puka, Đ&#224;o Anh Tuấn, Trung D&#226;n, Kiều Linh, L&#234; Nam,
-                                        Ch&#237; T&#226;m, Thanh Thức, Tr&#225;c Thu&#253; Mi&#234;u, Mai Thế Hiệp, NS
-                                        Mạnh Dung, NSƯT Thanh Dậu, NS Thanh Hiền, Nguyễn Anh T&#250;,…
-                                    </p>
-                                    <p>
-                                        <b>Mô tả: </b> Nh&#224; Gia Ti&#234;n xoay quanh c&#226;u chuyện đa g&#243;c
-                                        nh&#236;n về c&#225;c thế hệ kh&#225;c nhau trong một gia đ&#236;nh, c&#243; hai
-                                        nh&#226;n vật ch&#237;nh l&#224; Gia Minh (Huỳnh Lập) v&#224; Mỹ Ti&#234;n
-                                        (Phương Mỹ Chi). Trở về căn nh&#224; gia ti&#234;n để quay c&#225;c video “triệu
-                                        view” tr&#234;n mạng x&#227; hội, Mỹ Ti&#234;n - mộ...
-                                    </p>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <a href="film/nha-gia-tien-t18/b046f0d2-c828-408e-9c89-a4cdb8db0daa.html">
-                                            <p class="time red">&nbsp;<i class="fa fa-ticket"></i> &nbsp;Đặt
-                                                v&#233;&nbsp;&nbsp;</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row movie-tabs">
-                                <div class="col-md-2 col-sm-12">
-                                    <a href="film/nu-tu-bong-toi-t16/b3cab74d-6def-49c9-ae08-3ade07b0ef19.html"
-                                        title="The end of days">
-                                        <img src="Areas/Admin/Content/Fileuploads/images/Poster2024/dark%20nun.jpg"
-                                            alt="The end of days">
-                                    </a>
-                                </div>
-                                <div class="col-md-10 col-sm-12">
-
-                                    <header>
-                                        <h3 class="no-underline">NỮ TU B&#211;NG TỐI (T16)</h3>
-                                    </header>
-                                    <span class="title">
-                                        Kinh dị
-                                    </span>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <p class="time">2D</p>&nbsp;<p class="time red">T16</p>
-                                    </div>
-                                    <p class="desc">
-                                        <b>Đạo diễn: </b>
-                                    </p>
-                                    <p class="desc">
-                                        <b>Diễn vi&#234;n: </b>Song Hye-kyo; Jeon Yeo-been; Lee Jin-wook
-                                    </p>
-                                    <p>
-                                        <b>Mô tả: </b> Hai nữ tu Junia (Song Hye-kyo) v&#224; Michaela (Jeon Yeo-been)
-                                        d&#249;ng mọi nỗ lực thực hiện nghi lễ trừ t&#224; để cứu rỗi cậu b&#233; Hee
-                                        Joon đang bị linh hồn t&#224; &#225;c chiếm giữ. Một cuộc chiến kh&#244;ng hồi
-                                        kết giữa đức tin v&#224; quỷ dữ, giữa b&#237; ẩn t&#226;m linh v&#224; niềm tin
-                                        y họ...
-                                    </p>
-                                    <div class="col-lg-12" style="padding-left:0 !important">
-                                        <a href="film/nu-tu-bong-toi-t16/b3cab74d-6def-49c9-ae08-3ade07b0ef19.html">
-                                            <p class="time red">&nbsp;<i class="fa fa-ticket"></i> &nbsp;Đặt
-                                                v&#233;&nbsp;&nbsp;</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
