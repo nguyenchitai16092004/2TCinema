@@ -12,7 +12,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active">
                             <h3 class="register-heading">Đăng nhập</h3>
-                            <form action="/dang-nhap-tai-khoan" method="POST">
+                            <form id="loginForm" action="{{ route('login') }}" method="POST">
                                 @csrf
                                 <div class="row register-form">
                                     <div class="col-md-9">
@@ -30,9 +30,9 @@
                                         <div class="form-group">
                                             <ul style="display: flex; gap: 10px; padding-left: 0; list-style: none;">
                                                 <li><a href="{{ asset('/dang-ky') }}">Đăng ký</a></li>
- 
 
-                                                <li><a href="#">/ Quên mật khẩu?</a></li>
+
+                                                <li><a href="{{ asset('/quen-mat-khau') }}">/ Quên mật khẩu?</a></li>
                                             </ul>
                                         </div>
 
@@ -46,4 +46,37 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#loginForm').on('submit', function(e) {
+    e.preventDefault();
+    $('.main-reloader').show().text('Đang kiểm tra...');
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(res) {
+            if (res.success) {
+                window.location.href = '/';
+            }
+        },
+        error: function(xhr) {
+            let msg = 'Sai tên đăng nhập hoặc mật khẩu';
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+                msg = xhr.responseJSON.error;
+            }
+            $('.main-reloader').hide();
+            $.sweetModal({
+                content: msg,
+                title: 'Thông báo',
+                icon: $.sweetModal.ICON_WARNING,
+                theme: $.sweetModal.THEME_DARK,
+                buttons: {
+                    'OK': { classes: 'redB' }
+                }
+            });
+        }
+    });
+});
+    </script>
 @endsection

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SuatChieuController;
 use App\Http\Controllers\Apps\PhimController;
 use App\Http\Controllers\Apps\AuthController;
 use App\Http\Controllers\Apps\DatVeController;
+use App\Http\Controllers\Apps\ThanhToanController;
 
 //==============================Frontend=====================================//
 Route::get('/', [PhimController::class, 'Index'])->name('home');
@@ -19,9 +20,9 @@ Route::get('/info', function () {
     return view('frontend.pages.thong-tin-tai-khoan.info');
 });
 
-Route::get('/doi-mat-khau', function () {
-    return view('frontend.pages.thong-tin-tai-khoan.doi-mat-khau');
-});
+//Route::get('/doi-mat-khau', function () {
+//   return view('frontend.pages.thong-tin-tai-khoan.doi-mat-khau');
+//});
 
 Route::get('/cap-nhat-thong-tin', function () {
     return view('frontend.pages.thong-tin-tai-khoan.cap-nhat-thong-tin');
@@ -37,8 +38,12 @@ Route::post('/dang-ky', [AuthController::class, 'dang_ky']);
 // Đăng nhập
 Route::get('/dang-nhap', [AuthController::class, 'DangNhap'])->name('login.form');
 Route::post('/dang-nhap-tai-khoan', [AuthController::class, 'dang_nhap'])->name('login');
-
-Route::post('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
+Route::get('/doi-mat-khau', function () {
+    return view('frontend.pages.thong-tin-tai-khoan.doi-mat-khau');
+})->name('doi-mat-khau');
+Route::post('/doi-mat-khau', [AuthController::class, 'doi_mat_khau'])->name('doi-mat-khau');
+Route::post('/quen-mat-khau', [AuthController::class, 'quen_mat_khau']);
+Route::post('/dang-xuat', [AuthController::class, 'dang_xuat'])->name('logout');
 
 Route::get('/404', function () {
     return view('frontend.pages.404');
@@ -47,7 +52,8 @@ Route::get('/404', function () {
 Route::get('/cau-hoi-thuong-gap', function () {
     return view('frontend.pages.cau-hoi-thuong-gap');
 });
-
+Route::get('/cap-nhat-thong-tin', [AuthController::class, 'showUpdateInfo'])->name('user.updateInfo');
+Route::post('/cap-nhat-thong-tin', [AuthController::class, 'updateInfo'])->name('user.updateInfo.post');
 Route::get('/dat-ve/{id}', [DatVeController::class, 'show'])->name('dat-ve.show');
 
 Route::get('/lich-chieu', function () {
@@ -93,6 +99,12 @@ Route::get('/chi-tiet-phim/{id}', [PhimController::class, 'chiTiet'])->name('phi
 
 Route::post('/thanh-toan', [DatVeController::class, 'thanhToan'])->name('thanh-toan');
 Route::post('/check-seat', [DatVeController::class, 'checkSeat'])->name('check-seat');
+Route::post('/thanh-toan/momo', [ThanhToanController::class, 'thanhToanMomo'])->name('thanh-toan.momo');
+Route::get('/thanh-toan/momo/callback', [ThanhToanController::class, 'momoCallback'])->name('thanh-toan.momo.callback');
+Route::get('/dat-ve/thanh-toan', [DatVeController::class, 'showThanhToan'])->name('dat-ve.thanh-toan');
+Route::post('/thanh-toan/zalopay', [ThanhToanController::class, 'thanhToanZaloPay'])->name('thanh-toan.zalopay');
+Route::get('/thanh-toan/zalopay/callback', [ThanhToanController::class, 'zalopayCallback'])->name('thanh-toan.zalopay.callback');
+
 //===========================================================================//
 //===============================Admin=====================================//
 // Login admin (không cần middleware)

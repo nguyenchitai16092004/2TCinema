@@ -7,28 +7,20 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="auth-box-right">
-                        <h3>Th&#244;ng tin c&#225; nh&#226;n</h3>
+                        <h3>Thông tin cá nhân</h3>
                         <div class="login-box">
 
-                            <p>Nguyễn Ch&#237; T&#224;i</p>
-                            <p>Điện thoại: 0394378614</p>
-                            <p>Địa chỉ: Quận 7, Hồ Ch&#237; Minh</p>
-                            <p>Email: nguyenchitai16092004@gmail.com</p>
-                            <img src="#" style="display:block;width:200px;height:auto;margin: 0 auto;" />
-                            <div>
-                                <div style="float:left;width:49%">
-                                    <p style="font-weight:bold;color:#f37737">Điểm t&#237;ch lũy</p>
-                                    <p>0</p>
-                                </div>
-                                <div style="float:left;width:49%">
-                                    <p style="font-weight:bold;color:#f37737">Điểm thưởng</p>
-                                    <p>0</p>
-                                </div>
-                            </div>
-                            <a href="/doi-mat-khau.html">Đổi mật khẩu</a>
-                            <a href="/cap-nhat-tai-khoan.html">Cập nhật th&#244;ng tin</a>
+                            <img src="{{ asset('frontend/Content/img/user.avif') }}"
+                                style="display:block;width:200px;height:auto;margin: 0 auto;" />
+                            <p>{{ session('user_fullname') }}</p>
+                            <p>Điện thoại: {{ session('user_phone') }}</p>
+                            <p>Email: {{ session('user_email') }}</p>
+                            <p>Ngày sinh: {{ \Carbon\Carbon::parse(session('user_date'))->format('d-m-Y') }}</p>
+                            <p>Giới tính: {{ session('user_sex') == 1 ? 'Nam' : 'Nữ' }}</p>
+                            <a href="{{ asset('/doi-mat-khau') }}">Đổi mật khẩu</a>
+                            <a href="{{ asset('/cap-nhat-thong-tin') }}">Cập nhật thông tin</a>
 
-                            <a href="/online-booking-check.html">Lịch sử giao dịch online</a>
+                            <a href="{{ asset('/lich-su-giao-dich') }}">Lịch sử giao dịch online</a>
                         </div>
                     </div>
                 </div>

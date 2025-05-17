@@ -6,7 +6,7 @@
         <div class="container register" style="max-width: 100% !important;">
             <div class="row">
                 <div class="col-md-3 register-left">
-                    <img src="Content/img/logo_cinetick.png" alt="" />
+                    <img src="Content/img/logoCinetick.png" alt="" />
                     <p>Đổi mật khẩu tài khoản của bạn!</p>
                 </div>
                 <div class="col-md-9 register-right">
@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <ul style="display:flex">
                                             <li>
-                                                <a href="/quen-mat-khau.html">Qu&#234;n mật khẩu?</a>
+                                                <a href="/quen-mat-khau.html">Quên mật khẩu?</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -54,6 +54,12 @@
         </div>
     </div>
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         function MemberChangePasswordModel(oldPass, newPassWord, reNewPassWord) {
             var t = this;
             t.OldPass = oldPass,
@@ -117,12 +123,16 @@
                 return false;
             }
 
-            var data = JSON.stringify(new MemberChangePasswordModel(oldPass, newPassWord, reNewPassWord));
+            var data = {
+                OldPass: oldPass,
+                NewPass: newPassWord,
+                ReNewPass: reNewPassWord,
+                _token: $('meta[name="csrf-token"]').attr('content') // Thêm dòng này
+            };
             $.ajax({
-                url: "/MemberRegister/ChangePassword",
+                url: "/doi-mat-khau",
                 type: "POST",
-                data: data,
-                traditional: true,
+                data: JSON.stringify(data),
                 datatype: "json",
                 contentType: 'application/json; charset=utf-8',
                 success: function(result) {
@@ -133,7 +143,7 @@
                         $("#lgRePasswordNew").val("");
                         $(".main-reloader").css("display", "none");
                         $.sweetModal({
-                            content: 'Đổi mật khẩu thành công. Bạn có thể đăng nhập <a href="/dang-nhap.html">tại đây</a>',
+                            content: 'Đổi mật khẩu thành công. Bạn có thể đăng nhập <a href="{{ asset('/') }}">tại đây</a>',
                             title: 'Thông báo',
                             icon: $.sweetModal.ICON_WARNING,
                             theme: $.sweetModal.THEME_DARK,
@@ -144,7 +154,7 @@
                             }
                         }, function(confirm) {
                             if (confirm) {
-                                location.href = "/";
+                                location.href = "{{ asset('/') }}";
                             }
                         });
                         //location.href = "/";
@@ -153,7 +163,7 @@
                             case "1":
                                 $(".main-reloader").css("display", "none");
                                 $.sweetModal({
-                                    content: 'Phiên đăng nhập của bạn đã hết hạn vui lòng đăng nhập lại. <a href="/dang-nhap.html">tại đây</a>',
+                                    content: 'Phiên đăng nhập của bạn đã hết hạn vui lòng đăng nhập lại. <a href="{{ asset('/') }}">tại đây</a>',
                                     title: '',
                                     icon: $.sweetModal.ICON_WARNING,
                                     theme: $.sweetModal.THEME_DARK,
@@ -209,8 +219,19 @@
                         }
                     }
                 },
-                error: function() {
-                    return false;
+                error: function(xhr) {
+                    $(".main-reloader").css("display", "none");
+                    $.sweetModal({
+                        content: 'Có lỗi xảy ra: ' + xhr.status + ' - ' + xhr.responseText,
+                        title: 'Lỗi',
+                        icon: $.sweetModal.ICON_WARNING,
+                        theme: $.sweetModal.THEME_DARK,
+                        buttons: {
+                            'OK': {
+                                classes: 'redB'
+                            }
+                        }
+                    });
                 }
             });
         }

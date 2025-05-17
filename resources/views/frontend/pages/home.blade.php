@@ -177,7 +177,7 @@
                                                         <div
                                                             class="amy-movie-custom-field-group amy-movie-field-release_date">
                                                             <label class="amy-movie-custom-field-label">Diễn
-                                                                vi&#234;n:</label>
+                                                                viên:</label>
                                                             <div class="amy-movie-custom-field-content">
                                                                 {{ $phim->DienVien }}
                                                             </div>
@@ -187,7 +187,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="amy-movie-item-button">
-                                                        <a href="film/nguoi-soi-t18/700eb769-4e56-4435-a7b0-ce9e4b65b44c.html"
+                                                        <a href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}"
                                                             class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
                                                             <i class="fa fa-ticket"></i>Đặt v&#233;
                                                         </a>
@@ -260,7 +260,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="filmoja-heading">
-                        <h2>Khuyến m&#227;i v&#224; sự kiện</span></h2>
+                        <h2>Khuyến mãi và sự kiện</span></h2>
                     </div>
                 </div>
             </div>
@@ -338,9 +338,9 @@
                                         <header>
                                             <h3 class="no-underline">{{ $phim->TenPhim }} T{{ $phim->DoTuoi }}</h3>
                                         </header>
-                                        <span class="title">
+                                        {{-- <span class="title">
                                             {{ $phim->TheLoai }}
-                                        </span>
+                                        </span> --}}
                                         <div class="col-lg-12" style="padding-left:0 !important">
                                             <p class="time">{{ $phim->DoHoa }}</p>&nbsp;<p class="time red">
                                                 T{{ $phim->DoTuoi }}</p>

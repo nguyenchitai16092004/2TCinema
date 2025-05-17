@@ -212,6 +212,13 @@
     border-radius: 3px;
     font-size: 12px;
 }
+.age-rating{
+    background-color: #ff8c00;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+}
 
 .cinema-info {
     font-size: 14px;

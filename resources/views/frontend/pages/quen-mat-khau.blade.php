@@ -36,6 +36,12 @@
 
     <script>
         function forgotPass() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             $(".main-reloader").css("display", "block");
             var email = $("#fgEmail").val();
             if (email == "" || email == undefined) {
@@ -54,9 +60,12 @@
                 return false;
             }
 
-            var data = '{"email":"' + email + '"}';
+            var data = JSON.stringify({
+                email: email,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            });
             $.ajax({
-                url: "/MemberRegister/ForgotPassPost",
+                url: "/quen-mat-khau",
                 type: "POST",
                 data: data,
                 traditional: true,
@@ -67,7 +76,7 @@
                     if (result === "true" || result === true) {
                         $(".main-reloader").css("display", "none");
                         $.sweetModal({
-                            content: 'Vui lòng kiểm tra email để nhận mật khẩu mới. Và đăng nhập <a href="/dang-nhap.html">tại đây</a>',
+                            content: 'Vui lòng kiểm tra email để nhận mật khẩu mới. Và đăng nhập <a href="{{ asset('/') }}">tại đây</a>',
                             title: 'Thông báo',
                             icon: $.sweetModal.ICON_WARNING,
                             theme: $.sweetModal.THEME_DARK,
@@ -78,7 +87,7 @@
                             }
                         }, function(confirm) {
                             if (confirm) {
-                                location.href = "index.html";
+                                location.href = "{{ asset('/') }}";
                             }
                         });
 
@@ -97,8 +106,19 @@
                         });
                     }
                 },
-                error: function() {
-                    return false;
+                error: function(xhr) {
+                    $(".main-reloader").css("display", "none");
+                    $.sweetModal({
+                        content: xhr.responseText || 'Có lỗi xảy ra!',
+                        title: 'Lỗi',
+                        icon: $.sweetModal.ICON_WARNING,
+                        theme: $.sweetModal.THEME_DARK,
+                        buttons: {
+                            'OK': {
+                                classes: 'redB'
+                            }
+                        }
+                    });
                 }
             });
         }

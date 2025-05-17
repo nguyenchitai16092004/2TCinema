@@ -27,21 +27,19 @@
                             @if (session()->has('user_id'))
                                 <li class="user-loged" style="border: 1px solid #f37737;">
                                     <a style="color:#fff" title="{{ session('user_fullname') }}"
-                                        href="#">{{ session('user_fullname') }}</a>
+                                        href="{{ asset('/') }}">{{ session('user_fullname') }}</a>
                                     <ul class="info_option">
-                                        <li><a href="{{ asset('/thong-tin-tai-khoan') }}"><i class="fa fa-user"></i>
+                                        <li><a href="{{ asset('/info') }}"><i class="fa fa-user"></i>
                                                 Thông tin</a></li>
                                         <li><a href="{{ asset('/') }}" onclick="logOut()"><i
                                                     class="fa fa-sign-out"></i> Đăng xuất</a></li>
                                     </ul>
                                 </li>
                             @else
-                            <li style="display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
-                                <img src="{{ asset('frontend/Content/img/user.svg') }}" alt="">
-                                <a href="{{ asset('/dang-nhap') }}" class="btn-member">Đăng nhập</a>
-                            </li>
-                            
-                            
+                                <li style="display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
+                                    <img src="{{ asset('frontend/Content/img/user.svg') }}" alt="">
+                                    <a href="{{ asset('/dang-nhap') }}" class="btn-member">Đăng nhập</a>
+                                </li>
                             @endif
                             <script>
                                 function logOut() {
@@ -99,10 +97,9 @@
                                 <li><a href="{{ asset('/lich-chieu') }}">Mua Gói</a></li>
                                 <li>
                                     <a href="{{ asset('/phim-dang-chieu') }}">Phim</a>
-                                    <ul>
+                                    <ul style=" background: -webkit-linear-gradient(left, #171e38, #5841a7);">
                                         <li><a href="{{ asset('/phim-dang-chieu') }}">Phim Đang Chiếu</a></li>
                                         <li><a href="{{ asset('/phim-sap-chieu') }}">Phim Sắp Chiếu</a></li>
-
                                     </ul>
                                 </li>
                                 <li><a href="{{ asset('/uu-dai') }}">Khuyến Mãi</a></li>
