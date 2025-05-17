@@ -63,7 +63,20 @@
                     <span class="ml-4">Quản lý suất chiếu</span>
                 </a>
             </li>
-
+            <li class="relative px-6 py-3">
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    href="{{ route('the-loai.index') }}">
+                    <i class="fas fa-plus"></i>
+                    <span class="ml-4">Quản lý thể loại phim</span>
+                </a>
+            </li>
+            <li class="relative px-6 py-3">
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    href="{{ route('khuyen-mai.index') }}">
+                    <i class="fas fa-plus"></i>
+                    <span class="ml-4">Quản lý phiếu giảm giá</span>
+                </a>
+            </li>
             <li class="relative px-6 py-3">
                 <form action="{{ route('logout_admin') }}" method="post">
                     @csrf

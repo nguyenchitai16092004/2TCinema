@@ -24,9 +24,3 @@ class Rap extends Model
     }
 }
 
-    public function suatChieu()
-    {
-        return $this->belongsTo(Rap::class, 'ID_Rap', 'ID_Rap');
-    }
-}
-
