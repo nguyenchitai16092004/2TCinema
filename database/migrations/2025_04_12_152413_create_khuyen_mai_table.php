@@ -16,9 +16,6 @@ return new class extends Migration
             $table->string('TenKhuyenMai', 100);
             $table->integer('PhanTramGiam');
             $table->decimal('GiaTriToiDa', 10, 2);
-            // $table->date('NgayBatDau');
-            // $table->date('NgayKetThuc');
-            // $table->string('TrangThai', 50);
             $table->timestamps();
         });
     }

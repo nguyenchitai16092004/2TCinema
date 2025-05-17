@@ -25,7 +25,7 @@ class SuatChieuController extends Controller
     {
         $phims = Phim::where('TrangThai', 1)->get();
         $phongChieus = PhongChieu::join('rap', 'phong_chieu.ID_Rap', '=', 'rap.ID_Rap')
-            ->select('phong_chieu.TenPhongChieu', 'phong_chieu.ID_PhongChieu', 'rap.DiaChi')
+            ->select('phong_chieu.TenPhongChieu', 'phong_chieu.ID_PhongChieu', 'rap.DiaChi', 'rap.TenRap' , 'phong_chieu.ID_Rap')
             ->get();
         return view('backend.pages.suat_chieu.create-suat-chieu', compact('phims', 'phongChieus'));
     }
@@ -41,6 +41,7 @@ class SuatChieuController extends Controller
             'GiaVe' => 'required|numeric|min:0',
             'ID_PhongChieu' => 'required|exists:phong_chieu,ID_PhongChieu',
             'ID_Phim' => 'required|exists:phim,ID_Phim',
+            'ID_Rap' => 'required|exists:rap,ID_Rap',
         ]);
 
         if ($validator->fails()) {
@@ -93,7 +94,7 @@ class SuatChieuController extends Controller
         // Chỉ lấy những phim có TrangThai = 1
         $phims = Phim::where('TrangThai', 1)->get();
         $phongChieus = PhongChieu::join('rap', 'phong_chieu.ID_Rap', '=', 'rap.ID_Rap')
-            ->select('phong_chieu.TenPhongChieu', 'phong_chieu.ID_PhongChieu', 'rap.DiaChi')
+            ->select('phong_chieu.TenPhongChieu', 'phong_chieu.ID_PhongChieu', 'rap.DiaChi' , 'rap.TenRap' , 'phong_chieu.ID_Rap')
             ->get();
         return view('backend.pages.suat_chieu.detail-suat-chieu', compact('suatChieu', 'phims', 'phongChieus'));
     }
@@ -109,6 +110,7 @@ class SuatChieuController extends Controller
             'GiaVe' => 'required|numeric|min:0',
             'ID_PhongChieu' => 'required|exists:phong_chieu,ID_PhongChieu',
             'ID_Phim' => 'required|exists:phim,ID_Phim',
+            'ID_Rap' => 'required|exists:rap,ID_Rap',
         ]);
 
         if ($validator->fails()) {

@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AutController;
 use App\Http\Controllers\Admin\RapController;
 use App\Http\Controllers\Admin\AdminPhimController;
+use App\Http\Controllers\Admin\KhuyenMaiController;
 use App\Http\Controllers\Admin\PhongChieuController;
 use App\Http\Controllers\Admin\SuatChieuController;
+use App\Http\Controllers\Admin\TheLoaiPhimController;
 
 use App\Http\Controllers\Apps\PhimController;
 use App\Http\Controllers\Apps\AuthController;
@@ -163,4 +165,26 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
         Route::get('/filter-date', [SuatChieuController::class, 'filterByDate'])->name('filter.date');
         Route::get('/filter-phim', [SuatChieuController::class, 'filterByPhim'])->name('filter.phim');
     });
+
 });
+
+
+    Route::prefix('the-loai')->name('the-loai.')->group(function () {
+        Route::get('/', [TheLoaiPhimController::class, 'index'])->name('index');
+        Route::get('/create', [TheLoaiPhimController::class, 'create'])->name('create');
+        Route::post('/store', [TheLoaiPhimController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [TheLoaiPhimController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [TheLoaiPhimController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [TheLoaiPhimController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('khuyen-mai')->name('khuyen-mai.')->group(function () {
+        Route::get('/', [KhuyenMaiController::class, 'index'])->name('index');
+        Route::get('/create', [KhuyenMaiController::class, 'create'])->name('create');
+        Route::post('/store', [KhuyenMaiController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [KhuyenMaiController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [KhuyenMaiController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [KhuyenMaiController::class, 'destroy'])->name('delete');
+    });
+});
+

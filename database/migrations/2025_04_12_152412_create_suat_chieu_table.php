@@ -18,11 +18,15 @@ return new class extends Migration
             $table->decimal('GiaVe', 12, 2);
             $table->unsignedBigInteger('ID_PhongChieu');
             $table->unsignedBigInteger('ID_Phim');
+            $table->unsignedBigInteger('ID_Rap');
+
             $table->foreign('ID_PhongChieu')->references('ID_PhongChieu')->on('phong_chieu');
             $table->foreign('ID_Phim')->references('ID_Phim')->on('phim');
+            $table->foreign('ID_Rap')->references('ID_Rap')->on('rap');
             $table->timestamps();
         });
     }
+
 
 
     /**
