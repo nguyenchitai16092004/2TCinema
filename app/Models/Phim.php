@@ -36,5 +36,11 @@ class Phim extends Model
     {
         return $this->belongsTo(TheLoaiPhim::class, 'ID_TheLoaiPhim', 'ID_TheLoaiPhim');
     }
+    public function suatChieu()
+    {
+        return $this->hasMany(SuatChieu::class, 'ID_Phim', 'ID_Phim');
+    }
+}   
+
 }
 

@@ -22,5 +22,9 @@ class Rap extends Model
     {
         return $this->hasMany(PhongChieu::class, 'ID_Rap', 'ID_Rap');
     }
+    public function suatChieu()
+    {
+        return $this->belongsTo(Rap::class, 'ID_Rap', 'ID_Rap');
+    }
 }
 

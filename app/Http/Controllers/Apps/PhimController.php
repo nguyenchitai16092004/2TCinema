@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Apps;
 use App\Models\Phim;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 
 class PhimController extends Controller
 {
     public function index()
     {
-        $currentMonth = \Carbon\Carbon::now()->month; // Lấy tháng hiện tại
-        $currentYear = \Carbon\Carbon::now()->year;  // Lấy năm hiện tại
+        $currentMonth = Carbon::now()->month; // Lấy tháng hiện tại
+        $currentYear = Carbon::now()->year;  // Lấy năm hiện tại
 
         // Lấy danh sách phim đang chiếu
         $dsPhimDangChieu = Phim::where('TrangThai', '1')->get();

@@ -41,14 +41,15 @@
                 </div>
 
                 <div class="disclaimer">
-                    (*) Bằng việc click/chạm vào THANH TOÁN bên phải, bạn đã xác nhận hiểu rõ các <a href="{{ asset('chinh-sach-thanh-toan') }}">Chính sách thanh toán</a> của CineTick.
+                    (*) Bằng việc click vào THANH TOÁN bên phải, bạn đã xác nhận hiểu rõ các <a
+                        href="{{ asset('chinh-sach-thanh-toan') }}">Chính sách thanh toán</a> của CineTick.
                 </div>
             </div>
         </div>
 
         <div class="right-column">
             <div class="booking-timer">
-                Thời gian giữ ghế: <span class="timer">06:14</span>
+                Thời gian giữ ghế: <span class="timer">06:00</span>
             </div>
 
             <div class="movie-details">
@@ -57,24 +58,37 @@
                 </div>
                 <div class="movie-info">
                     <h3>{{ $suatChieu->phim->TenPhim }}</h3>
-                    <div class="movie-meta">{{ $suatChieu->phim->DoHoa }} <span class="age-rating">T{{ $suatChieu->phim->DoTuoi }}</span></div>
-                    <div class="movie-meta">{{ $suatChieu->rap->TenRap }} - {{ $suatChieu->rap->DiaChi }}</div>
-                    <div class="movie-meta">
-                        Suất: {{ substr($suatChieu->GioChieu, 0, 5) }} - 
-                        {{ ucfirst(\Carbon\Carbon::parse($suatChieu->NgayChieu)->translatedFormat('l, d/m/Y')) }}
-                    </div>
+                    <div class="movie-meta">{{ $suatChieu->phim->DoHoa }} <span
+                            class="age-rating">T{{ $suatChieu->phim->DoTuoi }}</span></div>
+
                 </div>
             </div>
 
             <div class="ticket-details">
-                @foreach ($selectedSeats as $seat)
-                    <div class="ticket-row">
-                        <div>Ghế: {{ $seat }}</div>
-                        <div>{{ number_format($suatChieu->GiaVe, 0, ',', '.') }} đ</div>
+                <div>
+                    <div>{{ $suatChieu->rap->TenRap }} - {{ $suatChieu->rap->DiaChi }}</div>
+                    <div> Suất: <strong>{{ substr($suatChieu->GioChieu, 0, 5) }} -
+                            {{ ucfirst(\Carbon\Carbon::parse($suatChieu->NgayChieu)->translatedFormat('l, d/m/Y')) }}</strong>
                     </div>
-                @endforeach
+                    <strong>
+                        <div>{{ $suatChieu->phongChieu->TenPhongChieu ?? '' }}</div>
+                    </strong>
+                </div>
             </div>
-            
+            <div class="ticket-details">
+                <div class="ticket-row" style="display: flex; justify-content: space-between;">
+                    <div>
+                        <strong><span>{{ count($selectedSeats) }}x Vé {{ $suatChieu->phim->DoHoa }} </span></strong>
+                    </div>
+                    <div>
+                        <strong>{{ number_format(count($selectedSeats) * $suatChieu->GiaVe, 0, ',', '.') }} đ</strong>
+                    </div>
+                </div>
+                <div style="margin-top: 2px;">
+                    Ghế: <strong>{{ implode(', ', $selectedSeats) }}</strong>
+                </div>
+            </div>
+
             <div class="total-row">
                 <div>Tổng cộng</div>
                 <div class="total-price">
@@ -83,22 +97,52 @@
             </div>
 
             <div class="action-buttons">
-                <button class="back-button">Quay lại</button>
-                <button class="confirm-button">Thanh Toán</button>
+                <button type="button" class="back-button">Quay lại</button>
+                <button type="button" class="confirm-button">Thanh Toán</button>
             </div>
         </div>
     </div>
-
+    <form id="form-thanh-toan" method="POST" action="{{ route('thanh-toan.momo') }}">
+        @csrf
+        <input type="hidden" name="TongTien" value="{{ count($selectedSeats) * $suatChieu->GiaVe }}">
+        <input type="hidden" name="TenPhim" value="{{ $suatChieu->phim->TenPhim }}">
+        <input type="hidden" name="NgayXem" value="{{ $suatChieu->NgayChieu }}">
+        <input type="hidden" name="DiaChi" value="{{ $suatChieu->rap->DiaChi }}">
+        <input type="hidden" name="GiaVe" value="{{ $suatChieu->GiaVe }}">
+        <input type="hidden" name="ID_SuatChieu" value="{{ $suatChieu->ID_SuatChieu }}">
+        @foreach ($selectedSeats as $seat)
+            <input type="hidden" name="selectedSeats[]" value="{{ $seat }}">
+        @endforeach
+    </form>
+    <form id="form-thanh-toan-zalopay" method="POST" action="{{ route('thanh-toan.zalopay') }}">
+        @csrf
+        <input type="hidden" name="TongTien" value="{{ count($selectedSeats) * $suatChieu->GiaVe }}">
+        <input type="hidden" name="TenPhim" value="{{ $suatChieu->phim->TenPhim }}">
+        <input type="hidden" name="NgayXem" value="{{ $suatChieu->NgayChieu }}">
+        <input type="hidden" name="DiaChi" value="{{ $suatChieu->rap->DiaChi }}">
+        <input type="hidden" name="GiaVe" value="{{ $suatChieu->GiaVe }}">
+        <input type="hidden" name="ID_SuatChieu" value="{{ $suatChieu->ID_SuatChieu }}">
+        @foreach ($selectedSeats as $seat)
+            <input type="hidden" name="selectedSeats[]" value="{{ $seat }}">
+        @endforeach
+    </form>
     <script>
-        // Simple toggle for dropdowns
+        document.querySelector('.confirm-button').addEventListener('click', function() {
+            if (document.getElementById('momo').checked) {
+                document.getElementById('form-thanh-toan').submit();
+            } else if (document.getElementById('zalopay').checked) {
+                document.getElementById('form-thanh-toan-zalopay').submit();
+            } else {
+                alert('Vui lòng chọn phương thức thanh toán!');
+            }
+        });
         document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
             toggle.addEventListener('click', function() {
                 this.classList.toggle('open');
             });
         });
 
-        // Simple timer functionality
-        let timeLeft = 374; // 6:14 in seconds
+        let timeLeft = 360; //phút
 
         function updateTimer() {
             const minutes = Math.floor(timeLeft / 60);
