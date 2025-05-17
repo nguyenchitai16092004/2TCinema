@@ -53,8 +53,9 @@
                                     <option value="">-- Chọn phòng chiếu --</option>
                                     @foreach ($phongChieus as $phongChieu)
                                         <option value="{{ $phongChieu->ID_PhongChieu }}"
+                                            data-rap-id="{{ $phongChieu->ID_Rap }}"
                                             {{ old('ID_PhongChieu') == $phongChieu->ID_PhongChieu ? 'selected' : '' }}>
-                                            {{ $phongChieu->TenPhongChieu }}  ( {{$phongChieu->DiaChi}} )
+                                            {{ $phongChieu->TenPhongChieu }} ({{$phongChieu->TenRap}} : {{ $phongChieu->DiaChi }} )
                                         </option>
                                     @endforeach
                                 </select>
@@ -64,6 +65,9 @@
                                     </span>
                                 @enderror
                             </div>
+
+                            <!-- Thêm trường input ẩn để lưu ID_Rap -->
+                            <input type="hidden" name="ID_Rap" id="ID_Rap" value="{{ old('ID_Rap') }}">
 
                             <div class="form-group mb-3">
                                 <label for="NgayChieu">Ngày chiếu</label>
@@ -108,4 +112,28 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lấy ID_Rap khi trang được tải (nếu đã chọn phòng chiếu trước đó)
+            var phongChieuSelect = document.getElementById('ID_PhongChieu');
+            var rapIdInput = document.getElementById('ID_Rap');
+
+            if (phongChieuSelect.value) {
+                var selectedOption = phongChieuSelect.options[phongChieuSelect.selectedIndex];
+                var rapId = selectedOption.getAttribute('data-rap-id');
+                rapIdInput.value = rapId;
+            }
+
+            // Cập nhật ID_Rap khi thay đổi phòng chiếu
+            phongChieuSelect.addEventListener('change', function() {
+                if (this.value) {
+                    var selectedOption = this.options[this.selectedIndex];
+                    var rapId = selectedOption.getAttribute('data-rap-id');
+                    rapIdInput.value = rapId;
+                } else {
+                    rapIdInput.value = '';
+                }
+            });
+        });
+    </script>
 @endsection

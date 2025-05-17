@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title', 'Quản lý Phòng Chiếu')
+@section('title', 'Tạo Phòng Chiếu')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('backend/assets/css/seat_layout.css') }}">
