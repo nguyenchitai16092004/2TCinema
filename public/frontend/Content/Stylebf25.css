@@ -17164,7 +17164,7 @@ li {
     font-size: 40px;
     position: relative;
     padding-left: 15px;
-    text-align: center;
+    z-index: 0;
 }
 
 /*.filmoja-heading h2:before {
@@ -17209,6 +17209,7 @@ li {
 
 .section_30 {
     padding: 30px 0;
+    z-index: 0;
 }
 
 .section_15 {
@@ -17330,7 +17331,6 @@ li {
 .filmoja-header-area.stick-top.sticky .slicknav_menu .slicknav_icon-bar,
 .filmoja-header-area.home-3-page .slicknav_menu .slicknav_icon-bar {
     background-color: #333333;
-
 }
 
 /*================================================
@@ -17391,6 +17391,8 @@ li {
 
 .filmoja-movie-details-page {
     background: #fff;
+    background: #e6e7e9;
+    max-width: 100% !important;
 }
 
 .breadcrumb-box h2 {
@@ -17534,7 +17536,6 @@ li {
 .main-header-area {
     /* background: #fff none repeat scroll 0 0; */
     background: -webkit-linear-gradient(left, #171e38, #5841a7);
-
 }
 
 .site-logo {
@@ -18968,13 +18969,12 @@ ul.company-desc-list li i {
 ==================================================*/
 
 .filmoja-footer-area {
-    background: -webkit-linear-gradient(to right, #171e38, #5842a8, #171e38); 
-    background: linear-gradient(to right, #171e38, #5842a8, #171e38);         
-    width: 100%;
-    padding: 20px 0;
+    background: linear-gradient(to right, #171e38, #5842a8, #171e38);
+    width: 100vw;
     color: white;
+    position: relative;
+    right: 260px;
 }
-
 
 .single-footer-widget h3 {
     font-size: 17px;
@@ -20666,16 +20666,19 @@ ul.company-desc-list li i {
 .filmoja-tv-movies-area,
 .filmoja-top-movies-area {
     background: #fff;
+    z-index: 1;
 }
 
 .filmoja-top-movies-area {
     /* background: url(img/bgs4.jpg) no-repeat scroll 0 0; */
     /* background-size: cover; */
     background-color: #171e38;
+    z-index: 0;
 }
 
 .filmoja-heading h2 {
     color: #fff;
+    z-index: 0;
 }
 
 .filmoja-top-movies-area .top-movie-details h4 a {
@@ -20691,12 +20694,13 @@ ul.company-desc-list li i {
     min-height: 30px;
     font-size: 15px;
     font-weight: 300;
+    z-index: 0;
 }
 
 .filmoja-top-movies-area .movie-details-thumbs ul li a {
     color: #fff;
+    z-index: 0;
 }
-
 
 /*Booking Form*/
 .booking-form {
@@ -20706,7 +20710,7 @@ ul.company-desc-list li i {
     margin: 0 auto;
     /*background-color: #5f6064;
 	background-image: linear-gradient(#5f6064, #343539);*/
-    background: url(img/bgs8.jpg) no-repeat scroll 0 0;
+    /* background: url(img/bgs8.jpg) no-repeat scroll 0 0; */
     background-size: cover;
     border-radius: 2px;
     box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.41);
@@ -23046,7 +23050,6 @@ h3.no-underline {
     padding: 10%;
     margin-top: 7%;
     justify-content: center;
-
 }
 
 .btnRegister {
@@ -25030,6 +25033,7 @@ h3.no-underline {
     .filmoja-feature-area .filmoja-heading h2,
     .filmoja-partner-area .filmoja-heading h2 {
         display: inline-block;
+        z-index: 0;
     }
 
     .filmoja-tv-movies-area .tv-tab #pills-tab {
@@ -25305,14 +25309,17 @@ h3.no-underline {
     .filmoja-heading h2 {
         font-size: 26px;
         padding-left: 0;
+        z-index: 0;
     }
 
     .filmoja-heading h2:before {
         display: none;
+        z-index: 0;
     }
 
     .filmoja-heading h2:after {
         display: none;
+        z-index: 0;
     }
 
     .top-movie-slider .owl-nav {
@@ -25737,14 +25744,17 @@ h3.no-underline {
     .filmoja-heading h2 {
         font-size: 28px;
         padding-left: 0;
+        z-index: 0;
     }
 
     .filmoja-heading h2:before {
         display: none;
+        z-index: 0;
     }
 
     .filmoja-heading h2:after {
         display: none;
+        z-index: 0;
     }
 
     .top-movie-slider .owl-nav {

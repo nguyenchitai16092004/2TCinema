@@ -8,14 +8,20 @@ use App\Models\SuatChieu;
 
 class DatVeController extends Controller
 {
-    public function show($id)
+    public function showBySlug($phimSlug, $ngay, $gio)
     {
-        $suatChieu = SuatChieu::with(['phim', 'rap'])->findOrFail($id);
+        $phim = \App\Models\Phim::where('Slug', $phimSlug)->firstOrFail();
+
+        $suatChieu = SuatChieu::with(['phim', 'rap'])
+            ->where('ID_Phim', $phim->ID_Phim)
+            ->where('NgayChieu', $ngay)
+            ->where('GioChieu', $gio)
+            ->firstOrFail();
 
         $suatChieuCungNgay = SuatChieu::where('NgayChieu', $suatChieu->NgayChieu)
             ->where('ID_Rap', $suatChieu->ID_Rap)
             ->where('ID_Phim', $suatChieu->ID_Phim)
-            ->orderBy('GioChieu', 'asc') // Sắp xếp theo giờ chiếu
+            ->orderBy('GioChieu', 'asc')
             ->get();
 
         return view('frontend.pages.dat-ve', compact('suatChieu', 'suatChieuCungNgay'));

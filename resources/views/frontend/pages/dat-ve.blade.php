@@ -243,8 +243,7 @@
                     </div>
 
                     <div class="button-group">
-                        <a href="{{ route('phim.chiTiet', ['id' => $suatChieu->ID_Phim]) }}" class="btn btn-back">Quay
-                            lại</a>
+                        <a href="{{ route('phim.chiTiet', ['slug' => $suatChieu->phim->Slug]) }}" class="btn btn-back">Quay lại</a>
                         <button id="btn-continue" class="btn btn-continue">Tiếp tục</button>
                     </div>
                 </div>

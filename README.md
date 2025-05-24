@@ -65,16 +65,39 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## How To Run
-Dự án được chạy bằng **XAMPP** với phiên bản PHP **8.2.12**. Thực hiện các bước sau để khởi chạy dự án:
+# Hướng Dẫn Khởi Chạy Dự Án
 
-```bash
-composer install
+Dự án được chạy trên **XAMPP** với phiên bản PHP **8.2.12**.  
 
-cp .env.example .env
+## Các bước thực hiện
 
-npm install
+1. Cài đặt các package PHP bằng Composer:
+    ```bash
+    composer install
+    ```
 
-php artisan key:generate
+2. Tạo file cấu hình `.env` từ file mẫu:
+    ```bash
+    cp .env.example .env
+    ```
 
+3. Cài đặt các package Node.js (nếu có):
+    ```bash
+    npm install
+    ```
+
+4. Tạo khóa ứng dụng Laravel:
+    ```bash
+    php artisan key:generate
+    ```
+
+5. **Cấu hình múi giờ** cho dự án:  
+   Thêm dòng sau vào file `.env` để đặt múi giờ về Việt Nam:
+    ```env
+    APP_TIMEZONE=Asia/Ho_Chi_Minh
+    ```
+
+---
+
+Bây giờ bạn có thể chạy dự án trên XAMPP với cấu hình PHP 8.2.12.
 
