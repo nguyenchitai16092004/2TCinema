@@ -11,32 +11,69 @@ class PhimController extends Controller
 {
     public function index()
     {
-        $currentMonth = Carbon::now()->month; // Lấy tháng hiện tại
-        $currentYear = Carbon::now()->year;  // Lấy năm hiện tại
+        $today = now()->toDateString(); // Khai báo ngày hôm nay
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
 
-        // Lấy danh sách phim đang chiếu
-        $dsPhimDangChieu = Phim::where('TrangThai', '1')->get();
+        // PHIM ĐANG CHIẾU: Ngày khởi chiếu <= hôm nay và ngày kết thúc >= hôm nay
+        $dsPhimDangChieu = Phim::whereDate('NgayKhoiChieu', '<=', $today)
+            ->whereDate('NgayKetThuc', '>=', $today)
+            ->get();
 
-        // Lấy danh sách phim sắp chiếu
-        $dsPhimSapChieu = Phim::where('TrangThai', '0')->get();
+        // PHIM SẮP CHIẾU: Ngày khởi chiếu > hôm nay và TrangThai = 0
+        $dsPhimSapChieu = Phim::whereDate('NgayKhoiChieu', '>', $today)
+            ->where('TrangThai', 0)
+            ->get();
 
-        // Lấy danh sách phim theo tháng và năm hiện tại
+        // PHIM CỦA THÁNG HIỆN TẠI (không phân biệt đã chiếu hay chưa)
         $dsPhimTheoThang = Phim::whereMonth('NgayKhoiChieu', $currentMonth)
             ->whereYear('NgayKhoiChieu', $currentYear)
             ->get();
 
-        // Trả về view với dữ liệu
-        return view('frontend.pages.home', compact('dsPhimDangChieu', 'dsPhimSapChieu', 'dsPhimTheoThang'));
+        return view('frontend.pages.home', compact(
+            'dsPhimDangChieu',
+            'dsPhimSapChieu',
+            'dsPhimTheoThang'
+        ));
+    }
+    public function phimDangChieu()
+    {
+        $today = now()->toDateString();
+        $dsPhimDangChieu = Phim::whereDate('NgayKhoiChieu', '<=', $today)
+            ->whereDate('NgayKetThuc', '>=', $today)
+            ->get();
+
+        return view('frontend.pages.phim-dang-chieu', compact('dsPhimDangChieu'));
+    }
+    public function phimSapChieu()
+    {
+        $today = now()->toDateString();
+        $dsPhimSapChieu = Phim::whereDate('NgayKhoiChieu', '>', $today)
+            ->where('TrangThai', 0)
+            ->get();
+
+        return view('frontend.pages.phim-sap-chieu', compact('dsPhimSapChieu'));
     }
 
-    public function chiTiet($id)
+    public function chiTiet($slug)
     {
-        $phim = Phim::findOrFail($id);
+        $phim = Phim::where('Slug', $slug)->firstOrFail();
+        $now = now();
+
         $suatChieu = $phim->suatChieu()
             ->with('rap')
             ->get()
+            ->filter(function ($suat) use ($now) {
+                $gioChieu = strlen($suat->GioChieu) === 5 ? $suat->GioChieu . ':00' : $suat->GioChieu;
+                $suatDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $suat->NgayChieu . ' ' . $gioChieu);
+                return $suatDateTime->greaterThan($now);
+            })
+            ->sortBy([
+                ['NgayChieu', 'asc'],
+                ['GioChieu', 'asc'],
+            ])
             ->groupBy(function ($item) {
-                return $item->NgayChieu . '|' . $item->rap->DiaChi; // Nhóm theo NgayChieu và DiaChi
+                return $item->NgayChieu . '|' . $item->rap->DiaChi;
             });
 
         return view('frontend.pages.chi-tiet-phim', compact('phim', 'suatChieu'));

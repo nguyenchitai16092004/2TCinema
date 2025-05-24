@@ -1,6 +1,8 @@
 @extends('frontend.layouts.master')
 @section('title', 'Trang chủ')
 @section('main')
+    <link rel="stylesheet" href="{{ asset('frontend/Content/css/home.css') }}">
+
     <!-- Slider Area Start -->
     <section class="filmoja-slider-area fix">
         <div class="filmoja-slide owl-carousel">
@@ -26,101 +28,141 @@
         </div>
     </section>
     <!-- Slider Area End -->
-    <div class="booking-form">
-        <div class="col-lg-12">
-            <div class="booking-form-item" style="width:20%;">
-                <div class="select-box slTheater">
+    <div class="booking-container">
+        <div class="booking-header">
+            <div class="booking-title">ĐẶT VÉ NHANH</div>
+        </div>
 
-                    <div class="select-box__current uServer" tabindex="1">
-
-
-                        <div class="select-box__value">
-                            <input class="select-box__input" type="radio" id="s0" value="0" name="inputServer"
-                                checked="checked">
-                            <p class="select-box__input-text">Rạp</p>
-                        </div>
-
-                        <img class="select-box__icon" src="Content/img/black-ar-down.png" alt="Arrow Icon"
-                            aria-hidden="true">
-                    </div>
-                    <ul class="select-box__list">
-
-                        <li>
-                            <label class="select-box__option" data-value="0" style="background-color: #36373b; color: #fff;"
-                                onclick="selectServer(this)" for="s0" aria-hidden="aria-hidden">Rạp</label>
-                        </li>
-
-                    </ul>
-                </div>
+        <div class="steps-indicator">
+            <div class="step active" id="step-1">
+                <div class="step-number">1</div>
+                <div class="step-label">Rạp</div>
             </div>
-
-            <div class="booking-form-item" style="width:20%;">
-                <div class="select-box slFilm">
-                    <div class="select-box__current uFilm" tabindex="1">
-
-
-                        <div class="select-box__value">
-                            <input class="select-box__input" type="radio" id="0" value="0" name="inputFilm"
-                                checked="checked">
-                            <p class="select-box__input-text">Phim</p>
-                        </div>
-                        <img class="select-box__icon" src="Content/img/black-ar-down.png" alt="Arrow Icon"
-                            aria-hidden="true">
-                    </div>
-                    <ul class="select-box__list">
-
-                        <li>
-                            <label class="select-box__option" data-value="0" for="0"
-                                aria-hidden="aria-hidden">Phim</label>
-                        </li>
-                    </ul>
-                </div>
+            <div class="step-separator" id="separator-1"></div>
+            <div class="step" id="step-2">
+                <div class="step-number">2</div>
+                <div class="step-label">Phim</div>
             </div>
-
-
-
-            <div class="booking-form-item" style="width:20%;">
-                <div class="select-box slDate">
-                    <div class="select-box__current uDate" tabindex="1">
-                        <div class="select-box__value">
-                            <input class="select-box__input" type="radio" id="0" value="0" name="inputDate"
-                                checked="checked">
-                            <p class="select-box__input-text">Ngày xem</p>
-                        </div>
-                        <img class="select-box__icon" src="Content/img/black-ar-down.png" alt="Arrow Icon"
-                            aria-hidden="true">
-                    </div>
-                    <ul class="select-box__list">
-                        <li>
-                            <label class="select-box__option" data-value="0" for="0" aria-hidden="aria-hidden">Ngày
-                                xem</label>
-                        </li>
-                    </ul>
-                </div>
+            <div class="step-separator" id="separator-2"></div>
+            <div class="step" id="step-3">
+                <div class="step-number">3</div>
+                <div class="step-label">Ngày</div>
             </div>
-            <div class="booking-form-item" style="width:20%;">
-                <div class="select-box slTime">
-                    <div class="select-box__current uTime" tabindex="1">
-                        <div class="select-box__value">
-                            <input class="select-box__input" type="radio" id="0" value="0" name="inputTime"
-                                checked="checked">
-                            <p class="select-box__input-text">Suất chiếu</p>
-                        </div>
-                        <img class="select-box__icon" src="Content/img/black-ar-down.png" alt="Arrow Icon"
-                            aria-hidden="true">
-                    </div>
-                    <ul class="select-box__list">
-                        <li>
-                            <label class="select-box__option" data-value="0" for="0"
-                                aria-hidden="aria-hidden">Suất chiếu</label>
-                        </li>
-                    </ul>
-                </div>
+            <div class="step-separator" id="separator-3"></div>
+            <div class="step" id="step-4">
+                <div class="step-number">4</div>
+                <div class="step-label">Suất</div>
             </div>
         </div>
 
-    </div>
+        <div class="booking-form">
+            <div class="booking-dropdown" id="theater-dropdown">
+                <button class="dropdown-btn" id="theater-btn">
+                    <span>1. Chọn Rạp</span>
+                    <span><i class="fas fa-chevron-down"></i></span>
+                </button>
+                <div class="dropdown-content" id="theater-content">
+                    <div class="dropdown-item" data-value="cinestar-quoc-thanh"><span class="marquee-text">Cinestar Quốc
+                            Thạnh (TP.HCM)</span></div>
+                    <div class="dropdown-item" data-value="cinestar-satra"><span class="marquee-text">Cinestar Satra Quận 6
+                            (TP.HCM)</span></div>
+                    <div class="dropdown-item" data-value="cinestar-hai-ba-trung"><span class="marquee-text">Cinestar Hai Bà
+                            Trưng (TP.HCM)</span></div>
+                    <div class="dropdown-item" data-value="cinestar-sinh-vien"><span class="marquee-text">Cinestar Sinh Viên
+                            (Bình Dương)</span></div>
+                    <div class="dropdown-item" data-value="cinestar-hue"><span class="marquee-text">Cinestar Huế (TP.
+                            Huế)</span></div>
+                    <div class="dropdown-item" data-value="cinestar-da-lat"><span class="marquee-text">Cinestar Đà Lạt (TP.
+                            Đà Lạt)</span></div>
+                    <div class="dropdown-item" data-value="cinestar-lam-dong"><span class="marquee-text">Cinestar Lâm Đồng
+                            (Đức Trọng)</span></div>
+                    <div class="dropdown-item" data-value="cinestar-my-tho"><span class="marquee-text">Cinestar Mỹ Tho (Tiền
+                            Giang)</span></div>
+                </div>
+            </div>
 
+            <div class="booking-dropdown" id="movie-dropdown">
+                <button class="dropdown-btn disabled" id="movie-btn">
+                    <span>2. Chọn Phim</span>
+                    <span><i class="fas fa-chevron-down"></i></span>
+                </button>
+                <div class="dropdown-content" id="movie-content">
+                    <div class="dropdown-item" data-value="buon-than-ban-than"><span class="marquee-text">BUỒN THÂN BẠN
+                            THÂN</span></div>
+                    <div class="dropdown-item" data-value="godzilla-x-kong"><span class="marquee-text">GODZILLA X KONG: ĐẾ
+                            QUỐC MỚI</span></div>
+                    <div class="dropdown-item" data-value="kung-fu-panda-4"><span class="marquee-text">KUNG FU PANDA
+                            4</span></div>
+                    <div class="dropdown-item" data-value="thanh-guom-diet-quy"><span class="marquee-text">THANH GƯƠM DIỆT
+                            QUỶ: LÀNG RÈN KIẾM</span></div>
+                    <div class="dropdown-item" data-value="gia-dinh-croods"><span class="marquee-text">GIA ĐÌNH
+                            CROODS</span></div>
+                </div>
+            </div>
+
+            <div class="booking-dropdown" id="date-dropdown">
+                <button class="dropdown-btn disabled" id="date-btn">
+                    <span>3. Chọn Ngày</span>
+                    <span><i class="fas fa-chevron-down"></i></span>
+                </button>
+                <div class="dropdown-content" id="date-content">
+                    <div class="dropdown-item" data-value="2025-05-22"><span class="marquee-text">Thứ Năm, 22/05</span>
+                    </div>
+                    <div class="dropdown-item" data-value="2025-05-23"><span class="marquee-text">Thứ Sáu, 23/05</span>
+                    </div>
+                    <div class="dropdown-item" data-value="2025-05-24"><span class="marquee-text">Thứ Bảy, 24/05</span>
+                    </div>
+                    <div class="dropdown-item" data-value="2025-05-25"><span class="marquee-text">Chủ Nhật, 25/05</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="booking-dropdown" id="time-dropdown">
+                <button class="dropdown-btn disabled" id="time-btn">
+                    <span>4. Chọn Suất</span>
+                    <span><i class="fas fa-chevron-down"></i></span>
+                </button>
+                <div class="dropdown-content" id="time-content">
+                    <div class="dropdown-item" data-value="10:15"><span class="marquee-text">10:15 - 2D Deluxe</span>
+                    </div>
+                    <div class="dropdown-item" data-value="13:30"><span class="marquee-text">13:30 - 2D Standard</span>
+                    </div>
+                    <div class="dropdown-item" data-value="16:20"><span class="marquee-text">16:20 - 3D Deluxe</span>
+                    </div>
+                    <div class="dropdown-item" data-value="19:45"><span class="marquee-text">19:45 - 2D Deluxe</span>
+                    </div>
+                    <div class="dropdown-item" data-value="22:10"><span class="marquee-text">22:10 - 2D Standard</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="book-btn disabled" id="book-btn">ĐẶT NGAY</button>
+        </div>
+
+        <div class="selected-info" id="theater-info"></div>
+
+        <div class="booking-summary" id="booking-summary">
+            <div class="movie-poster" id="movie-poster">
+                <i class="fas fa-film"></i>
+            </div>
+            <div class="summary-details">
+                <div class="movie-title" id="summary-movie-title"></div>
+                <div class="movie-details" id="summary-movie-details"></div>
+                <div class="summary-item">
+                    <div class="summary-label">Rạp:</div>
+                    <div class="summary-value" id="summary-theater"></div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Ngày:</div>
+                    <div class="summary-value" id="summary-date"></div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Suất chiếu:</div>
+                    <div class="summary-value" id="summary-time"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -145,9 +187,8 @@
                                             <div class="amy-movie-item-front">
                                                 <div class="slick-arrows"></div>
                                                 <div class="amy-movie-item-poster">
-                                                    <a href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">
-                                                        <img width="258" height="387" src="{{ $phim->HinhAnh }}"
-                                                            class="attachment-258x444 size-258x444" alt="" />
+                                                    <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
+                                                        <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" />
                                                     </a>
                                                 </div>
                                             </div>
@@ -156,12 +197,16 @@
                                                     <div class="amy-movie-item-content">
                                                         <span class="amy-movie-field-imdb">{{ $phim->DoTuoi }}</span>
                                                         <h3 class="amy-movie-field-title"><a
-                                                                href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">{{ $phim->TenPhim }}</a>
+                                                                href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">{{ $phim->TenPhim }}</a>
                                                         </h3>
                                                         <div class="amy-movie-item-meta">
                                                             <span class="amy-movie-field-mpaa">{{ $phim->DoHoa }}</span>
                                                             <span class="amy-movie-field-duration"><i
-                                                                    class="fa fa-clock-o"></i>{{ $phim->ThoiLuong }}</span>
+                                                                    class="fa fa-clock-o"></i>@php
+                                                                        $gio = floor($phim->ThoiLuong / 60);
+                                                                        $phut = $phim->ThoiLuong % 60;
+                                                                    @endphp
+                                                                {{ $gio > 0 ? $gio . ' giờ ' : '' }}{{ $phut > 0 ? $phut . ' phút' : '' }}</span>
                                                         </div>
                                                         <div class="amy-movie-custom-field-group amy-movie-field-language">
                                                             <div class="amy-movie-custom-field-content">
@@ -183,16 +228,21 @@
                                                             </div>
                                                         </div>
                                                         <div class="amy-movie-field-desc">
-                                                            <p style="color:#333">{{ $phim->MoTaPhim }}</p>
+                                                            <p style="color:#333">
+                                                                {{ Str::words($phim->MoTaPhim, 40, '...') }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="amy-movie-item-button">
-                                                        <a href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}"
+                                                        <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}"
                                                             class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox">
-                                                            <i class="fa fa-ticket"></i>Đặt v&#233;
+                                                            <i class="fa fa-ticket"></i>Đặt vé
                                                         </a>
-
+                                                        <a href="{{ $phim->Trailer }}"
+                                                            class="amy-btn-icon-text link-detail fancybox.iframe amy-fancybox popup-youtube">
+                                                            <i class="fa fa-circle-play"></i>Xem Trailer
+                                                        </a>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -224,13 +274,13 @@
                             <div class="single-top-movie">
                                 <div class="top-movie-wrap">
                                     <div class="top-movie-img">
-                                        <a href="{{ asset('/chi-tiet-phim') }}">
+                                        <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
                                             <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" />
                                         </a>
                                     </div>
                                     <div class="thumb-hover">
                                         <a class="play-video"
-                                            href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=fQKxDM-hxoU"><i
+                                            href="{{ $phim->Trailer }}"><i
                                                 class="fa fa-play"></i></a>
                                         <div class="thumb-date">
                                         </div>
@@ -238,7 +288,7 @@
                                 </div>
                                 <div class="top-movie-details">
                                     <h4><a
-                                            href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">{{ $phim->TenPhim }}</a>
+                                            href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">{{ $phim->TenPhim }}</a>
                                     </h4>
 
 
@@ -328,7 +378,7 @@
                             @foreach ($dsPhimTheoThang as $phim)
                                 <div class="row movie-tabs">
                                     <div class="col-md-2 col-sm-12">
-                                        <a href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">
+                                        <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
                                             <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}"
                                                 class="movie-poster">
                                         </a>
@@ -352,10 +402,10 @@
                                             <b>Diễn viên: </b>{{ $phim->DienVien }}
                                         </p>
                                         <p>
-                                            <b>Mô tả: </b> {{ $phim->MoTaPhim }}
+                                            <b>Mô tả: </b> {{ Str::words($phim->MoTaPhim, 40, '...') }}
                                         </p>
                                         <div class="col-lg-12" style="padding-left:0 !important">
-                                            <a href="{{ route('phim.chiTiet', ['id' => $phim->ID_Phim]) }}">
+                                            <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
                                                 <p class="time red">&nbsp;<i class="fa fa-ticket"></i> &nbsp;Đặt vé</p>
                                             </a>
                                         </div>
@@ -376,7 +426,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="filmoja-heading">
-                        <h2>Tin Điện Ảnh</h2>
+                        <h2>Góc Điện Ảnh</h2>
                     </div>
                 </div>
             </div>
@@ -541,47 +591,5 @@
             </div>
         </div>
     </section>
-
-    <!-- News Area End -->
-
-    {{-- <script>
-        window.onload = function() {
-            var modal = getCookie("key");
-            if (modal != "") {
-
-            } else {
-                $.ajax({
-                    url: "/Home/GetAdsImage",
-                    type: "GET",
-                    traditional: true,
-                    dataType: "text",
-                    contentType: 'application/json; charset=utf-8',
-                    success: function(data) {
-                        //alert(data);
-                        if (data != "" && data != null) {
-                            $("#adsImage").attr("src", data);
-                            $("#adsImageModal").modal('show');
-                            sessionStorage.setItem("key", "modal");
-                            return false;
-                        } else {
-
-                            return false;
-                        }
-                    },
-                    error: function() {
-                        return false;
-                    }
-                });
-            }
-
-        }
-
-        function getCookie(cname) {
-            var ca = sessionStorage.getItem(cname);
-            if (ca == null || ca == "") {
-                return "";
-            } else
-                return ca;
-        }
-    </script> --}}
+    <script src=" {{ asset('frontend/Content/js/home.js') }}"></script>
 @stop

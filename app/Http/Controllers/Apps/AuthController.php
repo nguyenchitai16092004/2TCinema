@@ -46,15 +46,46 @@ class AuthController extends Controller
             'SDT' => $request->SDT,
         ]);
 
+        $token = Str::random(64);
+
         TaiKhoan::create([
             'TenDN' => $request->TenDN,
             'MatKhau' => Hash::make($request->MatKhau),
-            'TrangThai' => true,
+            'TrangThai' => false, // chưa kích hoạt
             'ID_CCCD' => $request->ID_CCCD,
             'VaiTro' => 0,
+            'token_xac_nhan' => $token,
         ]);
 
-        return redirect()->route('login.form')->with('success', 'Đăng ký thành công! Mời đăng nhập.');
+        // Gửi email xác nhận
+        try {
+            Mail::send('emails.verify-email', [
+                'token' => $token,
+                'TenDN' => $request->TenDN,
+            ], function ($message) use ($request) {
+                $message->to($request->Email)
+                    ->subject('Xác nhận tài khoản của bạn');
+            });
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return back()->withErrors(['email' => 'Không gửi được email xác nhận.']);
+        }
+
+        return redirect()->route('register.form')->with('success', 'Vui lòng xác nhận tài khoản đăng ký thông qua liên kết mà chúng tôi đã gửi đến email của bạn!');
+    }
+    public function verifyAccount($token)
+    {
+        $taiKhoan = TaiKhoan::where('token_xac_nhan', $token)->first();
+
+        if (!$taiKhoan) {
+            return redirect()->route('login.form')->withErrors(['login' => 'Liên kết xác nhận không hợp lệ.']);
+        }
+
+        $taiKhoan->TrangThai = true;
+        $taiKhoan->token_xac_nhan = null;
+        $taiKhoan->save();
+
+        return redirect()->route('login.form')->with('success', 'Tài khoản đã được xác nhận. Bạn có thể đăng nhập!');
     }
 
     public function DangNhap()
@@ -71,11 +102,17 @@ class AuthController extends Controller
 
         $user = TaiKhoan::where('TenDN', $request->TenDN)->first();
 
+        // Kiểm tra tài khoản có tồn tại không
         if (!$user) {
             if ($request->ajax()) {
                 return response()->json(['error' => 'Tài khoản này chưa được đăng ký.'], 401);
             }
             return back()->withErrors(['login' => 'Tài khoản này chưa được đăng ký.']);
+        }
+
+        // Kiểm tra trạng thái kích hoạt
+        if ($user->TrangThai == 0) {
+            return back()->withErrors(['login' => 'Tài khoản chưa được xác nhận. Vui lòng kiểm tra Email và xác nhận tài khoản trước khi đăng nhập!']);
         }
 
         if (!Hash::check($request->MatKhau, $user->MatKhau)) {
@@ -102,6 +139,7 @@ class AuthController extends Controller
 
         return redirect()->route('home')->with('success', 'Đăng nhập thành công!');
     }
+    
     public function dang_xuat()
     {
         session()->flush();
@@ -205,5 +243,4 @@ class AuthController extends Controller
 
         return back()->with('success', 'Cập nhật thông tin thành công!');
     }
-   
 }

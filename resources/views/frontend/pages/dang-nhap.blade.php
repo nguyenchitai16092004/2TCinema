@@ -46,37 +46,39 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @if ($errors->any())
     <script>
-        $('#loginForm').on('submit', function(e) {
-    e.preventDefault();
-    $('.main-reloader').show().text('Đang kiểm tra...');
-    $.ajax({
-        url: $(this).attr('action'),
-        type: 'POST',
-        data: $(this).serialize(),
-        success: function(res) {
-            if (res.success) {
-                window.location.href = '/';
-            }
-        },
-        error: function(xhr) {
-            let msg = 'Sai tên đăng nhập hoặc mật khẩu';
-            if (xhr.responseJSON && xhr.responseJSON.error) {
-                msg = xhr.responseJSON.error;
-            }
-            $('.main-reloader').hide();
+        $(document).ready(function() {
             $.sweetModal({
-                content: msg,
+                content: `{!! implode('<br>', $errors->all()) !!}`,
                 title: 'Thông báo',
                 icon: $.sweetModal.ICON_WARNING,
                 theme: $.sweetModal.THEME_DARK,
                 buttons: {
-                    'OK': { classes: 'redB' }
+                    'OK': {
+                        classes: 'redB'
+                    }
                 }
             });
-        }
-    });
-});
+        });
     </script>
-@endsection
+@endif
+
+@if (session('success'))
+    <script>
+        $(document).ready(function() {
+            $.sweetModal({
+                content: `{{ session('success') }}`,
+                title: 'Thông báo',
+                icon: $.sweetModal.ICON_SUCCESS,
+                theme: $.sweetModal.THEME_DARK,
+                buttons: {
+                    'OK': {
+                        classes: 'redB'
+                    }
+                }
+            });
+        });
+    </script>
+@endif
+@stop

@@ -41,6 +41,3 @@ class Phim extends Model
         return $this->hasMany(SuatChieu::class, 'ID_Phim', 'ID_Phim');
     }
 }   
-
-}
-
