@@ -17,10 +17,12 @@ class TaiKhoan extends Authenticatable
     protected $fillable = [
         'TenDN',
         'MatKhau',
-        'VaiTro',
         'TrangThai',
         'ID_CCCD',
+        'VaiTro',
+        'token_xac_nhan', 
     ];
+
 
     protected $hidden = [
         'MatKhau',

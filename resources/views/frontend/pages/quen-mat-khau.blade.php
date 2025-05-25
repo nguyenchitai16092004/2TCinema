@@ -65,7 +65,7 @@
                 _token: $('meta[name="csrf-token"]').attr('content')
             });
             $.ajax({
-                url: "/quen-mat-khau",
+                url: "{{ route('quen-mat-khau.post') }}",
                 type: "POST",
                 data: data,
                 traditional: true,
@@ -76,7 +76,7 @@
                     if (result === "true" || result === true) {
                         $(".main-reloader").css("display", "none");
                         $.sweetModal({
-                            content: 'Vui lòng kiểm tra email để nhận mật khẩu mới. Và đăng nhập <a href="{{ asset('/') }}">tại đây</a>',
+                            content: 'Vui lòng kiểm tra email để nhận mật khẩu mới. Và đăng nhập <a href="{{ route('login.form') }}">tại đây</a>',
                             title: 'Thông báo',
                             icon: $.sweetModal.ICON_WARNING,
                             theme: $.sweetModal.THEME_DARK,

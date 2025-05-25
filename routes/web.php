@@ -41,6 +41,7 @@ Route::get('/lich-su-giao-dich', function () {
 // Đăng ký
 Route::get('/dang-ky', [AuthController::class, 'DangKy'])->name('register.form');
 Route::post('/dang-ky', [AuthController::class, 'dang_ky']);
+Route::get('/xac-nhan/{token}', [AuthController::class, 'verifyAccount'])->name('verify.account');
 
 // Đăng nhập
 Route::get('/dang-nhap', [AuthController::class, 'DangNhap'])->name('login.form');
@@ -52,38 +53,28 @@ Route::post('/doi-mat-khau', [AuthController::class, 'doi_mat_khau'])->name('doi
 Route::post('/quen-mat-khau', [AuthController::class, 'quen_mat_khau']);
 Route::post('/dang-xuat', [AuthController::class, 'dang_xuat'])->name('logout');
 
-Route::get('/404', function () {
-    return view('frontend.pages.404');
-});
+
 
 Route::get('/cau-hoi-thuong-gap', function () {
     return view('frontend.pages.cau-hoi-thuong-gap');
 });
 Route::get('/cap-nhat-thong-tin', [AuthController::class, 'showUpdateInfo'])->name('user.updateInfo');
 Route::post('/cap-nhat-thong-tin', [AuthController::class, 'updateInfo'])->name('user.updateInfo.post');
-Route::get('/dat-ve/{id}', [DatVeController::class, 'show'])->name('dat-ve.show');
-
-Route::get('/lich-chieu', function () {
+Route::get('/dat-ve/{phimSlug}/{ngay}/{gio}', [DatVeController::class, 'showBySlug'])->name('dat-ve.show.slug');Route::get('/lich-chieu', function () {
     return view('frontend.pages.lich-chieu');
 });
 Route::get('/lien-he', function () {
     return view('frontend.pages.lien-he');
 });
-Route::get('/phim-sap-chieu', function () {
-    return view('frontend.pages.phim-sap-chieu');
-});
-Route::get('/phim-dang-chieu', function () {
-    return view('frontend.pages.phim-dang-chieu');
-});
+Route::get('/phim-sap-chieu', [PhimController::class, 'phimSapChieu'])->name('phim.sapChieu');
+Route::get('/phim-dang-chieu', [PhimController::class, 'phimDangChieu'])->name('phim.dangChieu');
 Route::get('/quen-mat-khau', function () {
     return view('frontend.pages.quen-mat-khau');
 });
 Route::get('/tin-tuc', function () {
     return view('frontend.pages.tin-tuc');
 });
-Route::get('/tuyen-dung', function () {
-    return view('frontend.pages.tuyen-dung');
-});
+
 Route::get('/uu-dai', function () {
     return view('frontend.pages.uu-dai');
 });
@@ -102,8 +93,7 @@ Route::get('/dieu-khoan-chung', function () {
 Route::get('/kiem-hang-doi-tra-hoan-tien', function () {
     return view('frontend.pages.chinh-sach.kiem-hang-doi-tra-hoan-tien');
 });
-Route::get('/chi-tiet-phim/{id}', [PhimController::class, 'chiTiet'])->name('phim.chiTiet');
-
+Route::get('/chi-tiet-phim/{slug}', [PhimController::class, 'chiTiet'])->name('phim.chiTiet');
 Route::post('/thanh-toan', [DatVeController::class, 'thanhToan'])->name('thanh-toan');
 Route::post('/check-seat', [DatVeController::class, 'checkSeat'])->name('check-seat');
 Route::post('/thanh-toan/momo', [ThanhToanController::class, 'thanhToanMomo'])->name('thanh-toan.momo');
