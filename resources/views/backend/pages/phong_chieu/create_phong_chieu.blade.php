@@ -82,13 +82,31 @@
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- Loại phòng --}}
+                            <div class="mb-3">
+                                <label class="form-label">Loại phòng</label>
+                                <select class="form-select form-select-sm" name="LoaiPhong" required>
+                                    <option value="" disabled selected>Chọn loại phòng</option>
+                                    <option value="0" {{ old('LoaiPhong') == '0' ? 'selected' : '' }}>
+                                        Phòng thường
+                                    </option>
+                                    <option value="1" {{ old('LoaiPhong') == '1' ? 'selected' : '' }}>
+                                        Phòng VIP
+                                    </option>
+                                </select>
+                                @error('LoaiPhong')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="row">
                                 {{-- Số hàng ghế --}}
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Số hàng ghế</label>
                                     <select class="form-select form-select-sm" id="rowCount" name="rowCount" required>
                                         <option value="" disabled selected>Chọn số hàng</option>
-                                        @for ($i = 5; $i <= 12; $i++)
+                                        @for ($i = 5; $i <= 10; $i++)
                                             <option value="{{ $i }}"
                                                 {{ old('rowCount') == $i ? 'selected' : '' }}>{{ $i }}</option>
                                         @endfor
@@ -103,7 +121,7 @@
                                     <label class="form-label">Số ghế mỗi hàng</label>
                                     <select class="form-select form-select-sm" id="colCount" name="colCount" required>
                                         <option value="" disabled selected>Chọn số ghế</option>
-                                        @foreach ([6, 8, 10, 12, 14, 16] as $col)
+                                        @foreach ([6, 7, 8, 9, 10] as $col)
                                             <option value="{{ $col }}"
                                                 {{ old('colCount') == $col ? 'selected' : '' }}>{{ $col }}
                                             </option>
@@ -157,7 +175,7 @@
                                     <i class="bi bi-plus-circle me-1"></i> Tạo phòng
                                 </button>
                                 <button type="button" id="clearAislesBtn" onclick="clearAisles()"
-                                    class="btn btn-outline-danger btn-sm" disabled>
+                                    class="btn btn-outline-danger btn-sm" style="display: none;">
                                     <i class="bi bi-x-circle me-1"></i> Hủy đường
                                 </button>
                             </div>
@@ -174,7 +192,8 @@
                         <ul class="small mb-0 ps-3">
                             <li>Nhập thông tin phòng chiếu và click <strong>Xem sơ đồ</strong> để tạo mẫu</li>
                             <li>Click vào ghế để chuyển đổi: <strong>Thường → VIP → Không hoạt động</strong></li>
-                            <li>Thêm đường đi (lối đi) bằng cách chọn vị trí trong da</li>
+                            <li>Thêm đường đi (lối đi) bằng cách chọn vị trí trong danh sách</li>
+                            <li>Phòng thường: Các ghế cơ bản, Phòng VIP: Các ghế cao cấp hơn</li>
                         </ul>
                     </div>
                 </div>

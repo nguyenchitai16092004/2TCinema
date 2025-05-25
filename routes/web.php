@@ -8,7 +8,12 @@ use App\Http\Controllers\Admin\AdminPhimController;
 use App\Http\Controllers\Admin\KhuyenMaiController;
 use App\Http\Controllers\Admin\PhongChieuController;
 use App\Http\Controllers\Admin\SuatChieuController;
+use App\Http\Controllers\Admin\TaiKhoanController;
+use App\Http\Controllers\Admin\HoaDonController;
+use App\Http\Controllers\Admin\VeXemPhimController;
+use App\Http\Controllers\Admin\ThongKeController;
 use App\Http\Controllers\Admin\TheLoaiPhimController;
+use App\Http\Controllers\Admin\HomeController;
 
 use App\Http\Controllers\Apps\PhimController;
 use App\Http\Controllers\Apps\AuthController;
@@ -124,6 +129,10 @@ Route::get('/admin/404', fn() => view('backend.pages.404'));
 Route::get('/admin/charts', fn() => view('backend.pages.charts'));
 
 Route::prefix('admin')->middleware(['admin'])->group(function () {
+    Route::get('/home', [HomeController::class , 'index'])-> name('cap-nhat-thong-tin.index') ;
+    Route::post('/cap-nhat-thong-tin-trang', [HomeController::class , 'update'])-> name('thong-tin-trang-web.update') ;
+ 
+
     // Rap
     Route::prefix('rap')->name('rap.')->group(function () {
         Route::get('/', [RapController::class, 'index'])->name('index');
@@ -166,9 +175,6 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
         Route::get('/filter-phim', [SuatChieuController::class, 'filterByPhim'])->name('filter.phim');
     });
 
-});
-
-
     Route::prefix('the-loai')->name('the-loai.')->group(function () {
         Route::get('/', [TheLoaiPhimController::class, 'index'])->name('index');
         Route::get('/create', [TheLoaiPhimController::class, 'create'])->name('create');
@@ -186,5 +192,44 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
         Route::post('/update/{id}', [KhuyenMaiController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [KhuyenMaiController::class, 'destroy'])->name('delete');
     });
-});
 
+    Route::prefix('tai-khoan')->name('tai-khoan.')->group(function () {
+        Route::get('/', [TaiKhoanController::class, 'index'])->name('index');
+        Route::get('/create', [TaiKhoanController::class, 'create'])->name('create');
+        Route::post('/store', [TaiKhoanController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [TaiKhoanController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [TaiKhoanController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [TaiKhoanController::class, 'destroy'])->name('delete');
+        Route::get('/change-status/{id}', [TaiKhoanController::class, 'changeStatus'])->name('status');
+        Route::get('/export', [TaiKhoanController::class, 'export'])->name('export');
+    });
+
+    // Routes quản lý hóa đơn
+    Route::prefix('hoa-don')->name('hoa-don.')->group(function () {
+        Route::get('/', [HoaDonController::class, 'index'])->name('index');
+        Route::get('/create', [HoaDonController::class, 'create'])->name('create');
+        Route::post('/store', [HoaDonController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [HoaDonController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [HoaDonController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [HoaDonController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [HoaDonController::class, 'destroy'])->name('destroy');
+        Route::get('/export-report', [HoaDonController::class, 'exportReport'])->name('export-report');
+    });
+
+    // Routes quản lý vé xem phim trong hóa đơn
+    Route::prefix('ve-xem-phim')->name('ve-xem-phim.')->group(function () {
+        Route::get('/{hoaDonId}', [VeXemPhimController::class, 'index'])->name('index');
+        Route::get('/{hoaDonId}/create', [VeXemPhimController::class, 'create'])->name('create');
+        Route::post('/{hoaDonId}/store', [VeXemPhimController::class, 'store'])->name('store');
+        Route::get('/{hoaDonId}/show/{veId}', [VeXemPhimController::class, 'show'])->name('show');
+        Route::get('/{hoaDonId}/edit/{veId}', [VeXemPhimController::class, 'edit'])->name('edit');
+        Route::put('/{hoaDonId}/update/{veId}', [VeXemPhimController::class, 'update'])->name('update');
+        Route::delete('/{hoaDonId}/destroy/{veId}', [VeXemPhimController::class, 'destroy'])->name('destroy');
+        Route::patch('/{hoaDonId}/change-status/{veId}', [VeXemPhimController::class, 'changeStatus'])->name('change-status');
+    });
+
+    Route::prefix('thong-ke')->name('thong-ke.')->group(function () {
+        Route::get('/', [ThongKeController::class, 'index'])->name('index');
+    });
+    
+});

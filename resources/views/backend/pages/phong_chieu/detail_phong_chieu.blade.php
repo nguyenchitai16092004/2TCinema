@@ -88,6 +88,32 @@
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- Loại phòng --}}
+                            <div class="mb-3">
+                                <label class="form-label">Loại phòng</label>
+                                <select class="form-select form-select-sm" name="LoaiPhong" required>
+                                    <option value="" disabled>Chọn loại phòng</option>
+                                    <option value="0" {{ $phongChieu->LoaiPhong == 0 ? 'selected' : '' }}>Phòng thường</option>
+                                    <option value="1" {{ $phongChieu->LoaiPhong == 1 ? 'selected' : '' }}>Phòng VIP</option>
+                                </select>
+                                @error('LoaiPhong')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Trạng thái --}}
+                            <div class="mb-3">
+                                <label class="form-label">Trạng thái</label>
+                                <select class="form-select form-select-sm" name="TrangThai" required>
+                                    <option value="1" {{ $phongChieu->TrangThai == 1 ? 'selected' : '' }}>Hoạt động</option>
+                                    <option value="0" {{ $phongChieu->TrangThai == 0 ? 'selected' : '' }}>Không hoạt động</option>
+                                </select>
+                                @error('TrangThai')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="row">
                                 {{-- Số hàng ghế --}}
                                 <div class="col-md-6 mb-3">
@@ -155,6 +181,15 @@
                                 @enderror
                             </div>
 
+                            {{-- Nút xóa lối đi --}}
+                            <div class="mb-3">
+                                <button type="button" id="clearAislesBtn" onclick="clearAisles()" 
+                                    class="btn btn-outline-warning btn-sm"
+                                    style="display: {{ (json_decode($phongChieu->HangLoiDi ?: '[]')) ? 'inline-block' : 'none' }};">
+                                    <i class="bi bi-eraser me-1"></i> Xóa lối đi
+                                </button>
+                            </div>
+
                             {{-- Hidden input cho sơ đồ ghế --}}
                             <input type="hidden" name="seatLayout" id="seatLayoutInput"
                                 value="{{ json_encode($seatLayout) }}">
@@ -162,6 +197,11 @@
                             {{-- Hiển thị lỗi --}}
                             @if (session('error'))
                                 <div class="alert alert-danger">{{ session('error') }}</div>
+                            @endif
+
+                            {{-- Hiển thị thành công --}}
+                            @if (session('success'))
+                                <div class="alert alert-success">{{ session('success') }}</div>
                             @endif
 
                             {{-- Nút --}}
@@ -201,7 +241,15 @@
         rowAisles = rowAisles || [];
         colAisles = colAisles || [];
         seatCount = seatCount || 0;
-        let isDetailView = false;
+        let isDetailView = true; // Đặt true cho trang detail
+        
+        console.log('Detail view initialized with:', {
+            seats: seats,
+            rowAisles: rowAisles,
+            colAisles: colAisles,
+            seatCount: seatCount,
+            isDetailView: isDetailView
+        });
     </script>
     <script src="{{ asset('backend/assets/js/seat.js') }}" defer></script>
 @endsection

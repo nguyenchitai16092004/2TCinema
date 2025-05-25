@@ -42,5 +42,4 @@ class Phim extends Model
     }
 }   
 
-}
 

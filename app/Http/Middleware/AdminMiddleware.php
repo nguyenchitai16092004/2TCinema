@@ -16,14 +16,20 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Kiểm tra xem người dùng đã đăng nhập hay chưa
         if (!Auth::check()) {
-            return redirect('/admin')->with('error', 'Bạn cần đăng nhập để truy cập trang quản trị!');
+            return redirect('/admin')->with('error', 'Bạn cần đăng nhập để truy cập!');
         }
-        
-        // Kiểm tra vai trò của người dùng
-        if (Auth::user()->VaiTro != 1) {
-            return redirect('/admin')->with('error', 'Bạn không có quyền truy cập vào trang quản trị!');
+
+        $vaiTro = Auth::user()->VaiTro;
+
+        // Nếu là người dùng bình thường
+        if ($vaiTro == 0) {
+            return redirect('/')->with('error', 'Bạn không có quyền truy cập khu vực quản trị!');
+        }
+
+        // Nếu là nhân viên và đang cố gắng truy cập khu vực không được phép
+        if ($vaiTro == 1 && $request->is('admin/khach-hang*')) {
+            return redirect('/admin')->with('error', 'Bạn không có quyền truy cập thông tin khách hàng!');
         }
 
         return $next($request);

@@ -34,7 +34,8 @@ class PhongChieuController extends Controller
         // Xác thực dữ liệu đầu vào
         $request->validate([
             'roomName' => 'required|string|max:100',
-            'ID_Rap' => 'required|exists:rap,ID_Rap', // Bảng rap, không phải raps
+            'ID_Rap' => 'required|exists:rap,ID_Rap',
+            'LoaiPhong' => 'required|integer|in:0,1', // 0: phòng thường, 1: phòng VIP
             'rowCount' => 'required|integer|min:5|max:10',
             'colCount' => 'required|integer|min:6|max:12',
             'seatLayout' => 'required|json',
@@ -46,6 +47,12 @@ class PhongChieuController extends Controller
 
         try {
             DB::beginTransaction();
+
+            $soPhongChieu = PhongChieu::where('ID_Rap', $request->ID_Rap)->count();
+            if ($soPhongChieu >= 5) {
+                DB::rollBack();
+                return redirect()->back()->with('error', 'Rạp này đã đạt tối đa 5 phòng chiếu.')->withInput();
+            }
 
             // Chuyển đổi seatLayout từ JSON sang mảng
             $seatLayout = json_decode($request->seatLayout, true);
@@ -63,6 +70,7 @@ class PhongChieuController extends Controller
             // Tạo phòng chiếu
             $phongChieu = PhongChieu::create([
                 'TenPhongChieu' => $request->roomName,
+                'LoaiPhong' => $request->LoaiPhong,
                 'TrangThai' => true,
                 'SoLuongGhe' => $soLuongGhe,
                 'ID_Rap' => $request->ID_Rap,
@@ -165,6 +173,7 @@ class PhongChieuController extends Controller
         $validated = $request->validate([
             'roomName' => 'required|string|max:100',
             'ID_Rap' => 'required|exists:rap,ID_Rap',
+            'LoaiPhong' => 'required|integer|in:0,1', // 0: phòng thường, 1: phòng VIP
             'rowCount' => 'required|integer|min:5|max:10',
             'colCount' => 'required|integer|in:6,7,8,9,10,12',
             'rowAisles' => 'array|nullable',
@@ -196,6 +205,7 @@ class PhongChieuController extends Controller
             $phongChieu->update([
                 'TenPhongChieu' => $validated['roomName'],
                 'ID_Rap' => $validated['ID_Rap'],
+                'LoaiPhong' => $validated['LoaiPhong'],
                 'TrangThai' => $validated['TrangThai'],
                 'SoLuongGhe' => $soLuongGhe,
                 'HangLoiDi' => json_encode($validated['rowAisles'] ?? []),
