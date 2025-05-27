@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-md-9 register-right">
                     <h3 class="register-heading">Thông tin tài khoản</h3>
-                    <form id="registerForm" action="/dang-ky" method="POST">
+                    <form id="registerForm" action="{{ route('register.form.post') }}" method="POST">
                         @csrf
                         <div class="row register-form">
                             <div class="col-md-6">

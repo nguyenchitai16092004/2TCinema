@@ -17,10 +17,10 @@
                             <p>Email: {{ session('user_email') }}</p>
                             <p>Ngày sinh: {{ \Carbon\Carbon::parse(session('user_date'))->format('d-m-Y') }}</p>
                             <p>Giới tính: {{ session('user_sex') == 1 ? 'Nam' : 'Nữ' }}</p>
-                            <a href="{{ asset('/doi-mat-khau') }}">Đổi mật khẩu</a>
-                            <a href="{{ asset('/cap-nhat-thong-tin') }}">Cập nhật thông tin</a>
+                            <a href="{{ route('doi-mat-khau.get') }}">Đổi mật khẩu</a>
+                            <a href="{{ route('user.updateInfo.get') }}">Cập nhật thông tin</a>
 
-                            <a href="{{ asset('/lich-su-giao-dich') }}">Lịch sử giao dịch online</a>
+                            <a href="{{ route('user.lichsugiaodich') }}">Lịch sử giao dịch online</a>
                         </div>
                     </div>
                 </div>

@@ -71,7 +71,7 @@ class AuthController extends Controller
             return back()->withErrors(['email' => 'Không gửi được email xác nhận.']);
         }
 
-        return redirect()->route('register.form')->with('success', 'Vui lòng xác nhận tài khoản đăng ký thông qua liên kết mà chúng tôi đã gửi đến email của bạn!');
+        return redirect()->route('register.form.get')->with('success', 'Vui lòng xác nhận tài khoản đăng ký thông qua liên kết mà chúng tôi đã gửi đến email của bạn!');
     }
     public function verifyAccount($token)
     {

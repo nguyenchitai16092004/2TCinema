@@ -24,20 +24,18 @@
                     <div class="single-footer-widget">
                         <h3>Chính sách</h3>
                         <ul>
-                            <li><a href="chinh-sach/dieu-khoan-chung-1.html"><i
+                            <li><a href="{{ route('chinh-sach.dieu-khoan-chung') }}"><i
                                         class="fa fa-angle-double-right"></i>Điều khoản chung</a></li>
-                            <li><a href="chinh-sach/chinh-sach-thanh-toan-2.html"><i
-                                        class="fa fa-angle-double-right"></i>Ch&#237;nh s&#225;ch thanh
-                                    to&#225;n</a></li>
-                            <li><a href="chinh-sach/chinh-sach-giao-nhan-3.html"><i
-                                        class="fa fa-angle-double-right"></i>Ch&#237;nh S&#225;ch Giao Nhận</a>
+                            <li><a href="{{ route('chinh-sach.thanh-toan') }}"><i
+                                        class="fa fa-angle-double-right"></i>Chính sách thanh toán</a></li>
+                            <li><a href="{{ route('chinh-sach.giao-nhan') }}"><i
+                                        class="fa fa-angle-double-right"></i>Chính sách giao nhận</a>
                             </li>
-                            <li><a href="chinh-sach/bao-mat-thong-tin-4.html"><i
-                                        class="fa fa-angle-double-right"></i>Bảo Mật Th&#244;ng Tin</a></li>
-                            <li><a href="chinh-sach/kiem-hang-doi-tra-hoan-tien-5.html"><i
-                                        class="fa fa-angle-double-right"></i>Kiểm H&#224;ng, đổi trả/ho&#224;n
-                                    tiền</a></li>
-                            <li><a href="{{ asset('/cau-hoi-thuong-gap') }}"><i
+                            <li><a href="{{ route('chinh-sach.bao-mat-thong-tin') }}"><i
+                                        class="fa fa-angle-double-right"></i>Bảo mật thông tin</a></li>
+                            <li><a href="{{ route('chinh-sach.kiem-hang-doi-tra-hoan-tien') }}"><i
+                                        class="fa fa-angle-double-right"></i>Kiểm hàng, đổi trả hoàn tiền</a></li>
+                            <li><a href="{{ route('cau-hoi-thuong-gap') }}"><i
                                         class="fa fa-angle-double-right"></i>Câu hỏi thường gặp</a></li>
 
                         </ul>

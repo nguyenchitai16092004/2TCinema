@@ -29,10 +29,10 @@
 
                                         <div class="form-group">
                                             <ul style="display: flex; gap: 10px; padding-left: 0; list-style: none;">
-                                                <li><a href="{{ asset('/dang-ky') }}">Đăng ký</a></li>
+                                                <li><a href="{{ route('register.form.get') }}">Đăng ký</a></li>
 
 
-                                                <li><a href="{{ asset('/quen-mat-khau') }}">/ Quên mật khẩu?</a></li>
+                                                <li><a href="{{ route('quen-mat-khau.get') }}">/ Quên mật khẩu?</a></li>
                                             </ul>
                                         </div>
 

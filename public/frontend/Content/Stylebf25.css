@@ -70,7 +70,6 @@ body {
     font-size: 14px;
     line-height: 22px;
     max-width: 95%;
-    /* background: url(img/bgs6.jpg); */
     background-size: contain;
     letter-spacing: 1.5px;
 }
@@ -4764,9 +4763,6 @@ input[type="button"].btn-block {
     color: #6c757d;
 }
 
-.nav-tabs {
-    border-bottom: 1px solid #dee2e6;
-}
 
 .nav-tabs .nav-item {
     margin-bottom: -1px;
@@ -17158,7 +17154,7 @@ li {
 
 .filmoja-heading h2 {
     font-family: "Nunito Sans", sans-serif;
-    text-transform: uppercase; /* Changed from capitalize to uppercase */
+    text-transform: uppercase;
     font-weight: bold;
     color: #111;
     font-size: 40px;
@@ -18970,11 +18966,15 @@ ul.company-desc-list li i {
 
 .filmoja-footer-area {
     background: linear-gradient(to right, #171e38, #5842a8, #171e38);
-    width: 100vw;
+    width: 100%;
+    max-width: 100%;
     color: white;
-    position: relative;
-    right: 260px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
 }
+
+
 
 .single-footer-widget h3 {
     font-size: 17px;
@@ -26118,17 +26118,16 @@ h3.no-underline {
         display: none;
     }
 }
-@media only screen and (min-width: 1300px) {
+/* @media only screen and (min-width: 1300px) {
     body {
         max-width: 1280px !important;
     }
-}
+} */
 @media only screen and (max-width: 992px) {
     .info-map .container .row > div:first-child {
         display: none;
     }
 }
-@charset 'UTF-8';
 /* Slider */
 .slick-loading .slick-list {
     background: #fff url("../4048342.html") center center no-repeat;
