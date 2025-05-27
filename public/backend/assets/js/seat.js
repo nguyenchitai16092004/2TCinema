@@ -1,5 +1,5 @@
 // Enhanced Room Management JavaScript
-// Supports both creation and detail views
+// Supports both creation and detail views with room type logic
 
 document.addEventListener('DOMContentLoaded', function () {
     // DOM Elements
@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const previewBtn = document.getElementById('previewBtn');
     const selectAllBtn = document.getElementById('selectAllBtn');
     const seatCountSpan = document.getElementById('seatCount');
+    const roomTypeSelect = document.querySelector('select[name="LoaiPhong"]');
 
     // Initialize data
     let seats = [];
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let colAisles = [];
     let seatCount = 0;
     let isDetailView = false;
+    let currentRoomType = null; // Thêm biến theo dõi loại phòng hiện tại
 
     // Try to parse initial data if available
     try {
@@ -38,16 +40,70 @@ document.addEventListener('DOMContentLoaded', function () {
                 colAisles = Array.from(colAislesSelect.selectedOptions).map(opt => parseInt(opt.value));
             }
 
+            // Lấy loại phòng hiện tại nếu có
+            if (roomTypeSelect) {
+                currentRoomType = roomTypeSelect.value;
+            }
+
             console.log('Initial data loaded:', {
                 isDetailView,
                 seats,
                 rowAisles,
-                colAisles
+                colAisles,
+                currentRoomType
             });
         }
     } catch (e) {
         console.error('Error initializing data:', e);
         seats = [];
+    }
+
+    // Cập nhật giới hạn số hàng và cột theo loại phòng
+    function updateRowAndColOptions() {
+        const loaiPhong = roomTypeSelect ? roomTypeSelect.value : null;
+        let maxRow = 10;
+        let maxCol = 10;
+
+        if (loaiPhong === "1") { // VIP
+            maxRow = 9;
+            maxCol = 8;
+        }
+
+        // Lưu giá trị hiện tại
+        const currentRow = rowCountSelect ? rowCountSelect.value : '';
+        const currentCol = colCountSelect ? colCountSelect.value : '';
+
+        // Cập nhật options cho số hàng
+        if (rowCountSelect) {
+            rowCountSelect.innerHTML = '<option value="" disabled selected>Chọn số hàng</option>';
+            for (let i = 5; i <= maxRow; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                if (currentRow === i.toString()) option.selected = true;
+                rowCountSelect.appendChild(option);
+            }
+        }
+
+        // Cập nhật options cho số ghế mỗi hàng
+        if (colCountSelect) {
+            colCountSelect.innerHTML = '<option value="" disabled selected>Chọn số ghế</option>';
+            for (let i = 6; i <= maxCol; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                if (currentCol === i.toString()) option.selected = true;
+                colCountSelect.appendChild(option);
+            }
+        }
+
+        // Kiểm tra nếu giá trị hiện tại vượt quá giới hạn mới
+        if (currentRow && parseInt(currentRow) > maxRow) {
+            if (rowCountSelect) rowCountSelect.value = '';
+        }
+        if (currentCol && parseInt(currentCol) > maxCol) {
+            if (colCountSelect) colCountSelect.value = '';
+        }
     }
 
     // Chuẩn hóa dữ liệu ghế
@@ -108,6 +164,68 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log('Normalized seats:', seats);
         return seats;
+    }
+
+    // Áp dụng loại phòng cho tất cả ghế
+    function applyRoomTypeToAllSeats(roomType) {
+        const rowCount = parseInt(rowCountSelect.value) || 0;
+        const colCount = parseInt(colCountSelect.value) || 0;
+
+        if (!rowCount || !colCount || !seats || seats.length === 0) {
+            return;
+        }
+
+        // Đảm bảo mảng ghế đã được chuẩn hóa
+        normalizeSeats(rowCount, colCount);
+
+        // Áp dụng loại ghế dựa vào loại phòng
+        for (let i = 0; i < rowCount; i++) {
+            for (let j = 0; j < colCount; j++) {
+                if (seats[i][j] && seats[i][j].TrangThaiGhe !== 0) { // Không thay đổi ghế đã bị vô hiệu hóa
+                    if (roomType === '1') { // Phòng VIP
+                        seats[i][j].TrangThaiGhe = 2; // Chuyển thành ghế VIP
+                    } else if (roomType === '0') { // Phòng thường
+                        seats[i][j].TrangThaiGhe = 1; // Chuyển thành ghế thường
+                    }
+                }
+            }
+        }
+
+        console.log('Applied room type', roomType, 'to all seats');
+        renderCurrentSeats();
+    }
+
+    // Xử lý thay đổi loại phòng
+    function handleRoomTypeChange() {
+        if (!roomTypeSelect) return;
+
+        const newRoomType = roomTypeSelect.value;
+        updateRowAndColOptions();
+
+        // Chỉ áp dụng nếu loại phòng thay đổi và đã có sơ đồ ghế
+        if (newRoomType !== currentRoomType && seats && seats.length > 0) {
+            const rowCount = parseInt(rowCountSelect.value) || 0;
+            const colCount = parseInt(colCountSelect.value) || 0;
+
+            if (rowCount > 0 && colCount > 0) {
+                // Hiển thị thông báo xác nhận
+                const confirmMessage = newRoomType === '1'
+                    ? 'Chuyển sang phòng VIP sẽ đặt tất cả ghế thành ghế VIP. Bạn có muốn tiếp tục?'
+                    : 'Chuyển sang phòng thường sẽ đặt tất cả ghế thành ghế thường. Bạn có muốn tiếp tục?';
+
+                if (confirm(confirmMessage)) {
+                    applyRoomTypeToAllSeats(newRoomType);
+                    currentRoomType = newRoomType;
+                } else {
+                    // Khôi phục giá trị cũ nếu người dùng hủy
+                    roomTypeSelect.value = currentRoomType || '';
+                }
+            } else {
+                currentRoomType = newRoomType;
+            }
+        } else {
+            currentRoomType = newRoomType;
+        }
     }
 
     // Render sơ đồ ghế
@@ -191,8 +309,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 seat.dataset.row = i;
                 seat.dataset.col = j;
 
-                // Xử lý sự kiện click
-                seat.addEventListener('click', toggleSeatStatus);
+                // Xử lý sự kiện click - kiểm tra loại phòng
+                seat.addEventListener('click', function () {
+                    toggleSeatStatus.call(this);
+                });
 
                 rowContainer.appendChild(seat);
             }
@@ -221,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Chuyển đổi trạng thái ghế khi click
+    // Chuyển đổi trạng thái ghế khi click - với logic loại phòng
     function toggleSeatStatus() {
         let row = parseInt(this.dataset.row);
         let col = parseInt(this.dataset.col);
@@ -234,23 +354,54 @@ document.addEventListener('DOMContentLoaded', function () {
             };
         }
 
-        // Chuyển đổi trạng thái ghế theo chu kỳ: 1 (thường) -> 2 (VIP) -> 0 (không hoạt động) -> 1 (thường)
         const currentState = seats[row][col].TrangThaiGhe || 0;
+        const roomType = roomTypeSelect ? roomTypeSelect.value : null;
 
-        if (currentState == 1) {
-            seats[row][col].TrangThaiGhe = 2; // Chuyển thành ghế VIP
-            this.classList.remove('disabled', 'normal');
-            this.classList.add('vip');
-        } else if (currentState == 2) {
-            seats[row][col].TrangThaiGhe = 0; // Chuyển thành ghế không hoạt động
-            this.classList.add('disabled');
-            this.classList.remove('normal', 'vip');
-            seatCount--;
-        } else {
-            seats[row][col].TrangThaiGhe = 1; // Chuyển thành ghế thường
-            this.classList.remove('disabled', 'vip');
-            this.classList.add('normal');
-            seatCount++;
+        // Logic chuyển đổi dựa vào loại phòng
+        if (roomType === '0') { // Phòng thường - chỉ có ghế thường và vô hiệu hóa
+            if (currentState === 1) {
+                seats[row][col].TrangThaiGhe = 0; // Chuyển thành ghế không hoạt động
+                this.classList.add('disabled');
+                this.classList.remove('normal', 'vip');
+                seatCount--;
+            } else {
+                seats[row][col].TrangThaiGhe = 1; // Chuyển thành ghế thường
+                this.classList.remove('disabled', 'vip');
+                this.classList.add('normal');
+                if (currentState === 0) seatCount++;
+            }
+        } else if (roomType === '1') { // Phòng VIP - có đầy đủ các loại ghế
+            if (currentState === 1) {
+                seats[row][col].TrangThaiGhe = 2; // Chuyển thành ghế VIP
+                this.classList.remove('disabled', 'normal');
+                this.classList.add('vip');
+            } else if (currentState === 2) {
+                seats[row][col].TrangThaiGhe = 0; // Chuyển thành ghế không hoạt động
+                this.classList.add('disabled');
+                this.classList.remove('normal', 'vip');
+                seatCount--;
+            } else {
+                seats[row][col].TrangThaiGhe = 1; // Chuyển thành ghế thường
+                this.classList.remove('disabled', 'vip');
+                this.classList.add('normal');
+                seatCount++;
+            }
+        } else { // Chưa chọn loại phòng - giữ logic cũ
+            if (currentState == 1) {
+                seats[row][col].TrangThaiGhe = 2; // Chuyển thành ghế VIP
+                this.classList.remove('disabled', 'normal');
+                this.classList.add('vip');
+            } else if (currentState == 2) {
+                seats[row][col].TrangThaiGhe = 0; // Chuyển thành ghế không hoạt động
+                this.classList.add('disabled');
+                this.classList.remove('normal', 'vip');
+                seatCount--;
+            } else {
+                seats[row][col].TrangThaiGhe = 1; // Chuyển thành ghế thường
+                this.classList.remove('disabled', 'vip');
+                this.classList.add('normal');
+                seatCount++;
+            }
         }
 
         // Cập nhật số ghế và input
@@ -366,26 +517,31 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCurrentSeats();
     }
 
-    // Chọn tất cả ghế
+    // Chọn tất cả ghế - với logic loại phòng
     function selectAllSeats() {
         const rowCount = parseInt(rowCountSelect.value) || 0;
         const colCount = parseInt(colCountSelect.value) || 0;
+        const roomType = roomTypeSelect ? roomTypeSelect.value : null;
 
         if (!rowCount || !colCount) return;
 
         // Đảm bảo mảng ghế đã được chuẩn hóa
         normalizeSeats(rowCount, colCount);
 
-        // Đặt tất cả ghế về trạng thái thường (1)
+        // Đặt tất cả ghế dựa vào loại phòng
         for (let i = 0; i < rowCount; i++) {
             for (let j = 0; j < colCount; j++) {
                 if (seats[i][j]) {
-                    seats[i][j].TrangThaiGhe = 1;
+                    if (roomType === '1') { // Phòng VIP - đặt tất cả thành ghế VIP
+                        seats[i][j].TrangThaiGhe = 2;
+                    } else { // Phòng thường hoặc chưa chọn - đặt tất cả thành ghế thường
+                        seats[i][j].TrangThaiGhe = 1;
+                    }
                 }
             }
         }
 
-        console.log('Selected all seats');
+        console.log('Selected all seats with room type:', roomType);
         renderCurrentSeats();
     }
 
@@ -400,7 +556,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Chuẩn hóa dữ liệu ghế cho kích thước mới
         if (rowCount && colCount) {
             normalizeSeats(rowCount, colCount);
-            renderSeats(rowCount, colCount);
+
+            // Áp dụng loại phòng nếu đã chọn
+            const roomType = roomTypeSelect ? roomTypeSelect.value : null;
+            if (roomType) {
+                applyRoomTypeToAllSeats(roomType);
+            } else {
+                renderSeats(rowCount, colCount);
+            }
         } else {
             renderSeats(0, 0); // Hiển thị placeholder
         }
@@ -435,8 +598,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Chuẩn hóa dữ liệu ghế
         normalizeSeats(rowCount, colCount);
 
-        // Render sơ đồ ghế
-        renderSeats(rowCount, colCount);
+        // Áp dụng loại phòng nếu đã chọn
+        const roomType = roomTypeSelect ? roomTypeSelect.value : null;
+        if (roomType) {
+            applyRoomTypeToAllSeats(roomType);
+        } else {
+            renderSeats(rowCount, colCount);
+        }
 
         // Kích hoạt nút xóa lối đi nếu có lối đi
         if (clearAislesBtn) {
@@ -483,8 +651,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Chuẩn hóa dữ liệu ghế
         seats = normalizeSeats(rowCount, colCount);
 
-        // Render sơ đồ ghế (grid columns được cài đặt trong hàm renderSeats)
-        renderSeats(rowCount, colCount);
+        // Áp dụng loại phòng
+        const roomType = roomTypeSelect ? roomTypeSelect.value : null;
+        if (roomType) {
+            applyRoomTypeToAllSeats(roomType);
+        } else {
+            renderSeats(rowCount, colCount);
+        }
 
         // Kích hoạt nút xóa lối đi
         clearAislesBtn.disabled = false;
@@ -521,6 +694,13 @@ document.addEventListener('DOMContentLoaded', function () {
         roomForm.addEventListener('submit', handleSubmitForm);
     }
 
+    // Thêm event listener cho loại phòng
+    if (roomTypeSelect) {
+        roomTypeSelect.addEventListener('change', handleRoomTypeChange);
+        // Lưu giá trị ban đầu
+        currentRoomType = roomTypeSelect.value;
+    }
+
     // Initialize the view
     const rowCount = rowCountSelect ? parseInt(rowCountSelect.value) || 0 : 0;
     const colCount = colCountSelect ? parseInt(colCountSelect.value) || 0 : 0;
@@ -540,6 +720,11 @@ document.addEventListener('DOMContentLoaded', function () {
         renderSeats(0, 0);
     }
 
+    if (roomTypeSelect.value) {
+        updateRowAndColOptions();
+    }
+
+
     // Expose functions to global scope
     window.roomManagement = {
         renderSeats,
@@ -551,6 +736,12 @@ document.addEventListener('DOMContentLoaded', function () {
         selectAllSeats,
         clearAllAisles,
         updateAisleOptions,
-        previewSeatingLayout: previewSeatingLayout
+        previewSeatingLayout: previewSeatingLayout,
+        applyRoomTypeToAllSeats
     };
+
+    // Global functions for onclick handlers
+    window.selectAllSeats = selectAllSeats;
+    window.clearAisles = clearAllAisles;
+    window.previewSeats = previewSeats;
 });

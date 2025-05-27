@@ -30,16 +30,33 @@ class TaiKhoan extends Authenticatable
 
     public function getAuthPassword()
     {
-        return $this->MatKhau; 
+        return $this->MatKhau;
     }
 
     public function getAuthIdentifierName()
     {
-        return 'TenDN'; 
+        return 'TenDN';
     }
 
     public function thongTin()
     {
         return $this->belongsTo(ThongTin::class, 'ID_CCCD', 'ID_CCCD');
+    }
+
+    public function getVaiTroTextAttribute()
+    {
+        switch ($this->VaiTro) {
+            case 0:
+                return 'Người dùng';
+            case 1:
+                return 'Quản trị viên';
+            default:
+                return 'Không xác định';
+        }
+    }
+
+    public function getTrangThaiTextAttribute()
+    {
+        return $this->TrangThai ? 'Hoạt động' : 'Vô hiệu';
     }
 }

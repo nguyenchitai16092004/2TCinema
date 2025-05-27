@@ -23,7 +23,7 @@
         <ul>
             <li class="relative px-6 py-3">
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="charts.html">
+                    href="{{ route('thong-ke.index')}}">
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                         stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -75,6 +75,13 @@
                     href="{{ route('khuyen-mai.index') }}">
                     <i class="fas fa-plus"></i>
                     <span class="ml-4">Quản lý phiếu giảm giá</span>
+                </a>
+            </li>
+            <li class="relative px-6 py-3">
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    href="{{ route('tai-khoan.index') }}">
+                    <i class="fas fa-plus"></i>
+                    <span class="ml-4">Quản lý tài khoản</span>
                 </a>
             </li>
             <li class="relative px-6 py-3">

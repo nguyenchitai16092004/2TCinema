@@ -41,7 +41,7 @@ class AutController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->VaiTro == 1) { // 1 = Admin
+            if (Auth::user()->VaiTro == 1 || Auth::user()->VaiTro == 2) { // 1 = Admin
                 if (!Auth::user()->TrangThai) {
                     Auth::logout();
                     return redirect()->back()->with('error', 'Tài khoản đã bị vô hiệu hóa!');
@@ -50,7 +50,7 @@ class AutController extends Controller
                 // Reset số lần đăng nhập sai
                 session(['login_attempts' => 0]);
 
-                return view('backend.pages.home')->with('success', 'Đăng nhập thành công!');
+                return redirect()->route('cap-nhat-thong-tin.index')->with('success', 'Đăng nhập thành công!');
             } else {
                 Auth::logout();
                 return redirect()->back()->with('error', 'Bạn không có quyền truy cập vào trang quản trị!');

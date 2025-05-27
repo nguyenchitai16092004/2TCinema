@@ -14,6 +14,7 @@ class PhongChieu extends Model
 
     protected $fillable = [
         'TenPhongChieu',
+        'LoaiPhong',
         'TrangThai',
         'SoLuongGhe',
         'ID_Rap',

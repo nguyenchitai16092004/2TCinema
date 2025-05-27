@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('phong_chieu', function (Blueprint $table) {
             $table->id('ID_PhongChieu');
             $table->string('TenPhongChieu', 100);
+            $table->boolean('LoaiPhong');
             $table->boolean('TrangThai');
             $table->integer('SoLuongGhe');
             $table->json('HangLoiDi')-> nullable();

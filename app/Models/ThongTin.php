@@ -28,4 +28,9 @@ class ThongTin extends Model
     {
         return $this->hasMany(TaiKhoan::class, 'ID_CCCD', 'ID_CCCD');
     }
+
+    public function getGioiTinhTextAttribute()
+    {
+        return $this->GioiTinh ? 'Nam' : 'Nữ';
+    }
 }
