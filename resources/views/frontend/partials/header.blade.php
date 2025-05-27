@@ -29,7 +29,7 @@
                                     <a style="color:#fff" title="{{ session('user_fullname') }}"
                                         href="{{ asset('/') }}">{{ session('user_fullname') }}</a>
                                     <ul class="info_option">
-                                        <li><a href="{{ asset('/info') }}"><i class="fa fa-user"></i>
+                                        <li><a href="{{ route('user.info') }}"><i class="fa fa-user"></i>
                                                 Thông tin</a></li>
                                         <li><a href="{{ asset('/') }}" onclick="logOut()"><i
                                                     class="fa fa-sign-out"></i> Đăng xuất</a></li>
@@ -38,7 +38,7 @@
                             @else
                                 <li style="display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
                                     <img src="{{ asset('frontend/Content/img/user.svg') }}" alt="">
-                                    <a href="{{ asset('/dang-nhap') }}" class="btn-member">Đăng nhập</a>
+                                    <a href="{{ route('login.form') }}" class="btn-member">Đăng nhập</a>
                                 </li>
                             @endif
                             <script>
@@ -96,16 +96,15 @@
                                 </li>
                                 <li><a href="{{ asset('/lich-chieu') }}">Mua Gói</a></li>
                                 <li>
-                                    <a href="{{ asset('/phim-dang-chieu') }}">Phim</a>
+                                    <a href="{{ asset('#') }}">Phim</a>
                                     <ul style=" background: -webkit-linear-gradient(left, #171e38, #5841a7);">
-                                        <li><a href="{{ asset('/phim-dang-chieu') }}">Phim Đang Chiếu</a></li>
-                                        <li><a href="{{ asset('/phim-sap-chieu') }}">Phim Sắp Chiếu</a></li>
+                                        <li><a href="{{ route('phim.dangChieu') }}">Phim Đang Chiếu</a></li>
+                                        <li><a href="{{ route('phim.sapChieu') }}">Phim Sắp Chiếu</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="{{ asset('/uu-dai') }}">Khuyến Mãi</a></li>
                                 <li><a href="{{ asset('/tin-tuc') }}">Điện Ảnh</a></li>
                                 <li><a href="{{ asset('/lien-he') }}">Liên hệ</a></li>
-                                <li><a href="{{ asset('/tuyen-dung') }}">Tuyển dụng</a></li>
                             </ul>
                         </nav>
                     </div>

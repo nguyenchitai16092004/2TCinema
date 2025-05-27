@@ -23,88 +23,67 @@ use App\Http\Controllers\Apps\ThanhToanController;
 //==============================Frontend=====================================//
 Route::get('/', [PhimController::class, 'Index'])->name('home');
 
-Route::get('/info', function () {
-    return view('frontend.pages.thong-tin-tai-khoan.info');
+// --- Auth ---
+Route::prefix('auth')->group(function () {
+    Route::get('/dang-ky', [AuthController::class, 'DangKy'])->name('register.form.get');
+    Route::post('/dang-ky', [AuthController::class, 'dang_ky'])->name('register.form.post');
+    Route::get('/xac-nhan/{token}', [AuthController::class, 'verifyAccount'])->name('verify.account');
+    Route::get('/dang-nhap', [AuthController::class, 'DangNhap'])->name('login.form');
+    Route::post('/dang-nhap-tai-khoan', [AuthController::class, 'dang_nhap'])->name('login');
+    Route::post('/dang-xuat', [AuthController::class, 'dang_xuat'])->name('logout');
+    Route::get('/doi-mat-khau', fn() => view('frontend.pages.thong-tin-tai-khoan.doi-mat-khau'))->name('doi-mat-khau.get');
+    Route::post('/doi-mat-khau', [AuthController::class, 'doi_mat_khau'])->name('doi-mat-khau.post');
+    Route::get('/quen-mat-khau', fn() => view('frontend.pages.quen-mat-khau'))->name('quen-mat-khau.get');
+    Route::post('/quen-mat-khau', [AuthController::class, 'quen_mat_khau'])->name('quen-mat-khau.post');
 });
 
-//Route::get('/doi-mat-khau', function () {
-//   return view('frontend.pages.thong-tin-tai-khoan.doi-mat-khau');
-//});
-
-Route::get('/cap-nhat-thong-tin', function () {
-    return view('frontend.pages.thong-tin-tai-khoan.cap-nhat-thong-tin');
-});
-Route::get('/lich-su-giao-dich', function () {
-    return view('frontend.pages.thong-tin-tai-khoan.lich-su-giao-dich');
+// --- Thông tin tài khoản ---
+Route::prefix('tai-khoan')->group(function () {
+    Route::get('/info', fn () => view('frontend.pages.thong-tin-tai-khoan.info'))->name('user.info');
+    Route::get('/lich-su-giao-dich', fn () => view('frontend.pages.thong-tin-tai-khoan.lich-su-giao-dich'))->name('user.lichsugiaodich');
+    Route::get('/cap-nhat-thong-tin', [AuthController::class, 'showUpdateInfo'])->name('user.updateInfo.get');
+    Route::post('/cap-nhat-thong-tin', [AuthController::class, 'updateInfo'])->name('user.updateInfo.post');
 });
 
-// Đăng ký
-Route::get('/dang-ky', [AuthController::class, 'DangKy'])->name('register.form');
-Route::post('/dang-ky', [AuthController::class, 'dang_ky']);
-Route::get('/xac-nhan/{token}', [AuthController::class, 'verifyAccount'])->name('verify.account');
-
-// Đăng nhập
-Route::get('/dang-nhap', [AuthController::class, 'DangNhap'])->name('login.form');
-Route::post('/dang-nhap-tai-khoan', [AuthController::class, 'dang_nhap'])->name('login');
-Route::get('/doi-mat-khau', function () {
-    return view('frontend.pages.thong-tin-tai-khoan.doi-mat-khau');
-})->name('doi-mat-khau');
-Route::post('/doi-mat-khau', [AuthController::class, 'doi_mat_khau'])->name('doi-mat-khau');
-Route::post('/quen-mat-khau', [AuthController::class, 'quen_mat_khau']);
-Route::post('/dang-xuat', [AuthController::class, 'dang_xuat'])->name('logout');
-
-
-
-Route::get('/cau-hoi-thuong-gap', function () {
-    return view('frontend.pages.cau-hoi-thuong-gap');
-});
-Route::get('/cap-nhat-thong-tin', [AuthController::class, 'showUpdateInfo'])->name('user.updateInfo');
-Route::post('/cap-nhat-thong-tin', [AuthController::class, 'updateInfo'])->name('user.updateInfo.post');
-Route::get('/dat-ve/{phimSlug}/{ngay}/{gio}', [DatVeController::class, 'showBySlug'])->name('dat-ve.show.slug');Route::get('/lich-chieu', function () {
-    return view('frontend.pages.lich-chieu');
-});
-Route::get('/lien-he', function () {
-    return view('frontend.pages.lien-he');
-});
-Route::get('/phim-sap-chieu', [PhimController::class, 'phimSapChieu'])->name('phim.sapChieu');
-Route::get('/phim-dang-chieu', [PhimController::class, 'phimDangChieu'])->name('phim.dangChieu');
-Route::get('/quen-mat-khau', function () {
-    return view('frontend.pages.quen-mat-khau');
-});
-Route::get('/tin-tuc', function () {
-    return view('frontend.pages.tin-tuc');
+// --- Phim ---
+Route::prefix('phim')->group(function () {
+    Route::get('/phim-sap-chieu', [PhimController::class, 'phimSapChieu'])->name('phim.sapChieu');
+    Route::get('/phim-dang-chieu', [PhimController::class, 'phimDangChieu'])->name('phim.dangChieu');
+    Route::get('/chi-tiet-phim/{slug}', [PhimController::class, 'chiTiet'])->name('phim.chiTiet');
 });
 
-Route::get('/uu-dai', function () {
-    return view('frontend.pages.uu-dai');
+// --- Đặt vé ---
+Route::prefix('dat-ve')->group(function () {
+    Route::get('/dat-ve/{phimSlug}/{ngay}/{gio}', [DatVeController::class, 'showBySlug'])->name('dat-ve.show.slug');
+    Route::get('/dat-ve/thanh-toan', [DatVeController::class, 'showThanhToan'])->name('dat-ve.thanh-toan');
+    Route::post('/thanh-toan', [DatVeController::class, 'thanhToan'])->name('thanh-toan');
 });
-Route::get('/bao-mat-thong-tin', function () {
-    return view('frontend.pages.chinh-sach.bao-mat-thong-tin');
-});
-Route::get('/chinh-sach-giao-nhan', function () {
-    return view('frontend.pages.chinh-sach.chinh-sach-giao-nhan');
-});
-Route::get('/chinh-sach-thanh-toan', function () {
-    return view('frontend.pages.chinh-sach.chinh-sach-thanh-toan');
-});
-Route::get('/dieu-khoan-chung', function () {
-    return view('frontend.pages.chinh-sach.dieu-khoan-chung');
-});
-Route::get('/kiem-hang-doi-tra-hoan-tien', function () {
-    return view('frontend.pages.chinh-sach.kiem-hang-doi-tra-hoan-tien');
-});
-Route::get('/chi-tiet-phim/{slug}', [PhimController::class, 'chiTiet'])->name('phim.chiTiet');
-Route::post('/thanh-toan', [DatVeController::class, 'thanhToan'])->name('thanh-toan');
-Route::post('/check-seat', [DatVeController::class, 'checkSeat'])->name('check-seat');
-Route::post('/thanh-toan/momo', [ThanhToanController::class, 'thanhToanMomo'])->name('thanh-toan.momo');
-Route::get('/thanh-toan/momo/callback', [ThanhToanController::class, 'momoCallback'])->name('thanh-toan.momo.callback');
-Route::get('/dat-ve/thanh-toan', [DatVeController::class, 'showThanhToan'])->name('dat-ve.thanh-toan');
-Route::post('/thanh-toan/zalopay', [ThanhToanController::class, 'thanhToanZaloPay'])->name('thanh-toan.zalopay');
-Route::get('/thanh-toan/zalopay/callback', [ThanhToanController::class, 'zalopayCallback'])->name('thanh-toan.zalopay.callback');
 
-//===========================================================================//
+// --- Thanh toán ---
+Route::prefix('thanh-toan')->group(function () {
+    Route::post('/thanh-toan/momo', [ThanhToanController::class, 'thanhToanMomo'])->name('thanh-toan.momo');
+    Route::get('/thanh-toan/momo/callback', [ThanhToanController::class, 'momoCallback'])->name('thanh-toan.momo.callback');
+    Route::post('/thanh-toan/zalopay', [ThanhToanController::class, 'thanhToanZaloPay'])->name('thanh-toan.zalopay');
+    Route::get('/thanh-toan/zalopay/callback', [ThanhToanController::class, 'zalopayCallback'])->name('thanh-toan.zalopay.callback');
+});
+
+// --- Các trang tĩnh ---
+Route::view('/cau-hoi-thuong-gap', 'frontend.pages.cau-hoi-thuong-gap')->name('cau-hoi-thuong-gap');
+Route::view('/lich-chieu', 'frontend.pages.lich-chieu')->name('lich-chieu');
+Route::view('/lien-he', 'frontend.pages.lien-he')->name('lien-he');
+Route::view('/tin-tuc', 'frontend.pages.tin-tuc')->name('tin-tuc');
+Route::view('/uu-dai', 'frontend.pages.uu-dai')->name('uu-dai');
+
+// --- Chính sách ---
+Route::prefix('chinh-sach')->group(function () {
+Route::view('/bao-mat-thong-tin', 'frontend.pages.chinh-sach.bao-mat-thong-tin')->name('chinh-sach.bao-mat-thong-tin');
+Route::view('/chinh-sach-giao-nhan', 'frontend.pages.chinh-sach.chinh-sach-giao-nhan')->name('chinh-sach.giao-nhan');
+Route::view('/chinh-sach-thanh-toan', 'frontend.pages.chinh-sach.chinh-sach-thanh-toan')->name('chinh-sach.thanh-toan');
+Route::view('/dieu-khoan-chung', 'frontend.pages.chinh-sach.dieu-khoan-chung')->name('chinh-sach.dieu-khoan-chung');
+Route::view('/kiem-hang-doi-tra-hoan-tien', 'frontend.pages.chinh-sach.kiem-hang-doi-tra-hoan-tien')->name('chinh-sach.kiem-hang-doi-tra-hoan-tien');
+});
+
 //===============================Admin=====================================//
-// Login admin (không cần middleware)
 Route::get('/admin', function () {
     return view('backend.login');
 });

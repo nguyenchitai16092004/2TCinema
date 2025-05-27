@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <ul style="display:flex">
                                             <li>
-                                                <a href="/quen-mat-khau.html">Quên mật khẩu?</a>
+                                                <a href="{{ route('quen-mat-khau.get') }}">Quên mật khẩu?</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -130,7 +130,7 @@
                 _token: $('meta[name="csrf-token"]').attr('content') // Thêm dòng này
             };
             $.ajax({
-                url: "/doi-mat-khau",
+                url: "{{ route('doi-mat-khau.post') }}", 
                 type: "POST",
                 data: JSON.stringify(data),
                 datatype: "json",

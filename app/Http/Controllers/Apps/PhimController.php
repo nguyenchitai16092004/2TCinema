@@ -21,7 +21,7 @@ class PhimController extends Controller
             ->get();
 
         // PHIM SẮP CHIẾU: Ngày khởi chiếu > hôm nay và TrangThai = 0
-        $dsPhimSapChieu = Phim::whereDate('NgayKhoiChieu', '>', $today)
+        $dsPhimSapChieu = Phim::whereDate('NgayKhoiChieu', '>=', $today)
             ->where('TrangThai', 0)
             ->get();
 
