@@ -92,7 +92,7 @@
     width: 25px;
     height: 25px;
     background-color: #fff;
-    border:1px solid #e0e0e0;
+    border: 1px solid #e0e0e0;
     margin: 0 2px;
     border-radius: 3px;
     display: inline-flex;
@@ -212,7 +212,8 @@
     border-radius: 3px;
     font-size: 12px;
 }
-.age-rating{
+
+.age-rating {
     background-color: #ff8c00;
     color: white;
     padding: 2px 5px;
@@ -306,6 +307,7 @@
     background-color: #ff8c00;
     color: white;
 }
+
 .row-seat-left {
     margin-right: auto;
     margin-left: 0;
@@ -314,4 +316,196 @@
 .row-seat-right {
     margin-left: auto;
     margin-right: 0;
+}
+
+:root {
+    --color-bg-light: #f8f9fa;
+    --color-bg-white: #ffffff;
+    --color-border: #dee2e6;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-primary: #0d6efd;
+    --color-vip: #ffc107;
+    --color-booked: #dc3545;
+    --color-disabled: #adb5bd;
+    --color-text-secondary: #6c757d;
+}
+
+.left-panel {
+    padding: 20px;
+    background-color: var(--color-bg-light);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--color-shadow);
+}
+
+.time-selection {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.time-selection label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.time-btn {
+    margin: 5px;
+    padding: 6px 12px;
+    border: none;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.time-btn.active {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.seat-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 6px;
+    justify-items: center;
+    padding: 10px;
+    background-color: var(--color-bg-white);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    min-height: 200px;
+}
+
+.seat-legend {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.legend-normal {
+    background-color: var(--color-text-secondary);
+}
+
+.legend-vip {
+    background-color: var(--color-vip);
+}
+
+.legend-booked {
+    background-color: var(--color-booked);
+}
+
+.legend-disabled {
+    background-color: var(--color-disabled);
+}
+
+#seatLayout {
+    display: grid;
+    grid-template-columns: repeat(11, auto);
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-white);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+}
+
+.seat-label {
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-align: center;
+    margin-right: 10px;
+}
+
+.seat {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 36px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: var(--color-bg-light);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.seat:hover {
+    background-color: #e2e6ea;
+}
+
+.seat.vip {
+    background-color: var(--color-vip);
+    color: #000;
+}
+
+.seat.booked {
+    background-color: var(--color-booked);
+    color: #fff;
+    pointer-events: none;
+}
+
+.seat.selected {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.seat.disabled {
+    background-color: var(--color-disabled);
+    pointer-events: none;
+}
+
+.row-aisle {
+    grid-column: 1 / -1;
+    height: 20px;
+    background: linear-gradient(0deg, transparent 45%, rgba(0, 123, 255, 0.3) 45%, rgba(0, 123, 255, 0.3) 55%, transparent 55%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.column-aisle {
+    width: 20px;
+    background: linear-gradient(90deg, transparent 45%, rgba(0, 123, 255, 0.3) 45%, rgba(0, 123, 255, 0.3) 55%, transparent 55%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.seat-container {
+    display: grid;
+    gap: 2px;
+    justify-content: center;
+}
+
+.seat {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.row-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.aisle-col, .aisle-row {
+    background: transparent;
 }

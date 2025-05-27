@@ -14,6 +14,7 @@ class VeXemPhim extends Model
 
     protected $fillable = [
         'SoLuong',
+        'TenGhe',   
         'TenPhim',
         'NgayXem',
         'DiaChi',

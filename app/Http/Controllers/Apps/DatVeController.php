@@ -5,54 +5,237 @@ namespace App\Http\Controllers\Apps;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SuatChieu;
+use App\Models\PhongChieu;
+use App\Models\Rap;
+use App\Models\GheNgoi;
+use App\Models\VeXemPhim;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class DatVeController extends Controller
 {
     public function showBySlug($phimSlug, $ngay, $gio)
     {
-        $phim = \App\Models\Phim::where('Slug', $phimSlug)->firstOrFail();
+        try {
+            // Validate input parameters
+            if (empty($phimSlug) || empty($ngay) || empty($gio)) {
+                abort(400, 'Missing required parameters');
+            }
 
-        $suatChieu = SuatChieu::with(['phim', 'rap'])
-            ->where('ID_Phim', $phim->ID_Phim)
-            ->where('NgayChieu', $ngay)
-            ->where('GioChieu', $gio)
-            ->firstOrFail();
+            // Get movie by slug
+            $phim = \App\Models\Phim::where('Slug', $phimSlug)->firstOrFail();
 
-        $suatChieuCungNgay = SuatChieu::where('NgayChieu', $suatChieu->NgayChieu)
-            ->where('ID_Rap', $suatChieu->ID_Rap)
-            ->where('ID_Phim', $suatChieu->ID_Phim)
-            ->orderBy('GioChieu', 'asc')
-            ->get();
+            // Get showtime with related data
+            $suatChieu = SuatChieu::with(['phim', 'rap', 'phongChieu'])
+                ->where('ID_Phim', $phim->ID_Phim)
+                ->where('NgayChieu', $ngay)
+                ->where('GioChieu', $gio)
+                ->firstOrFail();
 
-        return view('frontend.pages.dat-ve', compact('suatChieu', 'suatChieuCungNgay'));
+            // Get cinema room and related cinema
+            $phongChieu = PhongChieu::with('rap')->findOrFail($suatChieu->ID_PhongChieu);
+
+            // Get all cinemas
+            $raps = Rap::all();
+
+            // Get seats for the room
+            $ghengoi = GheNgoi::where('ID_PhongChieu', $phongChieu->ID_PhongChieu)
+                ->get(['ID_Ghe', 'TenGhe', 'LoaiTrangThaiGhe']);
+
+            // Get booked seats for this showtime
+            $bookedSeats = VeXemPhim::where('ID_SuatChieu', $suatChieu->ID_SuatChieu)
+                ->pluck('TenGhe')
+                ->toArray();
+
+            // Calculate seat layout dimensions
+            $rowCount = 0;
+            $colCount = 0;
+
+            foreach ($ghengoi as $ghe) {
+                if (preg_match('/([A-Z])(\d+)/', $ghe->TenGhe, $matches)) {
+                    $row = ord(strtoupper($matches[1])) - 64; // Convert A->1, B->2, etc.
+                    $col = (int)$matches[2];
+                    $rowCount = max($rowCount, $row);
+                    $colCount = max($colCount, $col);
+                }
+            }
+
+            // Generate seat layout array with booking status
+            $seatLayout = [];
+            for ($i = 0; $i < $rowCount; $i++) {
+                $row = [];
+                for ($j = 0; $j < $colCount; $j++) {
+                    $tenGhe = chr(65 + $i) . ($j + 1);
+                    $ghe = $ghengoi->firstWhere('TenGhe', $tenGhe);
+
+                    // Determine seat status
+                    $trangThaiGhe = 0; // Default: disabled
+                    if ($ghe) {
+                        if (in_array($tenGhe, $bookedSeats)) {
+                            $trangThaiGhe = 3; // Booked
+                        } else {
+                            $trangThaiGhe = $ghe->LoaiTrangThaiGhe ?? 1; // Use seat type or default normal
+                        }
+                    }
+
+                    $row[] = [
+                        'TenGhe' => $tenGhe,
+                        'TrangThaiGhe' => $trangThaiGhe,
+                        'ID_Ghe' => $ghe ? $ghe->ID_Ghe : null,
+                        'IsBooked' => in_array($tenGhe, $bookedSeats)
+                    ];
+                }
+                $seatLayout[] = $row;
+            }
+
+            // Parse aisle information
+            $rowAisles = array_map('intval', json_decode($phongChieu->HangLoiDi ?? '[]', true) ?: []);
+            $colAisles = array_map('intval', json_decode($phongChieu->CotLoiDi ?? '[]', true) ?: []);
+
+
+            // Get same-day showtimes
+            $suatChieuCungNgay = SuatChieu::where('NgayChieu', $suatChieu->NgayChieu)
+                ->where('ID_Rap', $suatChieu->ID_Rap)
+                ->where('ID_Phim', $suatChieu->ID_Phim)
+                ->orderBy('GioChieu', 'asc')
+                ->get(['ID_SuatChieu', 'GioChieu']);
+
+            return view('frontend.pages.dat-ve', compact(
+                'suatChieu',
+                'suatChieuCungNgay',
+                'phongChieu',
+                'raps',
+                'ghengoi',
+                'rowCount',
+                'colCount',
+                'seatLayout',
+                'rowAisles',
+                'colAisles',
+                'bookedSeats'
+            ));
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            Log::error('Error in showBySlug: ' . $e->getMessage());
+            abort(404, 'Resource not found');
+        }
     }
+
     public function thanhToan(Request $request)
     {
-        // Lấy danh sách ghế đã chọn
-        $selectedSeats = explode(',', $request->input('selectedSeats'));
+        try {
+            // Validate input
+            $request->validate([
+                'selectedSeats' => 'required|string',
+                'suatChieuId' => 'required|integer|exists:suatchieus,ID_SuatChieu'
+            ]);
 
-        // Lấy thông tin suất chiếu
-        $suatChieu = SuatChieu::with(['phim', 'rap'])->findOrFail($request->input('suatChieuId'));
+            // Get selected seats
+            $selectedSeats = array_filter(explode(',', $request->input('selectedSeats')));
 
-        // Trả về view thanh toán với dữ liệu
-        return view('frontend.pages.thanh-toan', compact('selectedSeats', 'suatChieu'));
+            if (empty($selectedSeats)) {
+                return redirect()->back()->with('error', 'Vui lòng chọn ít nhất một ghế');
+            }
+
+            // Get showtime information
+            $suatChieu = SuatChieu::with(['phim', 'rap', 'phongChieu'])
+                ->findOrFail($request->input('suatChieuId'));
+
+            // Check if seats are still available
+            $bookedSeats = VeXemPhim::where('ID_SuatChieu', $suatChieu->ID_SuatChieu)
+                ->whereIn('TenGhe', $selectedSeats)
+                ->pluck('TenGhe')
+                ->toArray();
+
+            if (!empty($bookedSeats)) {
+                return redirect()->back()->with('error', 'Một số ghế đã được đặt: ' . implode(', ', $bookedSeats));
+            }
+
+            // Get seat information for pricing
+            $gheNgoi = GheNgoi::where('ID_PhongChieu', $suatChieu->ID_PhongChieu)
+                ->whereIn('TenGhe', $selectedSeats)
+                ->get();
+
+            // Calculate total price
+            $totalPrice = 0;
+            $seatDetails = [];
+
+            foreach ($selectedSeats as $seatName) {
+                $seat = $gheNgoi->firstWhere('TenGhe', $seatName);
+                if ($seat) {
+                    $price = $suatChieu->GiaVe;
+                    // Add VIP surcharge if applicable
+                    if ($seat->LoaiTrangThaiGhe == 2) {
+                        $price += 20000; // VIP surcharge
+                    }
+                    $totalPrice += $price;
+                    $seatDetails[] = [
+                        'TenGhe' => $seatName,
+                        'LoaiGhe' => $seat->LoaiTrangThaiGhe == 2 ? 'VIP' : 'Thường',
+                        'Gia' => $price
+                    ];
+                }
+            }
+
+            return view('frontend.pages.thanh-toan', compact(
+                'selectedSeats',
+                'suatChieu',
+                'seatDetails',
+                'totalPrice'
+            ));
+        } catch (\Exception $e) {
+            Log::error('Error in thanhToan: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại');
+        }
     }
-    /*
-    public function checkSeat(Request $request)
+
+    public function checkSeatAvailability(Request $request)
     {
-        $seat = $request->input('seat');
-        $suatChieuId = $request->input('suatChieuId');
+        try {
+            $seats = $request->input('seats', []);
+            $suatChieuId = $request->input('suatChieuId');
 
-        // Kiểm tra trạng thái ghế trong cơ sở dữ liệu
-        $isAvailable = !DB::table('ve')
-            ->where('ID_SuatChieu', $suatChieuId)
-            ->where('Ghe', $seat)
-            ->exists();
+            if (empty($seats) || !$suatChieuId) {
+                return response()->json(['success' => false, 'message' => 'Invalid parameters']);
+            }
 
-        return response()->json([
-            'available' => $isAvailable
-        ]);
+            // Check if seats are booked
+            $bookedSeats = VeXemPhim::where('ID_SuatChieu', $suatChieuId)
+                ->whereIn('TenGhe', $seats)
+                ->pluck('TenGhe')
+                ->toArray();
+
+            $availableSeats = array_diff($seats, $bookedSeats);
+
+            return response()->json([
+                'success' => true,
+                'availableSeats' => array_values($availableSeats),
+                'bookedSeats' => array_values($bookedSeats)
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error checking seat availability: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Server error']);
+        }
     }
-    */
-    
+
+    public function changeShowtime(Request $request)
+    {
+        try {
+            $suatChieuId = $request->input('suatChieuId');
+            $phimSlug = $request->input('phimSlug');
+
+            $suatChieu = SuatChieu::with(['phim'])->findOrFail($suatChieuId);
+
+            $ngay = $suatChieu->NgayChieu;
+            $gio = substr($suatChieu->GioChieu, 0, 5);
+
+            return redirect()->route('dat-ve.show', [
+                'phimSlug' => $phimSlug,
+                'ngay' => $ngay,
+                'gio' => $gio
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error changing showtime: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lỗi xảy ra');
+        }
+    }
 }
