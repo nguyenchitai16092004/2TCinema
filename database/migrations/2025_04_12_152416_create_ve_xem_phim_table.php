@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ve_xem_phim', function (Blueprint $table) {
             $table->id('ID_Ve');
             $table->integer('SoLuong');
+            $table->string('TenGhe', 100);
             $table->string('TenPhim', 100);
             $table->date('NgayXem');
             $table->string('DiaChi', 255);
