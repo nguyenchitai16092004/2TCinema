@@ -6,6 +6,7 @@ use App\Models\Phim;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
+use App\Models\Rap;
 
 class PhimController extends Controller
 {
@@ -15,9 +16,16 @@ class PhimController extends Controller
         $currentMonth = now()->month;
         $currentYear = now()->year;
 
+        $raps = Rap::all();
+        $phims = Phim::whereDate('NgayKhoiChieu', '<=', $today)
+            ->whereDate('NgayKetThuc', '>=', $today)
+            ->where('TrangThai', 1)
+            ->get();
+
         // PHIM ĐANG CHIẾU: Ngày khởi chiếu <= hôm nay và ngày kết thúc >= hôm nay
         $dsPhimDangChieu = Phim::whereDate('NgayKhoiChieu', '<=', $today)
             ->whereDate('NgayKetThuc', '>=', $today)
+            ->where('TrangThai', 1)
             ->get();
 
         // PHIM SẮP CHIẾU: Ngày khởi chiếu > hôm nay và TrangThai = 0
@@ -25,16 +33,13 @@ class PhimController extends Controller
             ->where('TrangThai', 0)
             ->get();
 
-        // PHIM CỦA THÁNG HIỆN TẠI (không phân biệt đã chiếu hay chưa)
-        $dsPhimTheoThang = Phim::whereMonth('NgayKhoiChieu', $currentMonth)
-            ->whereYear('NgayKhoiChieu', $currentYear)
-            ->get();
 
         return view('frontend.pages.home', compact(
             'dsPhimDangChieu',
             'dsPhimSapChieu',
-            'dsPhimTheoThang'
-        ));
+            'raps',
+            'phims'
+       ));
     }
     public function phimDangChieu()
     {

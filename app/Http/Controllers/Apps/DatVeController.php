@@ -22,6 +22,10 @@ class DatVeController extends Controller
                 abort(400, 'Missing required parameters');
             }
 
+            if (!session()->has('user_id')) {
+                // Redirect về trang đăng nhập, có thể truyền kèm return url
+                return redirect()->route('login.form')->with('error', 'Vui lòng đăng nhập để đặt vé!');
+            }
             // Get movie by slug
             $phim = \App\Models\Phim::where('Slug', $phimSlug)->firstOrFail();
 
@@ -187,7 +191,22 @@ class DatVeController extends Controller
             return redirect()->back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại');
         }
     }
+    // ...existing code...
 
+    public function showThanhToan(\Illuminate\Http\Request $request)
+    {
+        $suatChieuId = $request->input('ID_SuatChieu');
+        $selectedSeats = explode(',', $request->input('selectedSeats', ''));
+
+        // Lấy thông tin suất chiếu từ DB
+        $suatChieu = \App\Models\SuatChieu::with(['phim', 'rap', 'phongChieu'])->findOrFail($suatChieuId);
+
+        return view('frontend.pages.thanh-toan', [
+            'suatChieu' => $suatChieu,
+            'selectedSeats' => $selectedSeats,
+        ]);
+    }
+    // ...existing code...
     public function checkSeatAvailability(Request $request)
     {
         try {
@@ -237,5 +256,33 @@ class DatVeController extends Controller
             Log::error('Error changing showtime: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Có lỗi xảy ra');
         }
+    }
+    public function ajaxNgayChieu(Request $request)
+    {
+        $idRap = $request->id_rap;
+        $idPhim = $request->id_phim;
+        $ngays = \App\Models\SuatChieu::where('ID_Rap', $idRap)
+            ->where('ID_Phim', $idPhim)
+            ->pluck('NgayChieu')->unique()->values();
+        return response()->json($ngays);
+    }
+
+    public function ajaxSuatChieu(Request $request)
+    {
+        $idRap = $request->id_rap;
+        $idPhim = $request->id_phim;
+        $ngay = $request->ngay;
+        $suats = \App\Models\SuatChieu::where('ID_Rap', $idRap)
+            ->where('ID_Phim', $idPhim)
+            ->where('NgayChieu', $ngay)
+            ->get(['GioChieu', 'ID_SuatChieu', 'DinhDang']);
+        $result = $suats->map(function ($s) {
+            return [
+                'gio' => $s->GioChieu,
+                'id' => $s->ID_SuatChieu,
+                'dinh_dang' => $s->DinhDang ?? '2D'
+            ];
+        });
+        return response()->json($result);
     }
 }

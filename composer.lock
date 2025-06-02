@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7e498989f44c2409d348235abf45938",
+    "content-hash": "831b6efd402e9d91c19283fd396095af",
     "packages": [
         {
             "name": "brick/math",
@@ -645,16 +645,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.9.2",
+            "version": "7.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "d281ed313b989f213357e3be1a179f02196ac99b"
+                "reference": "7b2f29fe81dc4da0ca0ea7d42107a0845946ea77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/d281ed313b989f213357e3be1a179f02196ac99b",
-                "reference": "d281ed313b989f213357e3be1a179f02196ac99b",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7b2f29fe81dc4da0ca0ea7d42107a0845946ea77",
+                "reference": "7b2f29fe81dc4da0ca0ea7d42107a0845946ea77",
                 "shasum": ""
             },
             "require": {
@@ -751,7 +751,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.9.2"
+                "source": "https://github.com/guzzle/guzzle/tree/7.9.3"
             },
             "funding": [
                 {
@@ -767,7 +767,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-24T11:22:20+00:00"
+            "time": "2025-03-27T13:37:11+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -2507,6 +2507,53 @@
                 }
             ],
             "time": "2024-11-21T10:39:51+00:00"
+        },
+        {
+            "name": "payos/payos",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/payOSHQ/payos-lib-php.git",
+                "reference": "dce389ac3c464f04fd67f4488b3d66275dd0e7b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/payOSHQ/payos-lib-php/zipball/dce389ac3c464f04fd67f4488b3d66275dd0e7b3",
+                "reference": "dce389ac3c464f04fd67f4488b3d66275dd0e7b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PayOS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "locbt"
+                }
+            ],
+            "description": "A payOS package for PHP",
+            "keywords": [
+                "payment",
+                "payos",
+                "payos package"
+            ],
+            "support": {
+                "issues": "https://github.com/payOSHQ/payos-lib-php/issues",
+                "source": "https://github.com/payOSHQ/payos-lib-php/tree/v1.0.6"
+            },
+            "time": "2024-07-03T09:57:49+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -5568,6 +5615,73 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.3.0"
             },
             "time": "2024-12-21T16:25:41+00:00"
+        },
+        {
+            "name": "tjgazel/laravel-toastr",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tjgazel/laravel-toastr.git",
+                "reference": "3c1babf649ea6f1b0cdd3ab30126115d727f140c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tjgazel/laravel-toastr/zipball/3c1babf649ea6f1b0cdd3ab30126115d727f140c",
+                "reference": "3c1babf649ea6f1b0cdd3ab30126115d727f140c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "illuminate/session": "^5.5.0",
+                "illuminate/support": "^5.5.0"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Toastr": "TJGazel\\Toastr\\Facades\\Toastr"
+                    },
+                    "providers": [
+                        "TJGazel\\Toastr\\ToastrServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "helpers/helpers.php"
+                ],
+                "psr-4": {
+                    "TJGazel\\Toastr\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Talles Gazel",
+                    "email": "tjgazel@gmail.com"
+                }
+            ],
+            "description": "Toastr notifications for laravel 5.5+, 6 and 7",
+            "homepage": "https://github.com/tjgazel/laravel-toastr",
+            "keywords": [
+                "auto discover",
+                "facade",
+                "helper",
+                "laravel",
+                "notification",
+                "php",
+                "toastr"
+            ],
+            "support": {
+                "issues": "https://github.com/tjgazel/laravel-toastr/issues",
+                "source": "https://github.com/tjgazel/laravel-toastr/tree/v1.1.0"
+            },
+            "time": "2020-09-04T00:22:57+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

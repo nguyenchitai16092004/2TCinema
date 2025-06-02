@@ -1,8 +1,8 @@
 // Enhanced Booking Seat Management JavaScript
 // Specifically designed for ticket booking page
 
-document.addEventListener('DOMContentLoaded', function () {
-    console.log('Booking seat script initialized');
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Booking seat script initialized");
 
     // Initialize booking data from server
     const bookingData = window.bookingData || {};
@@ -15,34 +15,34 @@ document.addEventListener('DOMContentLoaded', function () {
     let vipSurcharge = bookingData.vipSurcharge || 20000;
 
     // DOM Elements
-    const seatContainer = document.getElementById('seatLayout');
-    const seatNumbersElement = document.querySelector('.seat-numbers');
-    const totalPriceElement = document.querySelector('.total-price');
-    const seatSummaryElement = document.querySelector('.seat-summary');
-    const ticketPriceElement = document.querySelector('.ticket-price');
-    const btnContinue = document.getElementById('btn-continue');
-    const timeButtons = document.querySelectorAll('.time-btn');
-    const showtimeInfo = document.querySelector('.showtime-info');
+    const seatContainer = document.getElementById("seatLayout");
+    const seatNumbersElement = document.querySelector(".seat-numbers");
+    const totalPriceElement = document.querySelector(".total-price");
+    const seatSummaryElement = document.querySelector(".seat-summary");
+    const ticketPriceElement = document.querySelector(".ticket-price");
+    const btnContinue = document.getElementById("btn-continue");
+    const timeButtons = document.querySelectorAll(".time-btn");
+    const showtimeInfo = document.querySelector(".showtime-info");
 
     // Booking state
     const selectedSeats = new Set();
     const maxSeats = 8;
     let isProcessing = false;
 
-    console.log('Initialized with data:', {
+    console.log("Initialized with data:", {
         seats: seats.length,
         rowAisles,
         colAisles,
         bookedSeats,
         suatChieuId,
-        ticketPrice
+        ticketPrice,
     });
 
     // Seat availability check function
     function checkSeatAvailability() {
         // Implementation for periodic seat availability check
         // This would typically make an AJAX call to check seat status
-        console.log('Checking seat availability...');
+        console.log("Checking seat availability...");
     }
 
     // Seat validation functions
@@ -51,19 +51,22 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!match) return null;
         return {
             row: match[1],
-            col: parseInt(match[2])
+            col: parseInt(match[2]),
         };
     }
 
     function getSeatsByRow(row) {
         const rowSeats = [];
-        document.querySelectorAll('.seat').forEach(seat => {
+        document.querySelectorAll(".seat").forEach((seat) => {
             const seatId = seat.textContent.trim();
-            if (seatId.startsWith(row) && seat.classList.contains('available')) {
+            if (
+                seatId.startsWith(row) &&
+                seat.classList.contains("available")
+            ) {
                 rowSeats.push({
                     id: seatId,
                     col: parseInt(seatId.slice(1)),
-                    element: seat
+                    element: seat,
                 });
             }
         });
@@ -82,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Get selected seats in this row
         const selectedInRow = rowSeats
-            .filter(seat => tempSelected.has(seat.id))
-            .map(seat => seat.col)
+            .filter((seat) => tempSelected.has(seat.id))
+            .map((seat) => seat.col)
             .sort((a, b) => a - b);
 
         if (selectedInRow.length <= 1) return true;
@@ -96,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (next - current === 2) {
                 // There's exactly one seat between current and next
                 const middleSeatId = `${seatInfo.row}${current + 1}`;
-                const middleSeat = rowSeats.find(s => s.id === middleSeatId);
+                const middleSeat = rowSeats.find((s) => s.id === middleSeatId);
 
                 if (middleSeat && !tempSelected.has(middleSeatId)) {
                     return false; // Gap found
@@ -105,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Check isolated seats at edges
-        const allCols = rowSeats.map(seat => seat.col).sort((a, b) => a - b);
+        const allCols = rowSeats.map((seat) => seat.col).sort((a, b) => a - b);
         const minCol = Math.min(...allCols);
         const maxCol = Math.max(...allCols);
 
@@ -130,49 +133,124 @@ document.addEventListener('DOMContentLoaded', function () {
         return true;
     }
 
+    // Validate all selected seats (for final check before continue)
+    function isValidSeatSelectionAll(seatArray) {
+        if (!seatArray || seatArray.length === 0) return true;
+
+        // Group seats by row
+        const seatsByRow = {};
+        seatArray.forEach((seatId) => {
+            const row = seatId.charAt(0);
+            if (!seatsByRow[row]) seatsByRow[row] = [];
+            seatsByRow[row].push(parseInt(seatId.slice(1)));
+        });
+
+        // Validate each row
+        for (const row in seatsByRow) {
+            const cols = seatsByRow[row].sort((a, b) => a - b);
+
+            // Check for gaps between consecutive seats
+            for (let i = 0; i < cols.length - 1; i++) {
+                if (cols[i + 1] - cols[i] === 2) {
+                    // There's exactly one seat gap between current and next
+                    const middleSeat = `${row}${cols[i] + 1}`;
+                    if (!seatArray.includes(middleSeat)) {
+                        console.log(`Gap found at ${middleSeat}`);
+                        return false;
+                    }
+                }
+            }
+
+            // Check for isolated seats at edges
+            const allSeatsInRow = [];
+            document.querySelectorAll(".seat").forEach((seat) => {
+                const seatId = seat.textContent.trim();
+                if (
+                    seatId.startsWith(row) &&
+                    (seat.classList.contains("available") ||
+                        seat.classList.contains("selected"))
+                ) {
+                    allSeatsInRow.push(parseInt(seatId.slice(1)));
+                }
+            });
+
+            if (allSeatsInRow.length === 0) continue;
+
+            allSeatsInRow.sort((a, b) => a - b);
+            const minCol = Math.min(...allSeatsInRow);
+            const maxCol = Math.max(...allSeatsInRow);
+
+            // Check left edge isolation
+            const leftmostSelected = Math.min(...cols);
+            if (leftmostSelected > minCol && leftmostSelected - 1 === minCol) {
+                const leftEdgeId = `${row}${minCol}`;
+                if (!seatArray.includes(leftEdgeId)) {
+                    console.log(`Left edge isolation at ${leftEdgeId}`);
+                    return false;
+                }
+            }
+
+            // Check right edge isolation
+            const rightmostSelected = Math.max(...cols);
+            if (
+                rightmostSelected < maxCol &&
+                rightmostSelected + 1 === maxCol
+            ) {
+                const rightEdgeId = `${row}${maxCol}`;
+                if (!seatArray.includes(rightEdgeId)) {
+                    console.log(`Right edge isolation at ${rightEdgeId}`);
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     // Render seat layout
     function renderSeatLayout() {
-        console.log('Starting renderSeatLayout with seats:', seats);
-        console.log('Column aisles:', colAisles);
-        console.log('Row aisles:', rowAisles);
-        
+        console.log("Starting renderSeatLayout with seats:", seats);
+        console.log("Column aisles:", colAisles);
+        console.log("Row aisles:", rowAisles);
+
         if (!seats || seats.length === 0) {
-            seatContainer.innerHTML = '<div class="placeholder-text text-muted text-center py-5">Không có thông tin về sơ đồ ghế</div>';
+            seatContainer.innerHTML =
+                '<div class="placeholder-text text-muted text-center py-5">Không có thông tin về sơ đồ ghế</div>';
             return;
         }
 
-        seatContainer.innerHTML = '';
-        seatContainer.className = 'seat-container';
+        seatContainer.innerHTML = "";
+        seatContainer.className = "seat-container";
 
         const rowCount = seats.length;
         const colCount = seats[0] ? seats[0].length : 0;
 
-        console.log('Grid dimensions:', { rowCount, colCount });
+        console.log("Grid dimensions:", { rowCount, colCount });
 
         // Calculate grid template columns
-        let gridTemplateColumns = 'auto'; // Row label column
+        let gridTemplateColumns = "auto"; // Row label column
         let totalCols = 1; // Start with 1 for row label
 
         for (let j = 0; j < colCount; j++) {
             // Check if we need an aisle BEFORE this column
             if (colAisles.includes(j)) {
-                gridTemplateColumns += ' 15px'; // Aisle width
+                gridTemplateColumns += " 15px"; // Aisle width
                 totalCols++;
                 console.log(`Adding column aisle before column ${j}`);
             }
-            gridTemplateColumns += ' 35px'; // Seat width
+            gridTemplateColumns += " 35px"; // Seat width
             totalCols++;
         }
-        
-        console.log('Grid template columns:', gridTemplateColumns);
-        console.log('Total columns:', totalCols);
+
+        console.log("Grid template columns:", gridTemplateColumns);
+        console.log("Total columns:", totalCols);
         seatContainer.style.gridTemplateColumns = gridTemplateColumns;
 
         // Create seat rows
         for (let i = 0; i < rowCount; i++) {
             // Row label
-            const rowLabel = document.createElement('div');
-            rowLabel.className = 'row-label';
+            const rowLabel = document.createElement("div");
+            rowLabel.className = "row-label";
             rowLabel.textContent = String.fromCharCode(65 + i);
             seatContainer.appendChild(rowLabel);
 
@@ -180,11 +258,13 @@ document.addEventListener('DOMContentLoaded', function () {
             for (let j = 0; j < colCount; j++) {
                 // Add column aisle if needed (BEFORE this seat)
                 if (colAisles.includes(j)) {
-                    const aisle = document.createElement('div');
-                    aisle.className = 'aisle aisle-col';
-                    aisle.style.width = '15px';
-                    aisle.style.height = '35px';
-                    console.log(`Creating column aisle before seat [${i}][${j}]`);
+                    const aisle = document.createElement("div");
+                    aisle.className = "aisle aisle-col";
+                    aisle.style.width = "15px";
+                    aisle.style.height = "35px";
+                    console.log(
+                        `Creating column aisle before seat [${i}][${j}]`
+                    );
                     seatContainer.appendChild(aisle);
                 }
 
@@ -193,42 +273,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!seatData) {
                     console.warn(`Missing seat data at position [${i}][${j}]`);
                     // Create empty placeholder
-                    const emptySeat = document.createElement('div');
-                    emptySeat.className = 'seat empty';
+                    const emptySeat = document.createElement("div");
+                    emptySeat.className = "seat empty";
                     seatContainer.appendChild(emptySeat);
                     continue;
                 }
 
                 const seatId = seatData.TenGhe;
-                const seat = document.createElement('div');
+                const seat = document.createElement("div");
 
-                seat.className = 'seat';
+                seat.className = "seat";
                 seat.textContent = seatId;
                 seat.dataset.row = i;
                 seat.dataset.col = j;
                 seat.dataset.seatId = seatId;
 
-                console.log(`Creating seat ${seatId} with status:`, seatData.TrangThaiGhe);
+                console.log(
+                    `Creating seat ${seatId} with status:`,
+                    seatData.TrangThaiGhe
+                );
 
                 // Set seat status
                 if (seatData.TrangThaiGhe === 0) {
                     // Disabled seat
-                    seat.classList.add('disabled');
+                    seat.classList.add("disabled");
                 } else if (seatData.IsBooked || bookedSeats.includes(seatId)) {
                     // Booked seat
-                    seat.classList.add('booked');
+                    seat.classList.add("booked");
                 } else {
                     // Available seat
-                    seat.classList.add('available');
+                    seat.classList.add("available");
 
                     if (seatData.TrangThaiGhe === 2) {
-                        seat.classList.add('vip');
+                        seat.classList.add("vip");
                     } else {
-                        seat.classList.add('normal');
+                        seat.classList.add("normal");
                     }
 
                     // Add click handler for available seats
-                    seat.addEventListener('click', function () {
+                    seat.addEventListener("click", function () {
                         handleSeatClick(this);
                     });
                 }
@@ -238,17 +321,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Add row aisle if needed (AFTER this row)
             if (rowAisles.includes(i + 1)) {
-                const aisleRow = document.createElement('div');
-                aisleRow.className = 'aisle aisle-row';
+                const aisleRow = document.createElement("div");
+                aisleRow.className = "aisle aisle-row";
                 aisleRow.style.gridColumn = `1 / span ${totalCols}`;
-                aisleRow.style.height = '15px';
-                aisleRow.style.backgroundColor = 'transparent';
+                aisleRow.style.height = "15px";
+                aisleRow.style.backgroundColor = "transparent";
                 console.log(`Creating row aisle after row ${i + 1}`);
                 seatContainer.appendChild(aisleRow);
             }
         }
 
-        console.log('Seat layout rendered successfully');
+        console.log("Seat layout rendered successfully");
     }
 
     // Handle seat click
@@ -257,27 +340,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const seatId = seatElement.dataset.seatId;
 
-        if (seatElement.classList.contains('selected')) {
+        if (seatElement.classList.contains("selected")) {
             // Deselect seat
-            seatElement.classList.remove('selected');
+            seatElement.classList.remove("selected");
             selectedSeats.delete(seatId);
         } else {
             // Select seat
             if (selectedSeats.size >= maxSeats) {
-                showNotification('Cảnh báo', `Bạn chỉ được chọn tối đa ${maxSeats} ghế.`, 'warning');
-                return;
-            }
-
-            if (!isValidSeatSelection(seatId)) {
                 showNotification(
-                    'Thông báo',
-                    'Việc chọn vị trí ghế của bạn không được để trống 1 ghế ở bên trái, giữa hoặc bên phải trên cùng hàng ghế mà bạn vừa chọn.',
-                    'warning'
+                    "Cảnh báo",
+                    `Bạn chỉ được chọn tối đa ${maxSeats} ghế.`,
+                    "warning"
                 );
                 return;
             }
 
-            seatElement.classList.add('selected');
+            // Add validation check here if you want immediate feedback
+            // Uncomment below lines if you want validation on click
+            /*
+            if (!isValidSeatSelection(seatId)) {
+                showNotification(
+                    "Thông báo",
+                    "Việc chọn vị trí ghế của bạn không được để trống 1 ghế ở bên trái, giữa hoặc bên phải trên cùng hàng ghế mà bạn vừa chọn.",
+                    "warning"
+                );
+                return;
+            }
+            */
+
+            seatElement.classList.add("selected");
             selectedSeats.add(seatId);
         }
 
@@ -290,7 +381,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Update seat numbers display
         if (seatNumbersElement) {
-            seatNumbersElement.textContent = seatArray.length > 0 ? seatArray.join(', ') : '';
+            seatNumbersElement.textContent =
+                seatArray.length > 0 ? seatArray.join(", ") : "";
         }
 
         // Calculate total price
@@ -298,10 +390,12 @@ document.addEventListener('DOMContentLoaded', function () {
         let normalCount = 0;
         let vipCount = 0;
 
-        seatArray.forEach(seatId => {
-            const seatElement = document.querySelector(`[data-seat-id="${seatId}"]`);
+        seatArray.forEach((seatId) => {
+            const seatElement = document.querySelector(
+                `[data-seat-id="${seatId}"]`
+            );
             if (seatElement) {
-                if (seatElement.classList.contains('vip')) {
+                if (seatElement.classList.contains("vip")) {
                     totalPrice += ticketPrice + vipSurcharge;
                     vipCount++;
                 } else {
@@ -313,43 +407,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Update summary display
         if (seatSummaryElement) {
-            let summaryText = '';
-            if (normalCount > 0) summaryText += `${normalCount} Ghế thường`;
+            let summaryText = "";
+            if (normalCount > 0) summaryText += `x${normalCount} Ghế thường`;
             if (vipCount > 0) {
-                if (summaryText) summaryText += ', ';
-                summaryText += `${vipCount} Ghế VIP`;
+                if (summaryText) summaryText += ", ";
+                summaryText += `x${vipCount} Ghế VIP`;
             }
             seatSummaryElement.textContent = summaryText;
-            seatSummaryElement.style.display = summaryText ? 'block' : 'none';
+            seatSummaryElement.style.display = summaryText ? "block" : "none";
         }
 
         if (totalPriceElement) {
-            totalPriceElement.textContent = totalPrice.toLocaleString('vi-VN') + ' đ';
+            totalPriceElement.textContent =
+                totalPrice.toLocaleString("vi-VN") + " đ";
         }
 
         // Update continue button state
         if (btnContinue) {
             btnContinue.disabled = selectedSeats.size === 0;
         }
+
+        // Cập nhật biến toàn cục để form gửi đúng ghế đã chọn
+        window.selectedSeats = seatArray;
+
+        console.log("Updated selectedSeats:", window.selectedSeats);
     }
 
     // Handle showtime change
     function handleShowtimeChange() {
-        timeButtons.forEach(button => {
-            button.addEventListener('click', function () {
+        timeButtons.forEach((button) => {
+            button.addEventListener("click", function () {
                 if (isProcessing) return;
 
                 // Update active state
-                timeButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+                timeButtons.forEach((btn) => btn.classList.remove("active"));
+                button.classList.add("active");
 
                 // Get new showtime info
-                const gioChieu = button.getAttribute('data-gio');
-                const suatChieuIdNew = button.getAttribute('data-id');
+                const gioChieu = button.getAttribute("data-gio");
+                const suatChieuIdNew = button.getAttribute("data-id");
 
                 // Update display
                 if (showtimeInfo) {
-                    const ngayChieu = showtimeInfo.textContent.split(' - ')[1];
+                    const ngayChieu = showtimeInfo.textContent.split(" - ")[1];
                     showtimeInfo.innerHTML = `<span>Suất: ${gioChieu}</span> - ${ngayChieu}`;
                 }
 
@@ -357,139 +457,73 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (suatChieuIdNew && suatChieuIdNew !== suatChieuId) {
                     isProcessing = true;
                     const currentUrl = new URL(window.location.href);
-                    const pathParts = currentUrl.pathname.split('/');
+                    const pathParts = currentUrl.pathname.split("/");
 
                     // Update time in URL
-                    pathParts[pathParts.length - 1] = gioChieu.replace(':', '-');
+                    pathParts[pathParts.length - 1] = gioChieu.replace(
+                        ":",
+                        "-"
+                    );
 
-                    window.location.href = pathParts.join('/');
+                    window.location.href = pathParts.join("/");
                 }
             });
-        });
-    }
-
-    // Handle continue button
-    function handleContinueButton() {
-        if (!btnContinue) return;
-
-        btnContinue.addEventListener('click', function () {
-            if (isProcessing || selectedSeats.size === 0) return;
-
-            // Final validation
-            let isValid = true;
-            const seatsByRow = {};
-
-            // Group seats by row
-            selectedSeats.forEach(seatId => {
-                const row = seatId.charAt(0);
-                if (!seatsByRow[row]) seatsByRow[row] = [];
-                seatsByRow[row].push(parseInt(seatId.slice(1)));
-            });
-
-            // Validate each row
-            for (const row in seatsByRow) {
-                const cols = seatsByRow[row].sort((a, b) => a - b);
-
-                // Check for gaps
-                for (let i = 0; i < cols.length - 1; i++) {
-                    if (cols[i + 1] - cols[i] === 2) {
-                        const middleSeat = `${row}${cols[i] + 1}`;
-                        if (!selectedSeats.has(middleSeat)) {
-                            isValid = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (!isValid) break;
-            }
-
-            if (!isValid) {
-                showNotification(
-                    'Thông báo',
-                    'Việc chọn vị trí ghế của bạn không được để trống 1 ghế ở bên trái, giữa hoặc bên phải trên cùng hàng ghế mà bạn vừa chọn.',
-                    'warning'
-                );
-                return;
-            }
-
-            // Submit booking
-            isProcessing = true;
-            btnContinue.disabled = true;
-            btnContinue.innerHTML = '<i class="spinner-border spinner-border-sm me-2"></i>Đang xử lý...';
-
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = window.thanhToanUrl || '/thanh-toan';
-
-            // Add CSRF token
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-            form.appendChild(csrfInput);
-
-            // Add selected seats
-            const seatsInput = document.createElement('input');
-            seatsInput.type = 'hidden';
-            seatsInput.name = 'selectedSeats';
-            seatsInput.value = Array.from(selectedSeats).join(',');
-            form.appendChild(seatsInput);
-
-            // Add showtime ID
-            const suatChieuInput = document.createElement('input');
-            suatChieuInput.type = 'hidden';
-            suatChieuInput.name = 'suatChieuId';
-            suatChieuInput.value = suatChieuId;
-            form.appendChild(suatChieuInput);
-
-            document.body.appendChild(form);
-            form.submit();
         });
     }
 
     // Notification function
-    function showNotification(title, message, type = 'info') {
+    function showNotification(title, message, type = "info") {
+        console.log("Showing notification:", { title, message, type });
+
         // Try to use SweetModal if available
-        if (typeof $ !== 'undefined' && $.sweetModal) {
+        if (typeof $ !== "undefined" && $.sweetModal) {
             $.sweetModal({
                 content: message,
                 title: title,
-                icon: type === 'warning' ? $.sweetModal.ICON_WARNING : $.sweetModal.ICON_INFO,
+                icon:
+                    type === "warning"
+                        ? $.sweetModal.ICON_WARNING
+                        : $.sweetModal.ICON_INFO,
                 theme: $.sweetModal.THEME_DARK,
                 buttons: {
-                    'OK': {
-                        classes: 'redB'
-                    }
-                }
+                    OK: {
+                        classes: "redB",
+                    },
+                },
             });
+        } else if (typeof showBookingNotification === "function") {
+            // Use the global notification function if available
+            showBookingNotification(title, message, type);
         } else {
             // Fallback to alert
-            alert(title + ': ' + message);
+            alert(title + ": " + message);
         }
     }
 
     // Initialize everything
     function init() {
-        console.log('Initializing booking app...');
+        console.log("Initializing booking app...");
         renderSeatLayout();
         handleShowtimeChange();
-        handleContinueButton();
         updateBookingSummary();
 
         // Set up periodic seat availability check
         setInterval(checkSeatAvailability, 30000); // Check every 30 seconds
     }
 
-    // Start the application
-    init();
-
-    // Expose functions to global scope for debugging
+    // Initialize window.bookingApp object first
     window.bookingApp = {
         selectedSeats,
         renderSeatLayout,
         updateBookingSummary,
         checkSeatAvailability,
-        isValidSeatSelection
+        isValidSeatSelection,
+        isValidSeatSelectionAll,
+        showNotification,
     };
+
+    // Start the application
+    init();
+
+    console.log("Booking app initialized successfully");
 });

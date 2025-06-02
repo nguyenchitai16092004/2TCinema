@@ -4,114 +4,174 @@
 
     <link rel="stylesheet" href="{{ asset('frontend/Content/css/chi-tiet-phim.css') }}">
 
-    <section class="movie-detail-hero">
+    <div class="bg-gradient"></div>
+
+    <section id="mainContent" class="movie-hero">
+        <div class="hero-bg"></div>
+        <div class="hero-particles"></div>
+
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-4 col-md-5">
-                    <div class="movie-poster-hero">
-                        <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" class="movie-poster-img">
-                        <a href="{{ $phim->Trailer }}" class="trailer-btn-hero popup-youtube" target="_blank">
-                            <span class="trailer-hero-icon">
-                                <i class="fa fa-play"></i>
-                            </span>
-                            <span class="trailer-hero-text">Xem Trailer</span>
-                        </a>
+            <div class="hero-content">
+                <div class="poster-container fade-in-up stagger-1">
+                    <div class="movie-poster">
+                        <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" class="poster-img" />
                         <div class="poster-overlay"></div>
-                        <span class="badge badge-age badge-hero">{{ $phim->DoTuoi }}</span>
+                        <a href="#" class="trailer-btn" id="trailerBtn">
+                            <i class="fas fa-play"></i>
+                        </a>
+                        <span class="age-badge">T{{ $phim->DoTuoi }}</span>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-7">
-                    <div class="movie-info-box">
-                        <h1 class="movie-title">{{ $phim->TenPhim }}</h1>
-                        <div class="movie-meta">
-                            <span class="badge badge-format">{{ $phim->DoHoa }}</span>
+
+                <div class="movie-info">
+                    <h1 class="movie-title fade-in-up stagger-2">
+                        {{ $phim->TenPhim }}
+                    </h1>
+
+                    <div class="movie-badges fade-in-up stagger-3">
+                        <span class="badge badge-format">{{ $phim->DoHoa }}</span>
+                    </div>
+
+                    <div class="movie-meta fade-in-up stagger-4">
+                        <div class="meta-item">
+                            <div class="meta-label">
+                                <i class="fas fa-user-tie"></i>
+                                Đạo diễn
+                            </div>
+                            <div class="meta-value">
+                                {{ $phim->DaoDien }}
+                            </div>
                         </div>
-                        <ul class="movie-attributes">
-                            <li><b>Đạo diễn:</b> {{ $phim->DaoDien }}</li>
-                            <li><b>Ngày khởi chiếu:</b> {{ \Carbon\Carbon::parse($phim->NgayKhoiChieu)->format('d/m/Y') }}
-                            </li>
-                            <li><b>Diễn viên:</b> {{ $phim->DienVien }}</li>
-                            <li><b>Thời lượng:</b>
-                                @php
-                                    $gio = floor($phim->ThoiLuong / 60);
-                                    $phut = $phim->ThoiLuong % 60;
-                                @endphp
-                                {{ $gio > 0 ? $gio . ' giờ ' : '' }}{{ $phut > 0 ? $phut . ' phút' : '' }}
-                            </li>
-                            <li><b>Thể loại:</b> {{ $phim->theLoai->TenTheLoai ?? '' }}</li>
-                        </ul>
-                        <div class="movie-description">
-                            <h4>Tóm tắt nội dung</h4>
-                            <p>{{ $phim->MoTaPhim }}</p>
+                        <div class="meta-item">
+                            <div class="meta-label">
+                                <i class="fas fa-calendar-alt"></i>
+                                Ngày khởi chiếu
+                            </div>
+                            <div class="meta-value">{{ \Carbon\Carbon::parse($phim->NgayKhoiChieu)->format('d/m/Y') }}</div>
                         </div>
+                        <div class="meta-item">
+                            <div class="meta-label">
+                                <i class="fas fa-users"></i>
+                                Diễn viên
+                            </div>
+                            <div class="meta-value">
+                                {{ $phim->DienVien }}
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">
+                                <i class="fas fa-clock"></i>
+                                Thời lượng
+                            </div>
+                            <div class="meta-value"> @php
+                                $gio = floor($phim->ThoiLuong / 60);
+                                $phut = $phim->ThoiLuong % 60;
+                            @endphp
+                                {{ $gio > 0 ? $gio . ' giờ ' : '' }}{{ $phut > 0 ? $phut . ' phút' : '' }}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">
+                                <i class="fas fa-tags"></i>
+                                Thể loại
+                            </div>
+                            <div class="meta-value">
+                                {{ $phim->theLoai->TenTheLoai ?? '' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-description fade-in-up stagger-4">
+                        <h4 class="description-title">
+                            <i class="fas fa-align-left"></i>
+                            Tóm tắt nội dung
+                        </h4>
+                        <p class="description-text">
+                            {{ $phim->MoTaPhim }}
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="showtime-section section_70 container bg-main">
-        <div class="container px-0">
-            <div class="row">
-                <div class="col-12">
-                    <h4 class="lich-chieu-title">
-                        <i class="fa-solid fa-calendar-days"></i> Lịch chiếu
-                    </h4>
-                </div>
-                <div class="col-12">
-                    @if ($suatChieu->isEmpty())
-                        <div class="showtime-empty text-center my-5">
-                            <div class="showtime-empty-icon animate-pop">
-                                <i class="fa-solid fa-clapperboard"></i>
-                            </div>
-                            <div class="showtime-empty-title">Các suất chiếu dành cho phim này đã hết!</div>
-                            <div class="showtime-empty-desc">
-                                Xin cảm ơn bạn đã ghé thăm.<br>
-                                Suất chiếu mới sẽ được cập nhật ngay thôi, bạn vui lòng quay lại sớm nhé!
-                            </div>
-                        </div>
-                    @else
-                        <div class="showtime-timeline">
-                            @foreach ($suatChieu as $groupKey => $group)
-                                @php
-                                    [$ngayChieu, $diaChi] = explode('|', $groupKey);
-                                @endphp
-                                <div class="showtime-card mb-4 timeline-item">
-                                    <div class="timeline-dot"></div>
-                                    <div class="showtime-card-header">
-                                        <div class="showtime-cinema">
-                                            <i class="fa-solid fa-film"></i>
-                                            {{ $group->first()->rap->TenRap ?? 'Thông tin rạp không khả dụng' }}
-                                        </div>
-                                        <div class="showtime-address">
-                                            <i class="fa-solid fa-location-dot"></i>
-                                            {{ $diaChi }}
-                                        </div>
-                                        <div class="showtime-date">
-                                            <i class="fa-solid fa-calendar-day"></i>
-                                            {{ ucfirst(\Carbon\Carbon::parse($ngayChieu)->translatedFormat('l, d/m/Y')) }}
-                                        </div>
-                                    </div>
-                                    <div class="showtime-card-body">
-                                        @foreach ($group as $suat)
-                                            <a href="{{ route('dat-ve.show.slug', [
-                                                'phimSlug' => $phim->Slug,
-                                                'ngay' => $suat->NgayChieu,
-                                                'gio' => $suat->GioChieu,
-                                            ]) }}"
-                                                class="showtime-btn animate-btn">
-                                                <i class="fa-regular fa-clock"></i>
-                                                {{ substr($suat->GioChieu, 0, 5) }}
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
+    <div class="trailer-modal" id="trailerModal">
+        <div class="trailer-container">
+            <button class="trailer-close" id="closeTrailer">
+                <i class="fas fa-times"></i>
+            </button>
+            <iframe class="trailer-video" id="trailerVideo" src="" allowfullscreen></iframe>
+            <div class="trailer-info">
+                <p>Nhấn ESC hoặc click bên ngoài để đóng</p>
             </div>
         </div>
+    </div>
+
+    <section class="showtime-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-calendar-days"></i> Lịch Chiếu
+            </h2>
+            @if ($suatChieu->isEmpty())
+                <div class="showtime-empty text-center my-5">
+
+                    <div class="showtime-empty-title">Các suất chiếu dành cho phim này đã hết!</div>
+                    <div class="showtime-empty-desc">
+                        Xin cảm ơn bạn đã ghé thăm.<br>
+                        Suất chiếu mới sẽ được cập nhật ngay thôi, bạn vui lòng quay lại sớm nhé!
+                    </div>
+                </div>
+            @else
+                <div class="showtime-grid">
+                    <!-- Showtime Card 1 -->
+                    @foreach ($suatChieu as $groupKey => $group)
+                        @php
+                            [$ngayChieu, $diaChi] = explode('|', $groupKey);
+                        @endphp
+                        <div class="showtime-card fade-in-up stagger-1">
+                            <div class="cinema-info">
+                                <div class="cinema-details">
+                                    <h3>
+                                        <i class="fas fa-film"></i>
+                                        {{ $group->first()->rap->TenRap ?? 'Thông tin rạp không khả dụng' }}
+                                    </h3>
+                                    <div class="cinema-address">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        {{ $diaChi }}
+                                    </div>
+                                    <div class="cinema-date">
+                                        <i class="fas fa-calendar-day"></i>
+                                        {{ ucfirst(\Carbon\Carbon::parse($ngayChieu)->translatedFormat('l, d/m/Y')) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="showtime-buttons">
+                                @foreach ($group as $suat)
+                                    <a href="{{ route('dat-ve.show.slug', [
+                                        'phimSlug' => $phim->Slug,
+                                        'ngay' => $suat->NgayChieu,
+                                        'gio' => $suat->GioChieu,
+                                    ]) }}"
+                                        class="showtime-btn">
+                                        <i class="far fa-clock"></i>
+                                        {{ substr($suat->GioChieu, 0, 5) }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
     </section>
+    @php
+        use Illuminate\Support\Str;
+        $trailerEmbed = $phim->Trailer;
+        if (Str::contains($trailerEmbed, 'watch?v=')) {
+            $trailerEmbed = str_replace('watch?v=', 'embed/', $trailerEmbed);
+        }
+    @endphp
     <script src="{{ asset('frontend/Content/js/chi-tiet-phim.js') }}"></script>
+    <script>
+        const trailerUrl = "{{ $trailerEmbed }}";
+    </script>
 @stop

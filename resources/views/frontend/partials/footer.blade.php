@@ -102,7 +102,7 @@
             <li><a class="" href="lich-chieu.html" style="background-color: #2b2b31;"><i
                         class="fa fa-film"></i><br /> Lịch Chiếu</a></li>
             <li><a href="uu-dai.html" style="background-color: #2b2b31;"><i class="fa fa-gift"></i><br /> Ưu
-                    Đ&#227;i</a></li>
+                   Đãi</a></li>
         </ul>
     </div>
 
@@ -126,31 +126,6 @@
 </section>
 
 
-<script>
-    function logOutMenu() {
-        $.ajax({
-            url: "/MemberRegister/Logout",
-            type: "POST",
-            traditional: true,
-            datatype: "json",
-            contentType: 'application/json; charset=utf-8',
-            success: function(result) {
-                //alert(result);
-                if (result === "true" || result === true) {
-                    location.href = "index.html";
-                } else {}
-            },
-            error: function() {
-                return false;
-            }
-        });
-    }
-</script>
-<script>
-    function toggleMBooking() {
-        $(".mobile-book").toggleClass("show-mobile-book");
-    }
-</script>
 <!-- Load Facebook SDK for JavaScript -->
 
 <div class="modal fade" id="adsImageModal" role="dialog" style="background: rgba(51, 51, 51, 0.46);">
@@ -159,9 +134,8 @@
         <div class="modal-content" style="    max-width: 640px;margin: 0 auto;">
             <div class="modal-body" style="padding:0">
                 <img id="adsImage" style="    border: 3px solid #000;border-radius: 3px;width:100%"
-                    src="../www.starlight.vn/Areas/Admin/Content/Fileuploads/images/POSTER/z2950019928727_f1e225b7c12d6c9e9cd4af710d7e685f.html" />
+                    src="#" />
             </div>
         </div>
     </div>
 </div>
-<script src="Scripts/Style88a8?v=_f8__VSi4vuTzCN0MMHUM1jt_vaACvuT1VJNbzQ6qPY1"></script>

@@ -133,9 +133,10 @@
     </div>
     <!-- Slider Area End -->
     <div class="booking-container">
-        <div class="booking-header">
-            <div class="booking-title">ĐẶT VÉ NHANH</div>
-        </div>
+        <header class="section-header">
+            <h1 class="section-title">Đặt vé nhanh</h1>
+        </header>
+
 
         <div class="steps-indicator">
             <div class="step active" id="step-1">
@@ -166,28 +167,11 @@
                     <span><i class="fas fa-chevron-down"></i></span>
                 </button>
                 <div class="dropdown-content" id="theater-content">
-                    <div class="dropdown-item" data-value="cinestar-quoc-thanh"><span class="marquee-text">Cinestar Quốc
-                            Thạnh (TP.HCM)</span></div>
-                    <div class="dropdown-item" data-value="cinestar-satra"><span class="marquee-text">Cinestar Satra Quận
-                            6
-                            (TP.HCM)</span></div>
-                    <div class="dropdown-item" data-value="cinestar-hai-ba-trung"><span class="marquee-text">Cinestar Hai
-                            Bà
-                            Trưng (TP.HCM)</span></div>
-                    <div class="dropdown-item" data-value="cinestar-sinh-vien"><span class="marquee-text">Cinestar Sinh
-                            Viên
-                            (Bình Dương)</span></div>
-                    <div class="dropdown-item" data-value="cinestar-hue"><span class="marquee-text">Cinestar Huế (TP.
-                            Huế)</span></div>
-                    <div class="dropdown-item" data-value="cinestar-da-lat"><span class="marquee-text">Cinestar Đà Lạt
-                            (TP.
-                            Đà Lạt)</span></div>
-                    <div class="dropdown-item" data-value="cinestar-lam-dong"><span class="marquee-text">Cinestar Lâm
-                            Đồng
-                            (Đức Trọng)</span></div>
-                    <div class="dropdown-item" data-value="cinestar-my-tho"><span class="marquee-text">Cinestar Mỹ Tho
-                            (Tiền
-                            Giang)</span></div>
+                    @foreach ($raps as $rap)
+                        <div class="dropdown-item" data-value="{{ $rap->ID_Rap }}" data-name="{{ $rap->TenRap }}">
+                            <span class="marquee-text">{{ $rap->TenRap }}</span>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -197,18 +181,11 @@
                     <span><i class="fas fa-chevron-down"></i></span>
                 </button>
                 <div class="dropdown-content" id="movie-content">
-                    <div class="dropdown-item" data-value="buon-than-ban-than"><span class="marquee-text">BUỒN THÂN BẠN
-                            THÂN</span></div>
-                    <div class="dropdown-item" data-value="godzilla-x-kong"><span class="marquee-text">GODZILLA X KONG:
-                            ĐẾ
-                            QUỐC MỚI</span></div>
-                    <div class="dropdown-item" data-value="kung-fu-panda-4"><span class="marquee-text">KUNG FU PANDA
-                            4</span></div>
-                    <div class="dropdown-item" data-value="thanh-guom-diet-quy"><span class="marquee-text">THANH GƯƠM
-                            DIỆT
-                            QUỶ: LÀNG RÈN KIẾM</span></div>
-                    <div class="dropdown-item" data-value="gia-dinh-croods"><span class="marquee-text">GIA ĐÌNH
-                            CROODS</span></div>
+                    @foreach ($phims as $phim)
+                        <div class="dropdown-item" data-value="{{ $phim->Slug }}" data-id="{{ $phim->ID_Phim }}">
+                            <span class="marquee-text">{{ $phim->TenPhim }}</span>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -302,7 +279,9 @@
                                 <div class="age-rating">T{{ $phim->DoTuoi }}</div>
                             </div>
                             <div class="movie-info">
-                                <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}"><h3 class="movie-title">{{ $phim->TenPhim }}</h3></a>
+                                <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
+                                    <h3 class="movie-title">{{ $phim->TenPhim }}</h3>
+                                </a>
                                 <p class="movie-genre">{{ $phim->theLoai->TenTheLoai ?? '' }}</p>
                                 <div class="movie-rating">
                                     <div class="stars">
@@ -355,11 +334,13 @@
                                 <div class="play-button" data-trailer="{{ $phim->Trailer }}">
                                     <div class="play-icon"></div>
                                 </div>
-                                
+
                                 <div class="age-rating">T{{ $phim->DoTuoi }}</div>
                             </div>
                             <div class="movie-info">
-                               <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}"> <h3 class="movie-title">{{ $phim->TenPhim }}</h3></a>
+                                <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
+                                    <h3 class="movie-title">{{ $phim->TenPhim }}</h3>
+                                </a>
                                 <p class="movie-genre">{{ $phim->theLoai->TenTheLoai ?? '' }}</p>
                                 <div class="movie-rating">
                                     <div class="stars">
@@ -826,7 +807,7 @@
         <div class="floating-circle"></div>
         <div class="floating-circle"></div>
         <div class="floating-circle"></div>
-        
+
     </div>
 
     <div class="container">
@@ -841,7 +822,8 @@
         <main class="content-grid">
             <article class="main-article">
                 <div class="main-article-image">
-                    <img src="https://images.unsplash.com/photo-1489599417793-4d8f4dfc6b10?w=800&h=400&fit=crop" alt="Final Destination Bloodlines">
+                    <img src="https://images.unsplash.com/photo-1489599417793-4d8f4dfc6b10?w=800&h=400&fit=crop"
+                        alt="Final Destination Bloodlines">
                     <div class="main-article-overlay">
                         <div class="article-meta">
                             <span class="article-tag">Thích</span>
@@ -858,10 +840,12 @@
             <aside class="sidebar">
                 <article class="sidebar-article">
                     <div class="sidebar-image">
-                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=150&h=150&fit=crop" alt="Bùi Thạc Chuyên">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=150&h=150&fit=crop"
+                            alt="Bùi Thạc Chuyên">
                     </div>
                     <div class="sidebar-content">
-                        <h3 class="sidebar-title">Bùi Thạc Chuyên Và 11 Năm Tâm Huyết Với Địa Đạo: Mặt Trời Trong Bóng Tối</h3>
+                        <h3 class="sidebar-title">Bùi Thạc Chuyên Và 11 Năm Tâm Huyết Với Địa Đạo: Mặt Trời Trong Bóng Tối
+                        </h3>
                         <div class="article-meta">
                             <span class="article-tag">Thích</span>
                             <div class="article-views">
@@ -874,7 +858,8 @@
 
                 <article class="sidebar-article">
                     <div class="sidebar-image">
-                        <img src="https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=150&h=150&fit=crop" alt="Oscar 2025">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=150&h=150&fit=crop"
+                            alt="Oscar 2025">
                     </div>
                     <div class="sidebar-content">
                         <h3 class="sidebar-title">Tổng Hợp Oscar 2025: Anora Thắng Lớn</h3>
@@ -890,7 +875,8 @@
 
                 <article class="sidebar-article">
                     <div class="sidebar-image">
-                        <img src="https://images.unsplash.com/photo-1594908900066-3f4adf00b6f6?w=150&h=150&fit=crop" alt="Nụ Hôn Bạc Tỷ">
+                        <img src="https://images.unsplash.com/photo-1594908900066-3f4adf00b6f6?w=150&h=150&fit=crop"
+                            alt="Nụ Hôn Bạc Tỷ">
                     </div>
                     <div class="sidebar-content">
                         <h3 class="sidebar-title">Nụ Hôn Bạc Tỷ: Thúy Kiều - Thúy Vân Phiên Bản 2025?</h3>
@@ -919,7 +905,8 @@
             <div class="promotion-card promotion-special">
                 <div class="promotion-badge">New</div>
                 <div class="promotion-image">
-                    <img src="https://images.unsplash.com/photo-1489599417793-4d8f4dfc6b10?w=400&h=250&fit=crop" alt="U22 Vui Vẻ - Bắp Nước Siêu Hạt Dẻ">
+                    <img src="https://images.unsplash.com/photo-1489599417793-4d8f4dfc6b10?w=400&h=250&fit=crop"
+                        alt="U22 Vui Vẻ - Bắp Nước Siêu Hạt Dẻ">
                 </div>
                 <div class="promotion-content">
                     <h3 class="promotion-title">U22 Vui Vẻ - Bắp Nước Siêu Hạt Dẻ</h3>
@@ -933,7 +920,8 @@
             <div class="promotion-card">
                 <div class="promotion-badge">Hot</div>
                 <div class="promotion-image">
-                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=250&fit=crop" alt="Snack Dư Vị - Xem Phim Hay Hết Ý">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=250&fit=crop"
+                        alt="Snack Dư Vị - Xem Phim Hay Hết Ý">
                 </div>
                 <div class="promotion-content">
                     <h3 class="promotion-title">Snack Dư Vị - Xem Phim Hay Hết Ý</h3>
@@ -947,7 +935,8 @@
             <div class="promotion-card">
                 <div class="promotion-badge">Premium</div>
                 <div class="promotion-image">
-                    <img src="https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=400&h=250&fit=crop" alt="Trọn Vẹn Cảm Giác Điện Ảnh">
+                    <img src="https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=400&h=250&fit=crop"
+                        alt="Trọn Vẹn Cảm Giác Điện Ảnh">
                 </div>
                 <div class="promotion-content">
                     <h3 class="promotion-title">Trọn Vẹn Cảm Giác Điện Ảnh: Từ Rạp Phim Về Đến Nhà</h3>
@@ -961,7 +950,8 @@
             <div class="promotion-card">
                 <div class="promotion-badge">25% Off</div>
                 <div class="promotion-image">
-                    <img src="https://images.unsplash.com/photo-1594908900066-3f4adf00b6f6?w=400&h=250&fit=crop" alt="Bánh Phồng Đế Rec Rec">
+                    <img src="https://images.unsplash.com/photo-1594908900066-3f4adf00b6f6?w=400&h=250&fit=crop"
+                        alt="Bánh Phồng Đế Rec Rec">
                 </div>
                 <div class="promotion-content">
                     <h3 class="promotion-title">Bánh Phồng Đế Rec Rec - Snack Để Giàu Đạm Nhiều Dinh Dưỡng</h3>
@@ -978,4 +968,73 @@
         </div>
     </div>
     <script src=" {{ asset('frontend/Content/js/home.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookBtn = document.getElementById('book-btn');
+            bookBtn.addEventListener('click', function() {
+                // Lấy giá trị đã chọn
+                const rap = document.querySelector('#theater-content .dropdown-item.selected')?.dataset
+                    .value;
+                const phim = document.querySelector('#movie-content .dropdown-item.selected')?.dataset
+                .value;
+                const ngay = document.querySelector('#date-content .dropdown-item.selected')?.dataset.value;
+                const gio = document.querySelector('#time-content .dropdown-item.selected')?.dataset.value;
+
+                if (!rap || !phim || !ngay || !gio) {
+                    alert('Vui lòng chọn đủ Rạp, Phim, Ngày, Suất!');
+                    return;
+                }
+
+                // Chuyển hướng sang route đặt vé (theo slug phim, ngày, giờ)
+                window.location.href = `/dat-ve/${phim}/${ngay}/${gio}`;
+            });
+
+            // Xử lý chọn item dropdown
+            document.querySelectorAll('.dropdown-content .dropdown-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.parentElement.querySelectorAll('.dropdown-item').forEach(i => i.classList
+                        .remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        }); // Khi chọn rạp hoặc phim
+        $('#theater-content .dropdown-item, #movie-content .dropdown-item').on('click', function() {
+            let idRap = $('#theater-content .dropdown-item.selected').data('value');
+            let idPhim = $('#movie-content .dropdown-item.selected').data('id');
+            if (idRap && idPhim) {
+                $.get('/ajax/ngay-chieu', {
+                    id_rap: idRap,
+                    id_phim: idPhim
+                }, function(data) {
+                    $('#date-content').html('');
+                    data.forEach(function(ngay) {
+                        $('#date-content').append(
+                            `<div class="dropdown-item" data-value="${ngay}"><span class="marquee-text">${ngay}</span></div>`
+                        );
+                    });
+                });
+            }
+        });
+        $('#date-content').on('click', '.dropdown-item', function() {
+            let idRap = $('#theater-content .dropdown-item.selected').data('value');
+            let idPhim = $('#movie-content .dropdown-item.selected').data('id');
+            let ngay = $(this).data('value');
+            if (idRap && idPhim && ngay) {
+                $.get('/ajax/suat-chieu', {
+                    id_rap: idRap,
+                    id_phim: idPhim,
+                    ngay: ngay
+                }, function(data) {
+                    $('#time-content').html('');
+                    data.forEach(function(suat) {
+                        $('#time-content').append(
+                            `<div class="dropdown-item" data-value="${suat.gio}" data-id="${suat.id}">
+                        <span class="marquee-text">${suat.gio} - ${suat.dinh_dang}</span>
+                    </div>`
+                        );
+                    });
+                });
+            }
+        });
+    </script>
 @stop

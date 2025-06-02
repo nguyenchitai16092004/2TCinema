@@ -22,10 +22,11 @@ return new class extends Migration
             $table->boolean('TrangThai');
             $table->unsignedBigInteger('ID_SuatChieu');
             $table->unsignedBigInteger('ID_HoaDon');
-            $table->unsignedBigInteger('ID_Ghe')->unique();
+            $table->unsignedBigInteger('ID_Ghe');
             $table->foreign('ID_SuatChieu')->references('ID_SuatChieu')->on('suat_chieu');
             $table->foreign('ID_HoaDon')->references('ID_HoaDon')->on('hoa_don');
             $table->foreign('ID_Ghe')->references('ID_Ghe')->on('ghe_ngoi');
+            $table->unique(['ID_Ghe', 'ID_SuatChieu']); 
             $table->timestamps();
         });
     }
