@@ -1402,14 +1402,9 @@ function V2movieCarousel2() {
                             i > 1 && ui(f),
                             i > 1 &&
                                 yt(
-                                    n
-                                        .slice(0, i - 1)
-                                        .concat({
-                                            value:
-                                                " " === n[i - 2].type
-                                                    ? "*"
-                                                    : "",
-                                        })
+                                    n.slice(0, i - 1).concat({
+                                        value: " " === n[i - 2].type ? "*" : "",
+                                    })
                                 ).replace(at, "$1"),
                             u,
                             r > i && ei(n.slice(i, r)),
@@ -15859,14 +15854,12 @@ function V2movieCarousel2() {
                     i,
                     r,
                     n = this.options;
-                this.element
-                    .show()
-                    .css({
-                        width: "auto",
-                        minHeight: 0,
-                        maxHeight: "none",
-                        height: 0,
-                    });
+                this.element.show().css({
+                    width: "auto",
+                    minHeight: 0,
+                    maxHeight: "none",
+                    height: 0,
+                });
                 n.minWidth > n.width && (n.width = n.minWidth);
                 t = this.uiDialog
                     .css({ height: "auto", width: n.width })
@@ -28712,8 +28705,7 @@ $(document).ready(function () {
             prevText:
                 '<img src="/Content/images/slider-prev2.png" alt="Previous" />',
         });
-} ),
-
+}),
     (function (n) {
         "use strict";
         typeof define == "function" && define.amd
@@ -30763,6 +30755,6 @@ $(document).ready(function () {
     });
 setTimeout(function () {
     if (document.readyState !== "complete") {
-        window.stop(); 
+        window.stop();
     }
 }, 5000);

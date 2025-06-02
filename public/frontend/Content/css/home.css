@@ -34,21 +34,7 @@
     );
 }
 
-.booking-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: #fff;
-    margin-right: auto;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(255, 229, 0, 0.3);
-}
 
-.booking-title::before {
-    content: "🎬";
-    margin-right: 12px;
-    font-size: 32px;
-}
 
 .booking-form {
     display: flex;
@@ -457,9 +443,6 @@
         width: 100%;
     }
 
-    .booking-title {
-        font-size: 24px;
-    }
 
     .booking-summary {
         flex-direction: column;

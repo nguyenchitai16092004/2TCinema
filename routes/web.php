@@ -18,8 +18,8 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Apps\PhimController;
 use App\Http\Controllers\Apps\AuthController;
 use App\Http\Controllers\Apps\DatVeController;
-use App\Http\Controllers\Apps\ThanhToanController;
-
+use App\Http\Controllers\PayOSController;
+use App\Http\Controllers\ThanhToanController;
 //==============================Frontend=====================================//
 Route::get('/', [PhimController::class, 'Index'])->name('home');
 
@@ -39,8 +39,8 @@ Route::prefix('auth')->group(function () {
 
 // --- Thông tin tài khoản ---
 Route::prefix('tai-khoan')->group(function () {
-    Route::get('/info', fn () => view('frontend.pages.thong-tin-tai-khoan.info'))->name('user.info');
-    Route::get('/lich-su-giao-dich', fn () => view('frontend.pages.thong-tin-tai-khoan.lich-su-giao-dich'))->name('user.lichsugiaodich');
+    Route::get('/info', fn() => view('frontend.pages.thong-tin-tai-khoan.info'))->name('user.info');
+    Route::get('/lich-su-giao-dich', fn() => view('frontend.pages.thong-tin-tai-khoan.lich-su-giao-dich'))->name('user.lichsugiaodich');
     Route::get('/cap-nhat-thong-tin', [AuthController::class, 'showUpdateInfo'])->name('user.updateInfo.get');
     Route::post('/cap-nhat-thong-tin', [AuthController::class, 'updateInfo'])->name('user.updateInfo.post');
 });
@@ -54,33 +54,56 @@ Route::prefix('phim')->group(function () {
 
 // --- Đặt vé ---
 Route::prefix('dat-ve')->group(function () {
-    Route::get('/dat-ve/{phimSlug}/{ngay}/{gio}', [DatVeController::class, 'showBySlug'])->name('dat-ve.show.slug');
+    Route::get('/{phimSlug}/{ngay}/{gio}', [DatVeController::class, 'showBySlug'])->name('dat-ve.show.slug');
     Route::get('/dat-ve/thanh-toan', [DatVeController::class, 'showThanhToan'])->name('dat-ve.thanh-toan');
     Route::post('/thanh-toan', [DatVeController::class, 'thanhToan'])->name('thanh-toan');
+    Route::get('/ajax/ngay-chieu', [DatVeController::class, 'ajaxNgayChieu']);
+    Route::get('/ajax/suat-chieu', [DatVeController::class, 'ajaxSuatChieu']);
 });
+
 
 // --- Thanh toán ---
 Route::prefix('thanh-toan')->group(function () {
-    Route::post('/thanh-toan/momo', [ThanhToanController::class, 'thanhToanMomo'])->name('thanh-toan.momo');
-    Route::get('/thanh-toan/momo/callback', [ThanhToanController::class, 'momoCallback'])->name('thanh-toan.momo.callback');
-    Route::post('/thanh-toan/zalopay', [ThanhToanController::class, 'thanhToanZaloPay'])->name('thanh-toan.zalopay');
-    Route::get('/thanh-toan/zalopay/callback', [ThanhToanController::class, 'zalopayCallback'])->name('thanh-toan.zalopay.callback');
+    // Route thanh toán chính
+    Route::post('/', [ThanhToanController::class, 'payment'])->name('payment');
+
+    // Routes cho PayOS embedded payment
+    Route::post('/payos-embedded/create', [PayOSController::class, 'createEmbeddedPaymentLink'])->name('payos.embedded.create');
+
+    // Routes xử lý callback từ PayOS
+    Route::get('/payos-return', [PayOSController::class, 'handleReturn'])->name('payos.return');
+    Route::get('/payos-cancel', [PayOSController::class, 'handleCancel'])->name('payos.cancel');
+
+    // Route kiểm tra trạng thái thanh toán
+    Route::get('/status/{orderCode}', [PayOSController::class, 'checkPaymentStatus'])->name('payos.status');
+
+    // Route hiển thị trang trạng thái checkout
+    Route::get('/checkout-status', [ThanhToanController::class, 'checkoutStatus'])->name('checkout_status');
+
+    // Routes bổ sung cho PayOS webhook (nếu cần)
+    Route::post('/payos-webhook', [PayOSController::class, 'handleWebhook'])->name('payos.webhook');
+
+    // Route để lấy thông tin payment link (AJAX)
+    Route::get('/payos-info/{orderCode}', [PayOSController::class, 'getPaymentInfo'])->name('payos.info');
 });
+
 
 // --- Các trang tĩnh ---
 Route::view('/cau-hoi-thuong-gap', 'frontend.pages.cau-hoi-thuong-gap')->name('cau-hoi-thuong-gap');
-Route::view('/lich-chieu', 'frontend.pages.lich-chieu')->name('lich-chieu');
 Route::view('/lien-he', 'frontend.pages.lien-he')->name('lien-he');
 Route::view('/tin-tuc', 'frontend.pages.tin-tuc')->name('tin-tuc');
 Route::view('/uu-dai', 'frontend.pages.uu-dai')->name('uu-dai');
+Route::view('/thanh-cong', 'frontend.pages.thanh-cong')->name('thanh-toan-thanh-cong');
+Route::view('/that-bai', 'frontend.pages.that-bai')->name('thanh-toan-that-bai');
+
 
 // --- Chính sách ---
 Route::prefix('chinh-sach')->group(function () {
-Route::view('/bao-mat-thong-tin', 'frontend.pages.chinh-sach.bao-mat-thong-tin')->name('chinh-sach.bao-mat-thong-tin');
-Route::view('/chinh-sach-giao-nhan', 'frontend.pages.chinh-sach.chinh-sach-giao-nhan')->name('chinh-sach.giao-nhan');
-Route::view('/chinh-sach-thanh-toan', 'frontend.pages.chinh-sach.chinh-sach-thanh-toan')->name('chinh-sach.thanh-toan');
-Route::view('/dieu-khoan-chung', 'frontend.pages.chinh-sach.dieu-khoan-chung')->name('chinh-sach.dieu-khoan-chung');
-Route::view('/kiem-hang-doi-tra-hoan-tien', 'frontend.pages.chinh-sach.kiem-hang-doi-tra-hoan-tien')->name('chinh-sach.kiem-hang-doi-tra-hoan-tien');
+    Route::view('/bao-mat-thong-tin', 'frontend.pages.chinh-sach.bao-mat-thong-tin')->name('chinh-sach.bao-mat-thong-tin');
+    Route::view('/chinh-sach-giao-nhan', 'frontend.pages.chinh-sach.chinh-sach-giao-nhan')->name('chinh-sach.giao-nhan');
+    Route::view('/chinh-sach-thanh-toan', 'frontend.pages.chinh-sach.chinh-sach-thanh-toan')->name('chinh-sach.thanh-toan');
+    Route::view('/dieu-khoan-chung', 'frontend.pages.chinh-sach.dieu-khoan-chung')->name('chinh-sach.dieu-khoan-chung');
+    Route::view('/kiem-hang-doi-tra-hoan-tien', 'frontend.pages.chinh-sach.kiem-hang-doi-tra-hoan-tien')->name('chinh-sach.kiem-hang-doi-tra-hoan-tien');
 });
 
 //===============================Admin=====================================//
@@ -98,9 +121,9 @@ Route::get('/admin/404', fn() => view('backend.pages.404'));
 Route::get('/admin/charts', fn() => view('backend.pages.charts'));
 
 Route::prefix('admin')->middleware(['admin'])->group(function () {
-    Route::get('/home', [HomeController::class , 'index'])-> name('cap-nhat-thong-tin.index') ;
-    Route::post('/cap-nhat-thong-tin-trang', [HomeController::class , 'update'])-> name('thong-tin-trang-web.update') ;
- 
+    Route::get('/home', [HomeController::class, 'index'])->name('cap-nhat-thong-tin.index');
+    Route::post('/cap-nhat-thong-tin-trang', [HomeController::class, 'update'])->name('thong-tin-trang-web.update');
+
 
     // Rap
     Route::prefix('rap')->name('rap.')->group(function () {
@@ -200,5 +223,4 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::prefix('thong-ke')->name('thong-ke.')->group(function () {
         Route::get('/', [ThongKeController::class, 'index'])->name('index');
     });
-    
 });

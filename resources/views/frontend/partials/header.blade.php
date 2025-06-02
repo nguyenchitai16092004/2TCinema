@@ -13,11 +13,11 @@
                 <div class="col-lg-5 col-md-3 col-sm-12">
                     <div class="header-top-social">
                         <ul>
-                            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                            {{-- <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
                             <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
                             <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
-                            <li><a href="#"><i class="fa fa-pinterest-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest-square"></i></a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -36,9 +36,11 @@
                                     </ul>
                                 </li>
                             @else
-                                <li style="display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
-                                    <img src="{{ asset('frontend/Content/img/user.svg') }}" alt="">
-                                    <a href="{{ route('login.form') }}" class="btn-member">Đăng nhập</a>
+                                <li>
+                                    <div style="display:flex; gap: 10px;">
+                                        <img src="{{ asset('frontend/Content/img/user.svg') }}" alt="user-login-svg">
+                                        <a href="{{ route('login.form') }}" class="btn-member">Đăng nhập</a>
+                                    </div>
                                 </li>
                             @endif
                             <script>
@@ -76,7 +78,7 @@
                 <div class="col-lg-3">
                     <div class="site-logo">
                         <a href="{{ asset('/') }}">
-                            <img width="120px" src="Content/img/logoCineTick.png" alt="filmoja" />
+                            <img width="150px" src="Content/img/logoCineTick.png" alt="filmoja" />
                         </a>
                     </div>
                     <!-- Responsive Menu Start -->
@@ -90,16 +92,24 @@
                             <ul id="responsive_navigation">
                                 <!-- Mobile Search Start -->
                                 <!-- Mobile Search End -->
+                                <a href="#"><img width="120px;"
+                                        src="{{ asset('frontend/Content/img/btn-ticket.webp') }}" alt="">
+                                </a>
+
                                 <li><a href="{{ asset('/') }}">Trang chủ</a></li>
-                                <li>
-                                    <a href="{{ asset('/lich-chieu') }}">Lịch chiếu</a>
-                                </li>
-                                <li><a href="{{ asset('/lich-chieu') }}">Mua Gói</a></li>
+
                                 <li>
                                     <a href="{{ asset('#') }}">Phim</a>
                                     <ul style=" background: -webkit-linear-gradient(left, #171e38, #5841a7);">
                                         <li><a href="{{ route('phim.dangChieu') }}">Phim Đang Chiếu</a></li>
                                         <li><a href="{{ route('phim.sapChieu') }}">Phim Sắp Chiếu</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ asset('#') }}">Rạp/Giá vé</a>
+                                    <ul style=" background: -webkit-linear-gradient(left, #171e38, #5841a7);">
+                                        <li><a href="#">CineTick 1</a></li>
+                                        <li><a href="#">CineTick 2</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="{{ asset('/uu-dai') }}">Khuyến Mãi</a></li>

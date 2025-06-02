@@ -1,11 +1,9 @@
 
 
 .ctn-thanh-toan {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 20px;
     display: flex;
-    gap: 20px;
 }
 
 .left-column {
@@ -119,6 +117,7 @@
     border-radius: 4px;
 }
 
+
 .payment-option:hover {
     background-color: #f9f9f9;
 }
@@ -128,8 +127,8 @@
 }
 
 .payment-option img {
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 80px;
     margin-right: 10px;
     object-fit: contain;
 }
@@ -188,7 +187,7 @@
 .booking-timer {
     background-color: #f9f9f9;
     padding: 10px;
-    text-align: right;
+    text-align: center;
     margin-bottom: 20px;
     color: #333;
 }
@@ -196,6 +195,7 @@
 .timer {
     color: #f7941d;
     font-weight: bold;
+    font-size: 20px;
 }
 
 .ticket-details {

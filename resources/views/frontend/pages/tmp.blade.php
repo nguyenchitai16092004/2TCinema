@@ -2,9 +2,7 @@
 @section('title', 'Đặt vé xem phim')
 @section('main')
     <link rel="stylesheet" href="{{ asset('frontend/Content/css/dat-ve.css') }}">
-
-    <div class="bg-gradient"></div>
-    <div class="boking-container">
+    <div class="container">
         <!-- Booking Steps -->
         <div class="booking-steps">
             <div class="step active">Chọn phim / Rạp / Suất</div>
@@ -12,26 +10,12 @@
             <div class="step">Thanh toán</div>
             <div class="step">Xác nhận</div>
         </div>
-        <div class="bg-gradient"></div>
+
         <!-- Main Content -->
         <div class="content">
-
             <!-- Left Panel - Seating -->
             <div class="left-panel">
-                {{-- <div class="time-selection">
-                    <label>Đổi suất chiếu</label>
-                    @if ($suatChieuCungNgay->isEmpty())
-                        <p>Không có suất chiếu nào cùng ngày và cùng rạp.</p>
-                    @else
-                        @foreach ($suatChieuCungNgay as $suat)
-                            <button class="time-btn {{ $suat->ID_SuatChieu == $suatChieu->ID_SuatChieu ? 'active' : '' }}"
-                                data-id="{{ $suat->ID_SuatChieu }}" data-gio="{{ substr($suat->GioChieu, 0, 5) }}"
-                                data-gia="{{ $suat->GiaVe }}">
-                                {{ substr($suat->GioChieu, 0, 5) }}
-                            </button>
-                        @endforeach
-                    @endif
-                </div> --}}
+         
 
                 {{-- Cột sơ đồ ghế --}}
                 <h5 class="card-title fw-bold text-center text-primary mb-3">
@@ -71,9 +55,10 @@
                         <img src="{{ $suatChieu->phim->HinhAnh }}" alt="{{ $suatChieu->phim->TenPhim }}">
                         <div class="movie-badge">T{{ $suatChieu->phim->DoTuoi }}</div>
                     </div>
-                    <div class="movie-name">
-                        <h3 class="movie-title">{{ $suatChieu->phim->TenPhim }} - {{ $suatChieu->phim->DoHoa }} </h3><span
-                            class="age-rating">T{{ $suatChieu->phim->DoTuoi }}</span>
+                    <h3 class="movie-title">{{ $suatChieu->phim->TenPhim }}</h3>
+                    <div class="movie-meta">
+                        {{ $suatChieu->phim->DoHoa }}
+                        <span class="age-rating">T{{ $suatChieu->phim->DoTuoi }}</span>
                     </div>
                     <p class="cinema-info">{{ $suatChieu->rap->TenRap }} - {{ $suatChieu->rap->DiaChi }}</p>
                     <p class="showtime-info">
@@ -94,7 +79,7 @@
                     </div>
 
                     <div class="total-section">
-                        <div class="total-title">Tổng cộng</div>
+                        <div>Tổng cộng</div>
                         <div class="total-price">0 đ</div>
                     </div>
 
@@ -112,51 +97,17 @@
         <input type="hidden" name="selectedSeats" id="selectedSeatsInput">
     </form>
     <script>
-        document.getElementById('btn-continue').addEventListener('click', function(e) {
+        document.getElementById('btn-continue').addEventListener('click', function () {
+            // Lấy danh sách ghế đã chọn từ JS (giả sử biến selectedSeats lưu mảng ghế)
             let selectedSeats = window.selectedSeats || [];
             if (selectedSeats.length === 0) {
                 showBookingNotification('Thông báo', 'Vui lòng chọn ít nhất 1 ghế!', 'warning');
                 return;
             }
-
-            // Kiểm tra logic chọn ghế ở đây
-            if (!window.bookingApp.isValidSeatSelectionAll(selectedSeats)) {
-                showBookingNotification(
-                    'Thông báo',
-                    'Việc chọn vị trí ghế của bạn không được để trống 1 ghế ở bên trái, giữa hoặc bên phải trên cùng hàng ghế mà bạn vừa chọn.',
-                    'warning'
-                );
-                return;
-            }
-
-            // Lấy độ tuổi phim
-            var age = {{ $suatChieu->phim->DoTuoi }};
-            $.sweetModal({
-                title: `<div style=" margin-bottom:8px;display:flex;justify-content:center;"><span style="background:#ff9800;color:#fff;padding:3px 7px;border-radius:6px;font-weight:100;">T${age}</span> </div>
-            <span style="color: #333; text-align: center; display: block; font-weight: bold;">Xác nhận mua vé cho người có độ tuổi phù hợp</span>`,
-                content: `<div style="color:#4080FF;font-size:15px;margin-top:8px;font-style:italic;">
-            Tôi xác nhận mua vé phim này cho người có độ tuổi từ <b>${age} tuổi trở lên</b> và đồng ý cung cấp giấy tờ tuỳ thân để xác minh độ tuổi.
-        </div>`,
-                icon: $.sweetModal.ICON_INFO,
-                theme: $.sweetModal.THEME_DARK,
-                buttons: {
-                    'Từ chối': {
-                        classes: 'grayB',
-                        action: function() {
-                        },
-                    },
-                    'Xác nhận': {
-                        classes: 'orangeB',
-                        action: function() {
-                            document.getElementById('selectedSeatsInput').value = selectedSeats.join(
-                                ',');
-                            document.getElementById('form-chuyen-thanh-toan').submit();
-                        },
-                    }
-                }
-            });
+            document.getElementById('selectedSeatsInput').value = selectedSeats.join(',');
+            document.getElementById('form-chuyen-thanh-toan').submit();
         });
-
+    
         // Đảm bảo cập nhật window.selectedSeats mỗi khi chọn ghế (bổ sung vào JS render ghế)
         // window.selectedSeats = [...]; // cập nhật khi chọn ghế
     </script>
@@ -176,12 +127,12 @@
         // Route URLs
         window.thanhToanUrl = "{{ route('thanh-toan') }}";
     </script>
-    <script>
-        // console.log('Debug info:', {
-        //     thanhToanUrl: "{{ route('thanh-toan') }}",
-        //     csrfToken: "{{ csrf_token() }}",
-        //     suatChieuId: {{ $suatChieu->ID_SuatChieu }}
-        // });
+<script>
+    // console.log('Debug info:', {
+    //     thanhToanUrl: "{{ route('thanh-toan') }}",
+    //     csrfToken: "{{ csrf_token() }}",
+    //     suatChieuId: {{ $suatChieu->ID_SuatChieu }}
+    // });
     </script>
     {{-- Legacy support for existing JavaScript --}}
     <script>

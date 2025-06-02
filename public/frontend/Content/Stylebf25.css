@@ -4763,7 +4763,6 @@ input[type="button"].btn-block {
     color: #6c757d;
 }
 
-
 .nav-tabs .nav-item {
     margin-bottom: -1px;
 }
@@ -17538,6 +17537,7 @@ li {
     margin: 5px 0;
     position: relative;
     z-index: 9999;
+    bottom: 20px;
 }
 
 .mainmenu ul {
@@ -22965,8 +22965,9 @@ h3.no-underline {
 }
 /*End*/
 .sweet-modal-box.alert {
-    width: 80% !important;
-    left: 10% !important;
+    width: 40% !important;
+    left: 30% !important;
+    border-radius: 2%;
 }
 /*Login/Register Form*/
 .register {
@@ -23739,7 +23740,6 @@ h3.no-underline {
     padding-bottom: 30px;
     letter-spacing: 2px;
     font-weight: 500;
-    text-transform: uppercase;
 }
 .sweet-modal-buttons {
     border-top: 1px solid #e0e0e0;

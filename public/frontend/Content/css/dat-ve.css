@@ -1,9 +1,3 @@
-.container {
-    max-width: 1170px;
-    margin: 0 auto;
-    padding: 0 15px;
-}
-
 .booking-steps {
     display: flex;
     border-bottom: 1px solid #e0e0e0;
@@ -26,14 +20,6 @@
 .content {
     display: flex;
     gap: 20px;
-}
-
-.left-panel {
-    flex: 2;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 20px;
 }
 
 .right-panel {
@@ -128,7 +114,6 @@
     border-bottom: 1px solid #ddd;
 }
 
-
 /* Seat Legend */
 .seat-legend {
     display: flex;
@@ -184,24 +169,41 @@
 
 .movie-poster {
     width: 100%;
-    height: 150px;
+    height: 200px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     position: relative;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .movie-poster img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.movie-poster:hover img {
+    transform: scale(1.05);
 }
 
 .movie-title {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 5px;
+    color: #000;
 }
-
+.movie-name {
+    display: flex;
+    gap: 10px;
+}
+.movie-meta {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000;
+}
 .movie-badge {
     position: absolute;
     bottom: 10px;
@@ -275,6 +277,39 @@
     font-size: 16px;
     font-weight: bold;
 }
+.sweet-modal-box {
+    width: 25% !important;
+    left: 35% !important;
+    border-radius: 2%;
+}
+.orangeB,
+.grayB {
+    margin-bottom: 10px;
+    width: 150px;
+}
+.grayB {
+    background-color: #ececec !important;
+    border: none !important;
+    color: #333 !important;
+}
+.grayB:hover {
+    background-color: #cdcccc !important;
+    border: none !important;
+    color: #333 !important;
+}
+.orangeB {
+    background-color: #ff8c00 !important;
+    border: none !important;
+    color: #fff;
+}
+.orangeB:hover {
+    background-color: #ffac46 !important;
+    border: none !important;
+    color: #fff;
+}
+.total-title {
+    color: #333;
+}
 
 .total-price {
     color: #ff8c00;
@@ -335,6 +370,7 @@
     background-color: var(--color-bg-light);
     border-radius: 12px;
     box-shadow: 0 2px 8px var(--color-shadow);
+    flex: 2;
 }
 
 .time-selection {
@@ -471,7 +507,13 @@
 .row-aisle {
     grid-column: 1 / -1;
     height: 20px;
-    background: linear-gradient(0deg, transparent 45%, rgba(0, 123, 255, 0.3) 45%, rgba(0, 123, 255, 0.3) 55%, transparent 55%);
+    background: linear-gradient(
+        0deg,
+        transparent 45%,
+        rgba(0, 123, 255, 0.3) 45%,
+        rgba(0, 123, 255, 0.3) 55%,
+        transparent 55%
+    );
     display: flex;
     align-items: center;
     justify-content: center;
@@ -479,7 +521,13 @@
 
 .column-aisle {
     width: 20px;
-    background: linear-gradient(90deg, transparent 45%, rgba(0, 123, 255, 0.3) 45%, rgba(0, 123, 255, 0.3) 55%, transparent 55%);
+    background: linear-gradient(
+        90deg,
+        transparent 45%,
+        rgba(0, 123, 255, 0.3) 45%,
+        rgba(0, 123, 255, 0.3) 55%,
+        transparent 55%
+    );
     display: flex;
     align-items: center;
     justify-content: center;
@@ -506,6 +554,51 @@
     font-weight: bold;
 }
 
-.aisle-col, .aisle-row {
+.aisle-col,
+.aisle-row {
     background: transparent;
+}
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    color: #fff;
+    min-height: 100vh;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+.bg-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    z-index: -2;
+}
+.bg-gradient::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+            circle at 20% 80%,
+            rgba(120, 119, 198, 0.3) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 119, 198, 0.3) 0%,
+            transparent 50%
+        );
+    animation: gradientShift 8s ease-in-out infinite alternate;
+}
+@keyframes gradientShift {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.8;
+    }
 }

@@ -131,6 +131,7 @@ class AuthController extends Controller
             'user_date' => $user->thongTin->NgaySinh ?? 'Chưa cập nhật',
             'user_sex' => $user->thongTin->GioiTinh ?? 'Chưa cập nhật',
             'user_role' => $user->VaiTro,
+            
         ]);
 
         if ($request->ajax()) {

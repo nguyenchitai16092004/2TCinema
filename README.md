@@ -96,7 +96,10 @@ Dự án được chạy trên **XAMPP** với phiên bản PHP **8.2.12**.
     ```env
     APP_TIMEZONE=Asia/Ho_Chi_Minh
     ```
-
+6. Chạy kho lưu trữ storage:
+    ```bash
+    php artisan storage:link
+    ```
 ---
 
 Bây giờ bạn có thể chạy dự án trên XAMPP với cấu hình PHP 8.2.12.
