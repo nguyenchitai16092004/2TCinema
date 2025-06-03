@@ -21,22 +21,20 @@ class ThanhToanController extends Controller
     /**
      * Xử lý thanh toán vé xem phim
      */
-     public function payment(Request $request)
-     {
+    public function payment(Request $request)
+    {
         Log::info($request->all());
         try {
-            // Validate dữ liệu đầu vào
+            // Validate dữ liệu đầu vào (KHÔNG CẦN totalPrice từ client)
             try {
                 $validated = $request->validate([
                     'ten_khach_hang' => 'required|string|max:255',
                     'email' => 'required|email|max:255',
                     'ID_SuatChieu' => 'required|integer|exists:suat_chieu,ID_SuatChieu',
                     'selectedSeats' => 'required|string',
-                    'totalPrice' => 'required|numeric|min:0',
                     'paymentMethod' => 'required|in:COD,PAYOS'
                 ]);
             } catch (ValidationException $e) {
-                // Trả về lỗi JSON nếu là AJAX
                 if ($request->ajax() || $request->wantsJson()) {
                     return response()->json([
                         'error' => $e->validator->errors()->first()
@@ -69,7 +67,7 @@ class ThanhToanController extends Controller
             // Kiểm tra ghế còn trống
             $bookedSeats = VeXemPhim::where('ID_SuatChieu', $suatChieu->ID_SuatChieu)
                 ->whereIn('TenGhe', $selectedSeats)
-                ->where('TrangThai', '!=', 0) // Không tính ghế đã hủy
+                ->where('TrangThai', '!=', 0)
                 ->pluck('TenGhe')
                 ->toArray();
 
@@ -86,33 +84,25 @@ class ThanhToanController extends Controller
                 ->whereIn('TenGhe', $selectedSeats)
                 ->get();
 
-            // Tính tổng tiền và chi tiết ghế
+            // Tính tổng tiền và chi tiết ghế (lưu ý ghế VIP)
             $calculatedTotal = 0;
             $seatDetails = [];
             foreach ($selectedSeats as $seatName) {
                 $seat = $gheNgoi->firstWhere('TenGhe', $seatName);
                 if ($seat) {
                     $giaVe = $suatChieu->GiaVe;
-                    // Thêm phụ phí VIP nếu có
                     if ($seat->LoaiTrangThaiGhe == 2) {
-                        $giaVe += 20000;
+                        // Phụ phí VIP: +20% giá vé gốc
+                        $giaVe += $giaVe * 0.2;
                     }
                     $calculatedTotal += $giaVe;
                     $seatDetails[] = [
                         'ID_Ghe' => $seat->ID_Ghe,
                         'TenGhe' => $seatName,
-                        'GiaVe'  => $giaVe
+                        'LoaiGhe' => $seat->LoaiTrangThaiGhe == 2 ? 'VIP' : 'Thường',
+                        'GiaVe'  => $giaVe,
                     ];
                 }
-            }
-
-            // Kiểm tra tổng tiền
-            if (abs($calculatedTotal - $request->totalPrice) > 1000) {
-                $message = 'Tổng tiền không khớp, vui lòng thử lại!';
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response()->json(['error' => $message], 400);
-                }
-                return redirect()->back()->with('error', $message);
             }
 
             // Chuẩn bị dữ liệu đơn hàng
@@ -138,7 +128,6 @@ class ThanhToanController extends Controller
             if ($request->paymentMethod === 'PAYOS') {
                 $payosController = app()->make(PayOSController::class);
                 $response = $payosController->createPaymentLink($orderData);
-                // Nếu createPaymentLink trả về redirect()->back() (validate lỗi), thì trả về JSON lỗi cho fetch
                 if ($response instanceof RedirectResponse) {
                     if ($request->ajax() || $request->wantsJson()) {
                         return response()->json(['error' => 'Thiếu thông tin đơn hàng!'], 400);
@@ -170,21 +159,17 @@ class ThanhToanController extends Controller
         try {
             DB::beginTransaction();
 
-            // Tạo mã hóa đơn
             $maHoaDon = HoaDon::generateMaHoaDon();
 
-            // Tạo hóa đơn
             $hoaDon = HoaDon::create([
                 'ID_HoaDon' => $maHoaDon,
-                'NgayTao' => now(),
                 'TongTien' => $orderData['tong_tien'],
                 'PTTT' => 'COD',
                 'ID_TaiKhoan' => session('user_id'),
-                'TrangThaiXacNhanHoaDon' => 0, // Chờ xác nhận
-                'TrangThaiXacNhanThanhToan' => 0, // Chờ thanh toán
+                'TrangThaiXacNhanHoaDon' => 0,
+                'TrangThaiXacNhanThanhToan' => 0,
             ]);
 
-            // Tạo vé cho từng ghế
             foreach ($orderData['seatDetails'] as $seatDetail) {
                 VeXemPhim::create([
                     'SoLuong' => 1,
@@ -193,7 +178,7 @@ class ThanhToanController extends Controller
                     'NgayXem' => $orderData['ngay_xem'],
                     'DiaChi' => $orderData['ten_rap'] . ' - ' . $orderData['ten_phong'],
                     'GiaVe' => $seatDetail['GiaVe'],
-                    'TrangThai' => 0, // Khách hàng chưa nhận vé
+                    'TrangThai' => 0,
                     'ID_SuatChieu' => $orderData['ID_SuatChieu'],
                     'ID_HoaDon' => $maHoaDon,
                     'ID_Ghe' => $seatDetail['ID_Ghe'],
@@ -201,9 +186,6 @@ class ThanhToanController extends Controller
             }
 
             DB::commit();
-
-            // Gửi email xác nhận (nếu có)
-            // $this->sendTicketEmail($orderData, $maHoaDon);
 
             return redirect()->route('checkout_status', [
                 'status' => 'success',
@@ -215,6 +197,7 @@ class ThanhToanController extends Controller
             throw $e;
         }
     }
+
     public function sendEmailForOrder($hoaDon, $veXemPhims)
     {
         // Đảm bảo $veXemPhims là collection hoặc mảng
@@ -236,7 +219,6 @@ class ThanhToanController extends Controller
         try {
             $data = [
                 'order_id'        => $hoaDon->ID_HoaDon,
-                'ngay_tao'        => $hoaDon->NgayTao,
                 'tong_tien'       => $hoaDon->TongTien,
                 'pttt'            => $hoaDon->PTTT,
                 'ten_khach_hang'  => session('user_fullname') ?? '',
@@ -251,6 +233,7 @@ class ThanhToanController extends Controller
             Log::error('Gửi mail vé xem phim thất bại: ' . $e->getMessage());
         }
     }
+
     public function checkoutStatus(Request $request)
     {
         $status = session('status', $request->input('status', null));

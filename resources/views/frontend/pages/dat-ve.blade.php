@@ -61,6 +61,7 @@
                 <div class="mt-3 d-flex justify-content-between align-items-center">
                     <small id="seatCount" class="text-muted">Số ghế: {{ $phongChieu->SoLuongGhe }}</small>
                     <small class="text-muted">Tối đa 8 ghế/lần đặt</small>
+                    <small class="text-muted">Ghế VIP sẽ thêm 20% giá vé so với ghế thường.</small>
                 </div>
             </div>
 
