@@ -38,18 +38,26 @@
             <div class="ticket-details">
                 <div class="ticket-row" style="display: flex; justify-content: space-between;">
                     <div><strong><span>{{ count($selectedSeats) }}x Vé {{ $suatChieu->phim->DoHoa }}</span></strong></div>
-                    <div><strong>{{ number_format(count($selectedSeats) * $suatChieu->GiaVe, 0, ',', '.') }} đ</strong>
+                    <div><strong> {{ number_format($totalPrice, 0, ',', '.') }} đ</strong>
                     </div>
                 </div>
                 <div style="margin-top: 2px;">
-                    Ghế: <strong>{{ implode(', ', $selectedSeats) }}</strong>
+                  
+                    <br>
+                    Ghế:
+                    <strong>
+                        {{-- Show từng ghế, phân biệt VIP/Thường và giá --}}
+                        @foreach($seatDetails as $detail)
+                        {{ $detail['TenGhe'] }} ({{ $detail['LoaiGhe'] }}: {{ number_format($detail['Gia'], 0, ',', '.') }} đ){{ !$loop->last ? ', ' : '' }}
+                    @endforeach
+                    </strong>
                 </div>
             </div>
 
             <div class="total-row">
                 <div>Tổng cộng</div>
                 <div class="total-price">
-                    {{ number_format(count($selectedSeats) * $suatChieu->GiaVe, 0, ',', '.') }} đ
+                    {{ number_format($totalPrice, 0, ',', '.') }} đ
                 </div>
             </div>
         </div>
@@ -90,7 +98,6 @@
                 <input type="hidden" name="ten_khach_hang" value="{{ session('user_fullname') ?? '' }}">
                 <input type="hidden" name="email" value="{{ session('user_email') ?? '' }}">
                 <input type="hidden" name="selectedSeats" value="{{ implode(',', $selectedSeats) }}">
-                <input type="hidden" name="totalPrice" value="{{ count($selectedSeats) * $suatChieu->GiaVe }}">
                 <input type="hidden" name="ID_SuatChieu" value="{{ $suatChieu->ID_SuatChieu }}">
                 <input type="hidden" name="paymentMethod" value="PAYOS">
             </form>

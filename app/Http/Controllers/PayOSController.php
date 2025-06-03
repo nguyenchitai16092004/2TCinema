@@ -50,7 +50,6 @@ class PayOSController extends Controller
 
         // Tạo hóa đơn
         $hoaDon = HoaDon::create([
-            'NgayTao'      => now(),
             'TongTien'     => $orderData['tong_tien'],
             'PTTT'         => 'PayOS',
             'ID_TaiKhoan'  => session('user_id'),
@@ -229,7 +228,6 @@ class PayOSController extends Controller
             foreach ($veXemPhims as $ve) {
                 $sendEmail->sendEmailForOrder(
                     $hoaDon->ID_HoaDon,
-                    $hoaDon->NgayTao,
                     $hoaDon->TongTien,
                     $hoaDon->PTTT,
                     session('HoTen') ?? '',

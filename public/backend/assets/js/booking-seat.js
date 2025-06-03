@@ -396,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
             if (seatElement) {
                 if (seatElement.classList.contains("vip")) {
-                    totalPrice += ticketPrice + vipSurcharge;
+                    totalPrice += ticketPrice * 1.2;
                     vipCount++;
                 } else {
                     totalPrice += ticketPrice;

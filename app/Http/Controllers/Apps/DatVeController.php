@@ -193,17 +193,41 @@ class DatVeController extends Controller
     }
     // ...existing code...
 
-    public function showThanhToan(\Illuminate\Http\Request $request)
+    public function showThanhToan(Request $request)
     {
         $suatChieuId = $request->input('ID_SuatChieu');
         $selectedSeats = explode(',', $request->input('selectedSeats', ''));
 
-        // Lấy thông tin suất chiếu từ DB
-        $suatChieu = \App\Models\SuatChieu::with(['phim', 'rap', 'phongChieu'])->findOrFail($suatChieuId);
+        $suatChieu = SuatChieu::with(['phim', 'rap', 'phongChieu'])->findOrFail($suatChieuId);
+
+        // Lấy thông tin ghế cho seatDetails
+        $gheNgoi = GheNgoi::where('ID_PhongChieu', $suatChieu->ID_PhongChieu)
+            ->whereIn('TenGhe', $selectedSeats)
+            ->get();
+
+        $seatDetails = [];
+        $totalPrice = 0;
+        foreach ($selectedSeats as $seatName) {
+            $seat = $gheNgoi->firstWhere('TenGhe', $seatName);
+            if ($seat) {
+                $price = $suatChieu->GiaVe;
+                if ($seat->LoaiTrangThaiGhe == 2) {
+                    $price = $price * 1.2; 
+                }
+                $totalPrice += $price;
+                $seatDetails[] = [
+                    'TenGhe' => $seatName,
+                    'LoaiGhe' => $seat->LoaiTrangThaiGhe == 2 ? 'VIP' : 'Thường',
+                    'Gia' => $price 
+                ];
+            }
+        }
 
         return view('frontend.pages.thanh-toan', [
             'suatChieu' => $suatChieu,
             'selectedSeats' => $selectedSeats,
+            'seatDetails' => $seatDetails,
+            'totalPrice' => $totalPrice,
         ]);
     }
     // ...existing code...

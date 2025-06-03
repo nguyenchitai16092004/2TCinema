@@ -7,7 +7,9 @@
     <div class="bg-gradient"></div>
 
     <section id="mainContent" class="movie-hero">
-        <div class="hero-bg"></div>
+        <div class="hero-bg"
+            style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('{{ $phim->HinhAnh }}') center/cover;">
+        </div>
         <div class="hero-particles"></div>
 
         <div class="container">
@@ -114,10 +116,9 @@
             @if ($suatChieu->isEmpty())
                 <div class="showtime-empty text-center my-5">
 
-                    <div class="showtime-empty-title">Các suất chiếu dành cho phim này đã hết!</div>
+                    <div class="showtime-empty-title">Ôi không!</div>
                     <div class="showtime-empty-desc">
-                        Xin cảm ơn bạn đã ghé thăm.<br>
-                        Suất chiếu mới sẽ được cập nhật ngay thôi, bạn vui lòng quay lại sớm nhé!
+                        Không tìm thấy suất chiếu nào cho phim này.
                     </div>
                 </div>
             @else
