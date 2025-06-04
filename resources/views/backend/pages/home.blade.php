@@ -136,6 +136,16 @@
                         @enderror
                     </div>
 
+                    <!-- Hotline -->
+                    <div class="mb-3">
+                        <label for="Hotline" class="form-label">Hotline:</label>
+                        <input type="text" class="form-control" name="Hotline" id="Hotline"
+                            value="{{ old('Hotline', $thongTin->Hotline ?? '') }}">
+                        @error('Hotline')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <!-- Facebook -->
                     <div class="mb-3">
                         <label for="Facebook" class="form-label">Facebook:</label>
@@ -144,7 +154,6 @@
                         @error('Facebook')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                         <iframe src="{{ $thongTin->Facebook }}" width="100%" height="300" style="border:1px solid #ccc;"></iframe>
                     </div>
 
                     <!-- Instagram -->
@@ -155,7 +164,6 @@
                         @error('Instagram')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                        <iframe src="{{ $thongTin->Instagram }}" width="100%" height="300" style="border:1px solid #ccc;" allowfullscreen></iframe>
                     </div>
 
                     <!-- Email -->

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('phong_chieu', function (Blueprint $table) {
             $table->id('ID_PhongChieu');
+            $table->unsignedBigInteger('ID_Rap');
             $table->string('TenPhongChieu', 100);
             $table->boolean('LoaiPhong');
             $table->boolean('TrangThai');

@@ -12,6 +12,7 @@ class ThongTinTrangWeb extends Model
 
     protected $fillable = [
         'Logo',
+        'Hotline',
         'Zalo',
         'Facebook',
         'Instagram',

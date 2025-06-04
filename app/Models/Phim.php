@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Phim extends Model
 {
-
     use HasFactory;
 
     protected $table = 'phim';
@@ -36,8 +35,15 @@ class Phim extends Model
     {
         return $this->belongsTo(TheLoaiPhim::class, 'ID_TheLoaiPhim', 'ID_TheLoaiPhim');
     }
+
     public function suatChieu()
     {
         return $this->hasMany(SuatChieu::class, 'ID_Phim', 'ID_Phim');
     }
-}   
+
+    // ✅ THÊM dòng này để tránh lỗi
+    public function binhLuan()
+    {
+        return $this->hasMany(BinhLuan::class, 'ID_Phim', 'ID_Phim');
+    }
+}
