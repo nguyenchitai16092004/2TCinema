@@ -516,7 +516,7 @@
                     Giao dịch không thể hoàn tất.<br>
                     Vui lòng thử lại hoặc liên hệ hỗ trợ.
                 </div>
-                <button class="contact-button" onclick="window.location.href='mailto:support@yourcinema.com'">Liên hệ hỗ trợ</button>
+                <a href="{{ route('lien-he') }}" class="contact-button" >Liên hệ hỗ trợ</a>
             </div>
         @endif
     </div>
@@ -534,7 +534,7 @@
         </div>
     @else
         <div class="action-buttons">
-            <a href="{{ route('checkout_status') }}" class="main-button">Thử lại</a>
+            {{-- <a href="{{ route('checkout_status') }}" class="main-button">Thử lại</a> --}}
             <a href="{{ route('home') }}" class="secondary-button">Quay lại trang chủ</a>
         </div>
     @endif

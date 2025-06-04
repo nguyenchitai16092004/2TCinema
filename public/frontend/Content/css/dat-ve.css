@@ -144,9 +144,6 @@
     background-color: #ff8c00;
 }
 
-.legend-vip {
-    background-color: #ffd700;
-}
 
 .legend-double {
     background-color: #fff;
@@ -358,10 +355,10 @@
     --color-bg-white: #ffffff;
     --color-border: #dee2e6;
     --color-shadow: rgba(0, 0, 0, 0.1);
-    --color-primary: #0d6efd;
+    --color-primary: rgb(245 128 32);
     --color-vip: #ffc107;
-    --color-booked: #dc3545;
-    --color-disabled: #adb5bd;
+    --color-booked: rgb(208 208 208);
+    --color-disabled: #dc3545;
     --color-text-secondary: #6c757d;
 }
 
@@ -432,15 +429,27 @@
 }
 
 .legend-normal {
-    background-color: var(--color-text-secondary);
+    background-color: #fff; /* Nền trắng */
+    border: 1px solid var(--color-text-secondary); /* Viền xám */
+    box-sizing: border-box;
 }
 
 .legend-vip {
-    background-color: var(--color-vip);
+    background-color: #fff;
+    border: 2px solid var(--color-vip);
+    box-sizing: border-box;
 }
-
+.choosing {
+    background-color: var( --color-primary);
+}
+.card-title{
+    border: 1px solid var(--color-border);
+    padding: 3px 3px;
+}
 .legend-booked {
     background-color: var(--color-booked);
+    border: 1px solid var(--color-text-secondary); 
+
 }
 
 .legend-disabled {
@@ -473,10 +482,12 @@
     text-align: center;
     line-height: 36px;
     border-radius: 6px;
-    border: 1px solid #ccc;
-    background-color: var(--color-bg-light);
     cursor: pointer;
     transition: 0.3s ease;
+
+    background-color: #fff; 
+    border: 1px solid var(--color-text-secondary); 
+    box-sizing: border-box;
 }
 
 .seat:hover {
@@ -484,14 +495,16 @@
 }
 
 .seat.vip {
-    background-color: var(--color-vip);
-    color: #000;
+    background-color: #fff;
+    border: 2px solid var(--color-vip);
+    box-sizing: border-box;
 }
 
 .seat.booked {
     background-color: var(--color-booked);
     color: #fff;
     pointer-events: none;
+    
 }
 
 .seat.selected {
