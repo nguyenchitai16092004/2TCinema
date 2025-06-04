@@ -34,8 +34,8 @@
                 </div> --}}
 
                 {{-- Cột sơ đồ ghế --}}
-                <h5 class="card-title fw-bold text-center text-primary mb-3">
-                    <i class="bi bi-grid-3x3-gap-fill me-1"></i> Sơ đồ ghế ngồi
+                <h5 class="card-title fw-bold text-center text-dark mb-3">
+                    <i class="bi bi-grid-3x3-gap-fill me-1"></i> Màn hình
                 </h5>
                 <div id="seatLayout" class="seat-container">
                     {{-- Sơ đồ ghế được render bằng JavaScript --}}
@@ -50,6 +50,10 @@
                         <span>Ghế VIP</span>
                     </div>
                     <div class="legend-item">
+                        <div class="legend-box choosing"></div>
+                        <span>Ghế đang chọn</span>
+                    </div>
+                    <div class="legend-item">
                         <div class="legend-box legend-booked"></div>
                         <span>Đã đặt</span>
                     </div>
@@ -61,7 +65,7 @@
                 <div class="mt-3 d-flex justify-content-between align-items-center">
                     <small id="seatCount" class="text-muted">Số ghế: {{ $phongChieu->SoLuongGhe }}</small>
                     <small class="text-muted">Tối đa 8 ghế/lần đặt</small>
-                    <small class="text-muted">Ghế VIP sẽ thêm 20% giá vé so với ghế thường.</small>
+                    <small class="text-muted">Ghế VIP sẽ thêm 20% giá vé so với ghế thường</small>
                 </div>
             </div>
 

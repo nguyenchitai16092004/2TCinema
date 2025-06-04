@@ -48,7 +48,7 @@
                     <strong>
                         {{-- Show từng ghế, phân biệt VIP/Thường và giá --}}
                         @foreach($seatDetails as $detail)
-                        {{ $detail['TenGhe'] }} ({{ $detail['LoaiGhe'] }}: {{ number_format($detail['Gia'], 0, ',', '.') }} đ){{ !$loop->last ? ', ' : '' }}
+                        {{ $detail['TenGhe'] }} ({{ $detail['LoaiGhe'] }}){{ !$loop->last ? ', ' : '' }}
                     @endforeach
                     </strong>
                 </div>
