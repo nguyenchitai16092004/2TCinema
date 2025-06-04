@@ -50,6 +50,18 @@ class AutController extends Controller
                 // Reset số lần đăng nhập sai
                 session(['login_attempts' => 0]);
 
+                // Lưu thông tin người đăng nhập vào session
+                $user = Auth::user();
+                session([
+                    'user_id' => $user->ID_TaiKhoan,
+                    'user_name' => $user->TenDN,
+                    'user_role' => $user->VaiTro,
+                    'user_fullname' => $user->HoTen ?? '', // Nếu có trường HoTen
+                    'user_email' => $user->email ?? '', // Nếu có trường email
+                    'login_time' => now()->format('Y-m-d H:i:s'),
+                    'is_logged_in' => true
+                ]);
+
                 return redirect()->route('cap-nhat-thong-tin.index')->with('success', 'Đăng nhập thành công!');
             } else {
                 Auth::logout();
@@ -67,7 +79,35 @@ class AutController extends Controller
     // Đăng xuất
     public function dang_xuat()
     {
+        // Xóa thông tin người dùng khỏi session
+        session()->forget([
+            'user_id',
+            'user_name', 
+            'user_role',
+            'user_fullname',
+            'user_email',
+            'login_time',
+            'is_logged_in'
+        ]);
+
+        // Hoặc có thể xóa toàn bộ session
+        // session()->flush();
+
         Auth::logout();
         return redirect('/admin')->with('success', 'Đăng xuất thành công!');
+    }
+
+    // Phương thức helper để lấy thông tin user từ session
+    public function getUserInfo()
+    {
+        return [
+
+        ];
+    }
+
+    // Kiểm tra người dùng có đăng nhập không
+    public function isLoggedIn()
+    {
+        return session('is_logged_in', false) && Auth::check();
     }
 }

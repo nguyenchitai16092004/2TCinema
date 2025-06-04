@@ -19,6 +19,7 @@ class HomeController extends Controller
     {
         $request->validate([
             'Logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'Hotline' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
             'Zalo' => 'nullable|string|max:50',
             'Facebook' => 'nullable|string|max:100',
             'Instagram' => 'nullable|string|max:100',
@@ -32,7 +33,7 @@ class HomeController extends Controller
             $thongTin = ThongTinTrangWeb::create([]); // tạo dòng rỗng
         }
 
-        $data = $request->only(['Zalo', 'Facebook', 'Instagram', 'Email', 'DiaChi']);
+        $data = $request->only(['Zalo','Hotline', 'Facebook', 'Instagram', 'Email', 'DiaChi']);
 
         if ($request->hasFile('Logo')) {
             if ($thongTin->Logo) {

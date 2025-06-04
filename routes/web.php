@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AutController;
 use App\Http\Controllers\Admin\RapController;
 use App\Http\Controllers\Admin\AdminPhimController;
+use App\Http\Controllers\Admin\BinhLuanController;
 use App\Http\Controllers\Admin\KhuyenMaiController;
 use App\Http\Controllers\Admin\PhongChieuController;
 use App\Http\Controllers\Admin\SuatChieuController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Admin\HoaDonController;
 use App\Http\Controllers\Admin\VeXemPhimController;
 use App\Http\Controllers\Admin\ThongKeController;
 use App\Http\Controllers\Admin\TheLoaiPhimController;
+use App\Http\Controllers\Admin\TinTucController;
 use App\Http\Controllers\Admin\HomeController;
 
 use App\Http\Controllers\Apps\PhimController;
@@ -218,6 +220,26 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
         Route::put('/{hoaDonId}/update/{veId}', [VeXemPhimController::class, 'update'])->name('update');
         Route::delete('/{hoaDonId}/destroy/{veId}', [VeXemPhimController::class, 'destroy'])->name('destroy');
         Route::patch('/{hoaDonId}/change-status/{veId}', [VeXemPhimController::class, 'changeStatus'])->name('change-status');
+    });
+
+    // Routes quản lý tin tức
+    Route::prefix('tin-tuc')->name('tin_tuc.')->group(function () {
+        Route::get('/', [TinTucController::class, 'index'])->name('index');
+        Route::get('/create', [TinTucController::class, 'create'])->name('create');
+        Route::post('/store', [TinTucController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [TinTucController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [TinTucController::class, 'update'])->name('update'); // dùng PUT
+        Route::delete('/delete/{id}', [TinTucController::class, 'destroy'])->name('destroy'); // dùng DELETE
+    });
+
+    // Routes quản lý bình luận (cập nhật)
+    Route::prefix('binh-luan')->name('binh-luan.')->group(function () {
+        Route::get('/', [BinhLuanController::class, 'index'])->name('index');
+        Route::get('/show/{id}', [BinhLuanController::class, 'show'])->name('show');
+        Route::get('/update-status/{id}', [BinhLuanController::class, 'updateStatus'])->name('update-status');
+        Route::delete('/destroy/{id}', [BinhLuanController::class, 'destroy'])->name('destroy');
+        Route::delete('/destroy-multiple', [BinhLuanController::class, 'destroyMultiple'])->name('destroy-multiple');
+        Route::get('/export', [BinhLuanController::class, 'export'])->name('export');
     });
 
     Route::prefix('thong-ke')->name('thong-ke.')->group(function () {

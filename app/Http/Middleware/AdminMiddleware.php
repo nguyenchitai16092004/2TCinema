@@ -16,11 +16,18 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
+        // Kiểm tra cả Auth và session
+        if (!Auth::check() || !session('is_logged_in', false)) {
+            // Xóa session nếu có
+            session()->forget([
+                'user_id', 'user_name', 'user_role', 'user_fullname', 
+                'user_email', 'login_time', 'is_logged_in'
+            ]);
             return redirect('/admin')->with('error', 'Bạn cần đăng nhập để truy cập!');
         }
 
         $vaiTro = Auth::user()->VaiTro;
+        // Cũng có thể lấy từ session: $vaiTro = session('user_role');
 
         // Nếu là người dùng bình thường
         if ($vaiTro == 0) {
@@ -32,6 +39,9 @@ class AdminMiddleware
             return redirect('/admin')->with('error', 'Bạn không có quyền truy cập thông tin khách hàng!');
         }
 
+        // Cập nhật thời gian hoạt động cuối cùng
+        session(['last_activity' => now()->format('Y-m-d H:i:s')]);
+
         return $next($request);
     }
-}
+}       

@@ -12,12 +12,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('thong_tin_trang_web', function (Blueprint $table) {
+            $table->id('Id')->default(1);
             $table->string('Logo', 255)->nullable();
             $table->string('Zalo', 50)->nullable();
             $table->string('Facebook', 100)->nullable();
             $table->string('Instagram', 100)->nullable();
             $table->string('Email', 100)->nullable();
             $table->string('DiaChi', 255)->nullable();
+            $table->string('Hotline', 15)->nullable();
             $table->timestamps();
         });
     }
