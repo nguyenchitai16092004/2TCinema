@@ -20,8 +20,13 @@ class AdminMiddleware
         if (!Auth::check() || !session('is_logged_in', false)) {
             // Xóa session nếu có
             session()->forget([
-                'user_id', 'user_name', 'user_role', 'user_fullname', 
-                'user_email', 'login_time', 'is_logged_in'
+                'user_id',
+                'user_name',
+                'user_role',
+                'user_fullname',
+                'user_email',
+                'login_time',
+                'is_logged_in'
             ]);
             return redirect('/admin')->with('error', 'Bạn cần đăng nhập để truy cập!');
         }
@@ -44,4 +49,4 @@ class AdminMiddleware
 
         return $next($request);
     }
-}       
+}

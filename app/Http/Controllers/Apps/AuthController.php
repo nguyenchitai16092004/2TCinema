@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -73,6 +74,7 @@ class AuthController extends Controller
 
         return redirect()->route('register.form.get')->with('success', 'Vui lòng xác nhận tài khoản đăng ký thông qua liên kết mà chúng tôi đã gửi đến email của bạn!');
     }
+
     public function verifyAccount($token)
     {
         $taiKhoan = TaiKhoan::where('token_xac_nhan', $token)->first();
@@ -95,43 +97,52 @@ class AuthController extends Controller
 
     public function dang_nhap(Request $request)
     {
-        $request->validate([
-            'TenDN' => 'required|string',
-            'MatKhau' => 'required|string',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'TenDN' => 'required',
+                'MatKhau' => 'required',
+            ],
+            [
+                'TenDN.required' => 'Tên đăng nhập không được để trống',
+                'MatKhau.required' => 'Mật khẩu không được để trống',
+            ]
+        );
 
-        $user = TaiKhoan::where('TenDN', $request->TenDN)->first();
-
-        // Kiểm tra tài khoản có tồn tại không
-        if (!$user) {
-            if ($request->ajax()) {
-                return response()->json(['error' => 'Tài khoản này chưa được đăng ký.'], 401);
-            }
-            return back()->withErrors(['login' => 'Tài khoản này chưa được đăng ký.']);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // Kiểm tra trạng thái kích hoạt
+        $credentials = [
+            'TenDN' => $request->TenDN,
+            'password' => $request->MatKhau,
+        ];
+
+        if (!Auth::attempt($credentials)) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Sai tài khoản hoặc mật khẩu'], 401);
+            }
+            return back()->withErrors(['login' => 'Sai tài khoản hoặc mật khẩu']);
+        }
+
+        $user = Auth::user();
+
         if ($user->TrangThai == 0) {
+            Auth::logout();
             return back()->withErrors(['login' => 'Tài khoản chưa được xác nhận. Vui lòng kiểm tra Email và xác nhận tài khoản trước khi đăng nhập!']);
         }
-
-        if (!Hash::check($request->MatKhau, $user->MatKhau)) {
-            if ($request->ajax()) {
-                return response()->json(['error' => 'Sai tên đăng nhập hoặc mật khẩu'], 401);
-            }
-            return back()->withErrors(['login' => 'Sai tên đăng nhập hoặc mật khẩu']);
-        }
-
+        // Lưu session
         session([
             'user_id' => $user->ID_TaiKhoan,
             'user_name' => $user->TenDN,
+            'user_role' => $user->VaiTro,
             'user_fullname' => $user->thongTin->HoTen ?? 'Người dùng',
             'user_email' => $user->thongTin->Email ?? 'Chưa cập nhật',
             'user_phone' => $user->thongTin->SDT ?? 'Chưa cập nhật',
+            'login_time' => now()->format('Y-m-d H:i:s'),
             'user_date' => $user->thongTin->NgaySinh ?? 'Chưa cập nhật',
             'user_sex' => $user->thongTin->GioiTinh ?? 'Chưa cập nhật',
-            'user_role' => $user->VaiTro,
-            
+            'is_logged_in' => true
         ]);
 
         if ($request->ajax()) {
@@ -140,12 +151,14 @@ class AuthController extends Controller
 
         return redirect()->route('home')->with('success', 'Đăng nhập thành công!');
     }
-    
+
+
     public function dang_xuat()
     {
         session()->flush();
         return redirect()->route('login.form')->with('success', 'Bạn đã đăng xuất!');
     }
+
     public function doi_mat_khau(Request $request)
     {
         $data = json_decode($request->getContent(), true);
@@ -168,6 +181,7 @@ class AuthController extends Controller
 
         return response("true");
     }
+
     public function quen_mat_khau(Request $request)
     {
         $data = json_decode($request->getContent(), true);
@@ -208,6 +222,7 @@ class AuthController extends Controller
 
         return response("true");
     }
+
     public function showUpdateInfo()
     {
         $userId = session('user_id');
@@ -219,6 +234,7 @@ class AuthController extends Controller
 
         return view('frontend.pages.thong-tin-tai-khoan.cap-nhat-thong-tin', compact('taiKhoan', 'thongTin'));
     }
+
     public function updateInfo(Request $request)
     {
         $userId = session('user_id');

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Apps;
 
 use App\Models\Phim;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use App\Models\Rap;
@@ -19,18 +18,15 @@ class PhimController extends Controller
         $raps = Rap::all();
         $phims = Phim::whereDate('NgayKhoiChieu', '<=', $today)
             ->whereDate('NgayKetThuc', '>=', $today)
-            ->where('TrangThai', 1)
             ->get();
 
         // PHIM ĐANG CHIẾU: Ngày khởi chiếu <= hôm nay và ngày kết thúc >= hôm nay
         $dsPhimDangChieu = Phim::whereDate('NgayKhoiChieu', '<=', $today)
             ->whereDate('NgayKetThuc', '>=', $today)
-            ->where('TrangThai', 1)
             ->get();
 
         // PHIM SẮP CHIẾU: Ngày khởi chiếu > hôm nay và TrangThai = 0
         $dsPhimSapChieu = Phim::whereDate('NgayKhoiChieu', '>=', $today)
-            ->where('TrangThai', 0)
             ->get();
 
 
@@ -39,7 +35,7 @@ class PhimController extends Controller
             'dsPhimSapChieu',
             'raps',
             'phims'
-       ));
+        ));
     }
     public function phimDangChieu()
     {

@@ -25,8 +25,7 @@ class Phim extends Model
         'HinhAnh',
         'DoTuoi',
         'DoHoa',
-        'NgonNgu',
-        'TrangThai',
+        'NgonNgu',  
         'ID_TheLoaiPhim'
     ];
 
