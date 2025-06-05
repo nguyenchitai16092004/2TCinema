@@ -109,9 +109,7 @@ Route::prefix('chinh-sach')->group(function () {
 });
 
 //===============================Admin=====================================//
-Route::get('/admin', function () {
-    return view('backend.login');
-});
+Route::get('/admin', [AutController::class, 'index']);
 Route::get('/admin/login', fn() => view('backend.login'));
 
 Route::post('/dang-nhap-quan-ly', [AutController::class, 'dang_nhap'])->name('login_admin');

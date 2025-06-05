@@ -1,40 +1,6 @@
 @extends('backend.layouts.master')
 @section('title', 'Tạo Phim')
 
-@section('css')
-    <style>
-        .card {
-            border: 1px solid #6f42c1;
-            box-shadow: 0 0 15px rgba(111, 66, 193, 0.2);
-        }
-
-        .card-header {
-            background-color: #6f42c1;
-            color: #fff;
-        }
-
-        .btn-primary {
-            background-color: #6f42c1;
-            border-color: #6f42c1;
-        }
-
-        .btn-primary:hover {
-            background-color: #5a32a3;
-            border-color: #4b288b;
-        }
-
-        .form-control:focus {
-            border-color: #6f42c1;
-            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
-        }
-
-        .custom-file-input:focus~.custom-file-label {
-            border-color: #6f42c1;
-            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
-        }
-    </style>
-@endsection
-
 @section('main')
     <div class="container-fluid">
         <div class="row">
@@ -62,6 +28,7 @@
                         <form action="{{ route('phim.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                {{-- Cột trái --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="TenPhim">Tên phim <span class="text-danger">*</span></label>
@@ -69,6 +36,48 @@
                                             value="{{ old('TenPhim') }}" required>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="ID_TheLoaiPhim">Thể loại phim <span class="text-danger">*</span></label>
+                                        <select name="ID_TheLoaiPhim" id="ID_TheLoaiPhim" class="form-control" required>
+                                            <option value="">-- Chọn thể loại --</option>
+                                            @foreach ($theLoais as $theLoai)
+                                                <option value="{{ $theLoai->ID_TheLoaiPhim }}"
+                                                    {{ old('ID_TheLoaiPhim') == $theLoai->ID_TheLoaiPhim ? 'selected' : '' }}>
+                                                    {{ $theLoai->TenTheLoai }}
+                                                </option>
+                                            @endforeach
+                                            <option value="create_new">+ Thêm thể loại mới</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ThoiLuong">Thời lượng (phút) <span class="text-danger">*</span></label>
+                                        <input type="number" name="ThoiLuong" id="ThoiLuong" class="form-control"
+                                            value="{{ old('ThoiLuong') }}" required min="1">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="NgayKhoiChieu">Ngày khởi chiếu <span
+                                                class="text-danger">*</span></label>
+                                        <input type="date" name="NgayKhoiChieu" id="NgayKhoiChieu" class="form-control"
+                                            value="{{ old('NgayKhoiChieu') }}" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="NgayKetThuc">Ngày kết thúc</label>
+                                        <input type="date" name="NgayKetThuc" id="NgayKetThuc" class="form-control"
+                                            value="{{ old('NgayKetThuc') }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="Trailer">Trailer URL</label>
+                                        <input type="url" name="Trailer" id="Trailer" class="form-control"
+                                            value="{{ old('Trailer') }}">
+                                    </div>
+                                </div>
+
+                                {{-- Cột phải --}}
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="DaoDien">Đạo diễn <span class="text-danger">*</span></label>
                                         <input type="text" name="DaoDien" id="DaoDien" class="form-control"
@@ -82,48 +91,6 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ThoiLuong">Thời lượng (phút) <span class="text-danger">*</span></label>
-                                        <input type="number" name="ThoiLuong" id="ThoiLuong" class="form-control"
-                                            value="{{ old('ThoiLuong') }}" required min="1">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="ID_TheLoaiPhim">Thể loại phim <span class="text-danger">*</span></label>
-                                        <select name="ID_TheLoaiPhim" id="ID_TheLoaiPhim" class="form-control" required>
-                                            <option value="">-- Chọn thể loại --</option>
-                                            @foreach ($theLoais as $theLoai)
-                                                <option value="{{ $theLoai->ID_TheLoaiPhim }}"
-                                                    {{ old('ID_TheLoaiPhim') == $theLoai->ID_TheLoaiPhim ? 'selected' : '' }}>
-                                                    {{ $theLoai->TenTheLoai }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="NgayKhoiChieu">Ngày khởi chiếu <span
-                                                class="text-danger">*</span></label>
-                                        <input type="date" name="NgayKhoiChieu" id="NgayKhoiChieu" class="form-control"
-                                            value="{{ old('NgayKhoiChieu') }}" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="HinhAnh">Hình ảnh</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="HinhAnh" name="HinhAnh"
-                                                accept="image/*">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="DoTuoi">Độ tuổi <span class="text-danger">*</span></label>
-                                        <input type="number" name="DoTuoi" id="DoTuoi" class="form-control"
-                                            value="{{ old('DoTuoi') }}" required min="0">
-                                    </div>
-
-                                    <div class="form-group">
                                         <label for="DoHoa">Đồ họa <span class="text-danger">*</span></label>
                                         <select name="DoHoa" id="DoHoa" class="form-control" required>
                                             <option value="">-- Chọn đồ họa --</option>
@@ -134,49 +101,55 @@
 
                                     <div class="form-group">
                                         <label for="NgonNgu">Ngôn ngữ <span class="text-danger">*</span></label>
-                                        <input type="text" name="NgonNgu" id="NgonNgu" class="form-control"
-                                            value="{{ old('NgonNgu') }}" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Trailer">Trailer URL</label>
-                                        <input type="url" name="Trailer" id="Trailer" class="form-control"
-                                            value="{{ old('Trailer') }}">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="TrangThai">Trạng thái <span class="text-danger">*</span></label>
-                                        <select name="TrangThai" id="TrangThai" class="form-control" required>
-                                            <option value="1" {{ old('TrangThai') == '1' ? 'selected' : '' }}>Hiển
-                                                thị</option>
-                                            <option value="0" {{ old('TrangThai') == '0' ? 'selected' : '' }}>Ẩn
-                                            </option>
+                                        <select name="NgonNgu" id="NgonNgu" class="form-control" required>
+                                            <option value="">-- Chọn ngôn ngữ --</option>
+                                            @foreach (['vi' => 'Tiếng Việt', 'en' => 'Tiếng Anh', 'es' => 'Tây Ban Nha', 'fr' => 'Pháp', 'de' => 'Đức', 'it' => 'Ý', 'ja' => 'Nhật', 'ko' => 'Hàn', 'zh' => 'Trung', 'ru' => 'Nga'] as $key => $lang)
+                                                <option value="{{ $key }}"
+                                                    {{ old('NgonNgu') == $key ? 'selected' : '' }}>{{ $lang }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="NgayKetThuc">Ngày kết thúc <span class="text-danger">*</span></label>
-                                        <input type="date" name="NgayKetThuc" id="NgayKetThuc" class="form-control"
-                                            value="{{ old('NgayKetThuc') }}" required>
+                                        <label for="DoTuoi">Độ tuổi <span class="text-danger">*</span></label>
+                                        <select name="DoTuoi" id="DoTuoi" class="form-control" required>
+                                            <option value="">-- Chọn độ tuổi --</option>
+                                            <option value="Loại P">Loại P - Cho mọi lứa tuổi</option>
+                                            <option value="Loại K">Loại K - Dưới 13 tuổi (cần giám hộ)</option>
+                                            <option value="Loại T13 (13+)">Loại T13 (13+)</option>
+                                            <option value="Loại T16 (16+)">Loại T16 (16+)</option>
+                                            <option value="Loại T18 (18+)">Loại T18 (18+)</option>
+                                            <option value="Loại C">Loại C - Không được phổ biến</option>
+                                        </select>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="HinhAnh">Hình ảnh</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="HinhAnh"
+                                                name="HinhAnh" accept="image/*">
+                                            <label class="custom-file-label" for="HinhAnh">Chọn ảnh</label>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                {{-- Full width --}}
+                                <div class="col-md-12 mt-3">
                                     <div class="form-group">
                                         <label for="MoTaPhim">Mô tả phim <span class="text-danger">*</span></label>
                                         <textarea name="MoTaPhim" id="MoTaPhim" class="form-control" rows="5" required>{{ old('MoTaPhim') }}</textarea>
                                     </div>
+
+                                    <div class="form-group text-right">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save"></i> Lưu phim
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Lưu phim
-                                </button>
-                            </div>
-
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -185,6 +158,11 @@
 @endsection
 @section('js')
     <script>
+        document.getElementById('ID_TheLoaiPhim').addEventListener('change', function() {
+            if (this.value === 'create_new') {
+                window.location.href = "{{ route('the-loai.create') }}";
+            }
+        });
         $(document).ready(function() {
             // Hiển thị tên file khi chọn ảnh
             $('.custom-file-input').on('change', function() {

@@ -73,11 +73,36 @@
                                             <td>{{ date('d/m/Y', strtotime($phim->NgayKetThuc)) }}</td>
                                             <td>{{ $phim->ThoiLuong }} phút</td>
                                             <td>
-                                                <a href="{{ route('phim.change-status', $phim->ID_Phim) }}"
-                                                    class="btn btn-sm {{ $phim->TrangThai ? 'btn-success' : 'btn-warning' }}">
-                                                    {{ $phim->TrangThai ? 'Công chiếu' : 'Chưa công chiếu' }}
-                                                </a>
+                                                @php
+                                                    $today = \Carbon\Carbon::now()->format('Y-m-d');
+                                                    $ngayKhoiChieu = \Carbon\Carbon::parse(
+                                                        $phim->NgayKhoiChieu,
+                                                    )->format('Y-m-d');
+                                                    $ngayKetThuc = \Carbon\Carbon::parse($phim->NgayKetThuc)->format(
+                                                        'Y-m-d',
+                                                    );
+
+                                                    if ($ngayKhoiChieu > $today && $ngayKetThuc > $today) {
+                                                        $trangThaiText = 'Sắp công chiếu';
+                                                        $bgColor = '#ffc107'; // Vàng
+                                                    } elseif ($ngayKhoiChieu <= $today && $ngayKetThuc >= $today) {
+                                                        $trangThaiText = 'Công chiếu';
+                                                        $bgColor = '#28a745'; // Xanh
+                                                    } elseif ($ngayKetThuc < $today) {
+                                                        $trangThaiText = 'Đã công chiếu';
+                                                        $bgColor = '#dc3545'; // Đỏ
+                                                    } else {
+                                                        $trangThaiText = 'Không xác định';
+                                                        $bgColor = '#6c757d'; // Xám
+                                                    }
+                                                @endphp
+
+                                                <span
+                                                    style="width:80% ;display: inline-block; padding: 4px 8px; border-radius: 5px; color: #fff; background-color: {{ $bgColor }};">
+                                                    {{ $trangThaiText }}
+                                                </span>
                                             </td>
+
 
                                             <td>
                                                 <a href="{{ route('phim.show', $phim->ID_Phim) }}"

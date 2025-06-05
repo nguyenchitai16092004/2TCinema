@@ -17,9 +17,15 @@ class AdminPhimController extends Controller
      */
     public function index()
     {
-        $phims = Phim::with('theLoai')->orderBy('created_at', 'desc')->paginate(10);
+        $now = now()->format('Y-m-d');
+        $phims = Phim::with('theLoai')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10);
+
         return view('backend.pages.phim.phim', compact('phims'));
     }
+
+
 
     /**
      * Hiển thị form tạo phim mới
@@ -37,21 +43,21 @@ class AdminPhimController extends Controller
     {
         // Validate dữ liệu đầu vào
         $validator = Validator::make($request->all(), [
-            'TenPhim' => 'required|max:100',
+            'TenPhim' => 'required|max:100|unique:phim,TenPhim',
             'DaoDien' => 'required|max:100',
             'DienVien' => 'required|max:255',
-            'ThoiLuong' => 'required|integer|min:1',
+            'ThoiLuong' => 'required|integer|min:1|max:180',
             'NgayKhoiChieu' => 'required|date',
-            'NgayKetThuc' => 'required|date|after_or_equal:NgayKhoiChieu',
+            'NgayKetThuc' => 'nullable|date|after_or_equal:NgayKhoiChieu',
             'MoTaPhim' => 'required',
             'Trailer' => 'nullable|url|max:255',
             'HinhAnh' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'DoTuoi' => 'required|integer|min:0',
+            'DoTuoi' => 'required|max:255',
             'DoHoa' => 'required|max:50',
             'NgonNgu' => 'required|max:50',
-            'TrangThai' => 'required|boolean',
             'ID_TheLoaiPhim' => 'required|exists:the_loai_phim,ID_TheLoaiPhim',
         ]);
+
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
