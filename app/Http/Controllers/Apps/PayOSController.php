@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Apps;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PayOS\PayOS;
 use App\Models\HoaDon;
 use App\Models\VeXemPhim;
 use TJGazel\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\ThanhToanController;
+use App\Http\Controllers\Apps\ThanhToanController;
 use App\Models\SuatChieu;
 
 
@@ -46,35 +47,37 @@ class PayOSController extends Controller
             return response()->json(['error' => 'Thiếu thông tin đơn hàng!'], 400);
         }
 
-
+        // Tạo mã hóa đơn random 7 ký tự
+        $maHoaDon = HoaDon::generateMaHoaDon();
 
         // Tạo hóa đơn
         $hoaDon = HoaDon::create([
-            'TongTien'     => $orderData['tong_tien'],
-            'PTTT'         => 'PayOS',
-            'ID_TaiKhoan'  => session('user_id'),
-            'TrangThaiXacNhanHoaDon'    => 0,
-            'TrangThaiXacNhanThanhToan'    => 0,
-            'created_at'   => now(),
-            'updated_at'   => now(),
+            'ID_HoaDon'   => $maHoaDon,
+            'TongTien'    => $orderData['tong_tien'],
+            'PTTT'        => 'PayOS',
+            'ID_TaiKhoan' => session('user_id'),
+            'TrangThaiXacNhanHoaDon'     => 0,
+            'TrangThaiXacNhanThanhToan'  => 0,
+            'created_at'  => now(),
+            'updated_at'  => now(),
         ]);
-        $maHoaDon = $hoaDon->ID_HoaDon;
-        $orderCodeNum = (int)$maHoaDon;
+
         $soLuongGhe = count($orderData['selectedSeats']);
 
         $suatChieu = SuatChieu::with(['rap'])->find($orderData['ID_SuatChieu']);
         $diaChiRap = $suatChieu->rap->DiaChi ?? '';
+
         foreach ($orderData['seatDetails'] as $seat) {
             VeXemPhim::create([
                 'SoLuong'      => 1,
                 'TenGhe'       => $seat['TenGhe'],
                 'TenPhim'      => $orderData['ten_phim'] ?? '',
                 'NgayXem'      => $orderData['ngay_xem'] ?? '',
-                'DiaChi' => $diaChiRap,
+                'DiaChi'       => $diaChiRap,
                 'GiaVe'        => $seat['GiaVe'],
                 'TrangThai'    => 0,
                 'ID_SuatChieu' => $orderData['ID_SuatChieu'],
-                'ID_HoaDon'    => $maHoaDon,
+                'ID_HoaDon'    => $maHoaDon, // Đã là string random
                 'ID_Ghe'       => $seat['ID_Ghe'],
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -84,7 +87,6 @@ class PayOSController extends Controller
         $items = array_map(function ($ghe) use ($orderData) {
             $seat = collect($orderData['seatDetails'])->firstWhere('TenGhe', $ghe);
             $price = isset($seat['GiaVe']) ? (int)$seat['GiaVe'] : 0;
-            // Kiểm tra vượt quá giới hạn PayOS cho chắc chắn
             if ($price > 10000000000) {
                 $price = 10000000000;
             }
@@ -95,9 +97,11 @@ class PayOSController extends Controller
             ];
         }, $orderData['selectedSeats']);
         Log::info('PayOS items:', $items);
-        // Lấy số nguyên từ mã hóa đơn làm orderCode
+
+        // Lấy order_code là duy nhất (dùng số hóa đơn hoặc random số từ chuỗi mã)
         preg_match_all('!\d+!', $maHoaDon, $matches);
         $orderCodeNum = $matches ? (int)implode('', $matches[0]) : time();
+
         try {
             $response = $this->payOS->createPaymentLink([
                 'orderCode'   => $orderCodeNum,
@@ -107,7 +111,6 @@ class PayOSController extends Controller
                 'cancelUrl'   => route('payos.cancel'),
                 'buyerName'   => session('user_fullname') ?? '',
                 'buyerEmail'  => session('user_email') ?? '',
-               // 'buyerPhone'  => $hoaDon->ID_TaiKhoan,
                 'items'       => $items,
                 'expiredAt'   => now()->addMinutes(15)->timestamp,
             ]);
@@ -116,7 +119,6 @@ class PayOSController extends Controller
                 'order_code'   => $orderCodeNum
             ]);
             if (empty($response['checkoutUrl'])) {
-                // Log để kiểm tra response thực tế của PayOS
                 Log::error('PayOS không trả về checkoutUrl', $response);
                 return response()->json(['error' => 'Không lấy được link thanh toán từ PayOS!'], 500);
             }
@@ -209,36 +211,25 @@ class PayOSController extends Controller
 
     protected function updatePaymentSuccess($orderCode)
     {
-        $maHoaDon = $orderCode;
         $hoaDon = HoaDon::where('order_code', $orderCode)->first();
 
         // Lấy tất cả vé thuộc hóa đơn này
-        $veXemPhims = VeXemPhim::where('ID_HoaDon', $maHoaDon)->get();
+        $veXemPhims = $hoaDon ? VeXemPhim::where('ID_HoaDon', $hoaDon->ID_HoaDon)->get() : collect();
 
         if ($hoaDon && $hoaDon->TrangThaiXacNhanThanhToan != 1) {
             $hoaDon->TrangThaiXacNhanThanhToan = 1; // Đã thanh toán
             $hoaDon->TrangThaiXacNhanHoaDon = 1;    // Đã xác nhận
             $hoaDon->save();
 
-            // Gửi email cho từng vé (hoặc gộp thông tin nếu muốn)
-            $sendEmail = new ThanhToanController();
-            $statusPayment = 'Đã thanh toán';
-            $status = 'Đã xác nhận';
-
-            foreach ($veXemPhims as $ve) {
-                $sendEmail->sendEmailForOrder(
-                    $hoaDon->ID_HoaDon,
-                    $hoaDon->TongTien,
-                    $hoaDon->PTTT,
-                    session('HoTen') ?? '',
-                    $ve->SoLuong,
-                    $ve->TenGhe,
-                    $ve->TenPhim,
-                    $ve->NgayXem,
-                    $ve->DiaChi,
-                    $ve->GiaVe
-                );
+            $email = $hoaDon->Email ?? session('user_email');
+            Log::info('Email gửi đi hóa đơn:', ['email' => $email, 'hoaDonId' => $hoaDon->ID_HoaDon]);
+            if (!$email) {
+                Log::error('Không xác định được email khách hàng để gửi hóa đơn');
+                return;
             }
+
+            $sendEmail = new ThanhToanController();
+            $sendEmail->sendEmailForOrder($hoaDon, $veXemPhims);
         }
     }
     public function handleCancel(Request $request)
@@ -266,9 +257,7 @@ class PayOSController extends Controller
     }
     protected function updatePaymentCancel($orderCode)
     {
-        $maHoaDon = $orderCode;
-
-        $hoaDon = HoaDon::where('ID_HoaDon', $maHoaDon)->first();
+        $hoaDon = HoaDon::where('order_code', $orderCode)->first();
         if (!$hoaDon) return;
 
         // Update trạng thái hóa đơn
@@ -277,8 +266,7 @@ class PayOSController extends Controller
         $hoaDon->save();
 
         // Update trạng thái vé (nếu muốn)
-        VeXemPhim::where('ID_HoaDon', $maHoaDon)->update([
+        VeXemPhim::where('ID_HoaDon', $hoaDon->ID_HoaDon)->update([
             'TrangThai' => 2 // Đã hủy
         ]);
-    }
-}
+    }}

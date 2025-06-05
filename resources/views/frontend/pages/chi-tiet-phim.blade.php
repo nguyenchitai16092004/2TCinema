@@ -8,7 +8,7 @@
 
     <section id="mainContent" class="movie-hero">
         <div class="hero-bg"
-            style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('{{ $phim->HinhAnh }}') center/cover;">
+            style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}') center/cover;">
         </div>
         <div class="hero-particles"></div>
 
@@ -16,7 +16,7 @@
             <div class="hero-content">
                 <div class="poster-container fade-in-up stagger-1">
                     <div class="movie-poster">
-                        <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" class="poster-img" />
+                        <img src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
                         <div class="poster-overlay"></div>
                         <a href="#" class="trailer-btn" id="trailerBtn">
                             <i class="fas fa-play"></i>

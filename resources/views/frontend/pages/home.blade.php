@@ -272,7 +272,7 @@
                     @foreach ($dsPhimDangChieu as $phim)
                         <div class="movie-card">
                             <div class="movie-poster">
-                                <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" />
+                                 <img src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
                                 <div class="play-button" data-trailer="{{ $phim->Trailer }}">
                                     <div class="play-icon"></div>
                                 </div>
@@ -330,7 +330,7 @@
                     @foreach ($dsPhimSapChieu as $phim)
                         <div class="movie-card">
                             <div class="movie-poster">
-                                <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" />
+                                <img src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
                                 <div class="play-button" data-trailer="{{ $phim->Trailer }}">
                                     <div class="play-icon"></div>
                                 </div>
@@ -399,7 +399,7 @@
                                                 <div class="slick-arrows"></div>
                                                 <div class="amy-movie-item-poster">
                                                     <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
-                                                        <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" />
+                                                         <img src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
                                                     </a>
                                                 </div>
                                             </div>
@@ -489,7 +489,7 @@
                                 <div class="top-movie-wrap">
                                     <div class="top-movie-img">
                                         <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
-                                            <img src="{{ $phim->HinhAnh }}" alt="{{ $phim->TenPhim }}" />
+                                             <img src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
                                         </a>
                                     </div>
                                     <div class="thumb-hover">

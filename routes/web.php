@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\RapController;
 use App\Http\Controllers\Admin\AdminPhimController;
 use App\Http\Controllers\Admin\BinhLuanController;
 use App\Http\Controllers\Admin\KhuyenMaiController;
+use App\Http\Controllers\Admin\EmployeeTicketController;
 use App\Http\Controllers\Admin\PhongChieuController;
 use App\Http\Controllers\Admin\SuatChieuController;
 use App\Http\Controllers\Admin\TaiKhoanController;
@@ -16,12 +17,13 @@ use App\Http\Controllers\Admin\ThongKeController;
 use App\Http\Controllers\Admin\TheLoaiPhimController;
 use App\Http\Controllers\Admin\TinTucController;
 use App\Http\Controllers\Admin\HomeController;
+    
 
 use App\Http\Controllers\Apps\PhimController;
 use App\Http\Controllers\Apps\AuthController;
 use App\Http\Controllers\Apps\DatVeController;
-use App\Http\Controllers\PayOSController;
-use App\Http\Controllers\ThanhToanController;
+use App\Http\Controllers\Apps\PayOSController;
+use App\Http\Controllers\Apps\ThanhToanController;
 //==============================Frontend=====================================//
 Route::get('/', [PhimController::class, 'Index'])->name('home');
 
@@ -123,6 +125,7 @@ Route::get('/admin/charts', fn() => view('backend.pages.charts'));
 Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('cap-nhat-thong-tin.index');
     Route::post('/cap-nhat-thong-tin-trang', [HomeController::class, 'update'])->name('thong-tin-trang-web.update');
+
 
 
     // Rap
@@ -243,4 +246,5 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::prefix('thong-ke')->name('thong-ke.')->group(function () {
         Route::get('/', [ThongKeController::class, 'index'])->name('index');
     });
+    
 });

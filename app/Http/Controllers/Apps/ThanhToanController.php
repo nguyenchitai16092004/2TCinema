@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Apps;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\HoaDon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketMail;
-use App\Http\Controllers\PayOSController;
+use App\Http\Controllers\Apps\PayOSController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
@@ -214,26 +214,45 @@ class ThanhToanController extends Controller
             return;
         }
 
-        $suatChieu = SuatChieu::with('rap')->find($firstVe->ID_SuatChieu);
+        $suatChieu = SuatChieu::with(['rap', 'phongChieu'])->find($firstVe->ID_SuatChieu);
         $diaChiRap = $suatChieu && $suatChieu->rap ? $suatChieu->rap->DiaChi : '';
+        $tenPhim = $firstVe->TenPhim ?? '';
+        $ngayXem = $firstVe->NgayXem ?? '';
+        $gioChieu = $suatChieu ? $suatChieu->GioChieu : '';
+        $phong = $suatChieu && $suatChieu->phongChieu ? $suatChieu->phongChieu->TenPhongChieu : '';
+        $email = session('user_email');;
+        $tenKhachHang = session('user_fullname');
+        Log::info('Email chuẩn bị gửi:', ['email' => $email, 'hoaDonId' => $hoaDon->ID_HoaDon]);
+
+        if (empty($email)) {
+            Log::error('Không xác định được email khách hàng để gửi hóa đơn', ['hoaDonId' => $hoaDon->ID_HoaDon]);
+            return;
+        }
+
         try {
             $data = [
-                'order_id'        => $hoaDon->ID_HoaDon,
-                'tong_tien'       => $hoaDon->TongTien,
-                'pttt'            => $hoaDon->PTTT,
-                'ten_khach_hang'  => session('user_fullname') ?? '',
-                'danh_sach_ghe'   => $veXemPhims->pluck('TenGhe')->toArray(),
-                'ten_phim'        => $firstVe->TenPhim ?? '',
-                'ngay_xem'        => $firstVe->NgayXem ?? '',
-                'dia_chi'         => $diaChiRap,
+                'ten_khach_hang' => $tenKhachHang,
+                'ma_hoa_don' => $hoaDon->ID_HoaDon,
+                'tong_tien'         => $hoaDon->TongTien,
+                'hinh_thuc_thanh_toan' => $hoaDon->PTTT,
+                'email'             => $email,
+                'danh_sach_ghe'     => $veXemPhims->pluck('TenGhe')->toArray(),
+                'ten_phim'          => $tenPhim,
+                'ngay_chieu'        => $ngayXem,
+                'gio_chieu'         => $gioChieu,
+                'phong'             => $phong,
+                'dia_chi'           => $diaChiRap,
+                'thoi_gian_dat'     => $hoaDon->created_at ? $hoaDon->created_at->format('d/m/Y H:i') : '',
+                'trang_thai'        => $hoaDon->TrangThaiXacNhanThanhToan == 1 ? 'Đã thanh toán' : 'Chưa thanh toán',
+                'ghe'               => implode(',', $veXemPhims->pluck('TenGhe')->toArray()),
+                'gia_ve'            => $hoaDon->TongTien,
             ];
-            $email = session('Email');
-            Mail::to($email)->send(new TicketMail((object)$data));
+
+            Mail::to($email)->send(new TicketMail((array)$data));
         } catch (\Exception $e) {
             Log::error('Gửi mail vé xem phim thất bại: ' . $e->getMessage());
         }
     }
-
     public function checkoutStatus(Request $request)
     {
         $status = session('status', $request->input('status', null));

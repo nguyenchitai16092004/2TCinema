@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('thong_tin_trang_web', function (Blueprint $table) {
-            $table->id('Id')->default(1);
+            $table->id('Id');
             $table->string('Logo', 255)->nullable();
             $table->string('Zalo', 50)->nullable();
             $table->string('Facebook', 100)->nullable();
