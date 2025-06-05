@@ -73,7 +73,7 @@
             <div class="right-panel">
                 <div class="movie-info">
                     <div class="movie-poster">
-                        <img src="{{ $suatChieu->phim->HinhAnh }}" alt="{{ $suatChieu->phim->TenPhim }}">
+                        <img src="{{ $suatChieu->phim->HinhAnh ? asset('storage/' . $suatChieu->phim->HinhAnh) : asset('images/no-image.jpg') }}" alt="{{ $suatChieu->phim->TenPhim }}">
                         <div class="movie-badge">T{{ $suatChieu->phim->DoTuoi }}</div>
                     </div>
                     <div class="movie-name">

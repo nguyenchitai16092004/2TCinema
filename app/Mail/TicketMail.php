@@ -10,22 +10,19 @@ class TicketMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $ticketData;
-
+    public $data;
     /**
      * Create a new message instance.
      */
     public function __construct($data)
     {
-        $this->ticketData = $data;
+        $this->data = $data;
     }
-
     /**
      * Build the message.
      */
     public function build()
     {
-        return $this->view('emails.ticket')
-            ->subject('Thông tin vé xem phim');
+        return $this->view('emails.ticket')->with(['data' => $this->data]);
     }
 }
