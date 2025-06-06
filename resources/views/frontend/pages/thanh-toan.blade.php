@@ -17,7 +17,7 @@
                 <div class="movie-info">
                     <h3>{{ $suatChieu->phim->TenPhim }}</h3>
                     <div class="movie-meta">{{ $suatChieu->phim->DoHoa }}
-                        <span class="age-rating">T{{ $suatChieu->phim->DoTuoi }}</span>
+                        <span class="age-rating">{{ $suatChieu->phim->DoTuoi }}</span>
                     </div>
                 </div>
             </div>

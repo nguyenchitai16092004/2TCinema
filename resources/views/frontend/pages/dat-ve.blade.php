@@ -74,11 +74,11 @@
                 <div class="movie-info">
                     <div class="movie-poster">
                         <img src="{{ $suatChieu->phim->HinhAnh ? asset('storage/' . $suatChieu->phim->HinhAnh) : asset('images/no-image.jpg') }}" alt="{{ $suatChieu->phim->TenPhim }}">
-                        <div class="movie-badge">T{{ $suatChieu->phim->DoTuoi }}</div>
+                        <div class="movie-badge">{{ $suatChieu->phim->DoTuoi }}</div>
                     </div>
                     <div class="movie-name">
                         <h3 class="movie-title">{{ $suatChieu->phim->TenPhim }} - {{ $suatChieu->phim->DoHoa }} </h3><span
-                            class="age-rating">T{{ $suatChieu->phim->DoTuoi }}</span>
+                            class="age-rating">{{ $suatChieu->phim->DoTuoi }}</span>
                     </div>
                     <p class="cinema-info">{{ $suatChieu->rap->TenRap }} - {{ $suatChieu->rap->DiaChi }}</p>
                     <p class="showtime-info">
@@ -135,9 +135,9 @@
             }
 
             // Lấy độ tuổi phim
-            var age = {{ $suatChieu->phim->DoTuoi }};
+            var age = "{{ $suatChieu->phim->DoTuoi }}";
             $.sweetModal({
-                title: `<div style=" margin-bottom:8px;display:flex;justify-content:center;"><span style="background:#ff9800;color:#fff;padding:3px 7px;border-radius:6px;font-weight:100;">T${age}</span> </div>
+                title: `<div style=" margin-bottom:8px;display:flex;justify-content:center;"><span style="background:#ff9800;color:#fff;padding:3px 7px;border-radius:6px;font-weight:100;">${age}</span> </div>
             <span style="color: #333; text-align: center; display: block; font-weight: bold;">Xác nhận mua vé cho người có độ tuổi phù hợp</span>`,
                 content: `<div style="color:#4080FF;font-size:15px;margin-top:8px;font-style:italic;">
             Tôi xác nhận mua vé phim này cho người có độ tuổi từ <b>${age} tuổi trở lên</b> và đồng ý cung cấp giấy tờ tuỳ thân để xác minh độ tuổi.

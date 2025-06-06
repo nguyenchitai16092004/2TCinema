@@ -58,6 +58,7 @@ class PayOSController extends Controller
             'ID_TaiKhoan' => session('user_id'),
             'TrangThaiXacNhanHoaDon'     => 0,
             'TrangThaiXacNhanThanhToan'  => 0,
+            'SoLuongVe'   => count($orderData['selectedSeats']),
             'created_at'  => now(),
             'updated_at'  => now(),
         ]);
@@ -69,7 +70,6 @@ class PayOSController extends Controller
 
         foreach ($orderData['seatDetails'] as $seat) {
             VeXemPhim::create([
-                'SoLuong'      => 1,
                 'TenGhe'       => $seat['TenGhe'],
                 'TenPhim'      => $orderData['ten_phim'] ?? '',
                 'NgayXem'      => $orderData['ngay_xem'] ?? '',

@@ -16,13 +16,10 @@
                             <h3 class="register-heading">Đổi mật khẩu</h3>
                             <div class="row register-form">
                                 <div class="col-md-9">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="lgUserName" readonly="readonly"
-                                            placeholder="Email / T&#234;n đăng nhập" value="nguyenchitai16092004@gmail.com">
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <input type="password" minlength="6" maxlength="50" name="txtEmpPhone"
-                                            class="form-control" id="lgPassword" placeholder="Mật khẩu cũ" value="">
+                                            class="form-control" id="lgPassword" placeholder="Mật khẩu hiện tại" value="">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" minlength="6" maxlength="50" name="txtEmpPhone"
@@ -31,7 +28,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="password" minlength="6" maxlength="50" name="txtEmpPhone"
-                                            class="form-control" id="lgRePasswordNew" placeholder="Mật khẩu nhập lại"
+                                            class="form-control" id="lgRePasswordNew" placeholder="Xác nhận mật khẩu mới"
                                             value="">
                                     </div>
                                     <div class="form-group">

@@ -1,6 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Đăng nhập')
 @section('main')
+    <link rel="stylesheet" href="{{ asset('frontend/Content/css/dang-nhap.css') }}">
     <div class="sign section--bg" style="background: #e6e7e9; max-width: 100%; border-top: 1px solid;">
         <div class="contain er register" style="max-width: 100%;">
             <div class="row">
@@ -19,12 +20,17 @@
 
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="TenDN"
-                                                placeholder="Email / Tên đăng nhập" required>
+                                                placeholder="Email / Tên đăng nhập" required autocomplete="username">
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="password" class="form-control" name="MatKhau"
-                                                placeholder="Mật khẩu" required minlength="6">
+                                            <div class="input-group">
+                                                <input type="password" class="form-control" name="MatKhau"
+                                                    placeholder="Mật khẩu" required minlength="6" id="password-input"  autocomplete="new-password">
+                                                <button type="button" id="toggle-password" tabindex="-1">
+                                                    <i class="bi bi-eye" id="eye-icon"></i>
+                                                </button>
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
@@ -36,7 +42,7 @@
                                             </ul>
                                         </div>
 
-                                        <button type="submit" class="btnRegister">Đăng nhập</button>
+                                        <button type="submit" class=" btnRegister">Đăng nhập</button>
                                     </div>
                                 </div>
                             </form>
@@ -47,38 +53,58 @@
         </div>
     </div>
     @if ($errors->any())
-    <script>
-        $(document).ready(function() {
-            $.sweetModal({
-                content: `{!! implode('<br>', $errors->all()) !!}`,
-                title: 'Thông báo',
-                icon: $.sweetModal.ICON_WARNING,
-                theme: $.sweetModal.THEME_DARK,
-                buttons: {
-                    'OK': {
-                        classes: 'redB'
+        <script>
+            $(document).ready(function() {
+                $.sweetModal({
+                    content: `{!! implode('<br>', $errors->all()) !!}`,
+                    title: 'Thông báo',
+                    icon: $.sweetModal.ICON_WARNING,
+                    theme: $.sweetModal.THEME_DARK,
+                    buttons: {
+                        'OK': {
+                            classes: 'redB'
+                        }
                     }
-                }
+                });
             });
-        });
-    </script>
-@endif
+        </script>
+    @endif
 
-@if (session('success'))
-    <script>
-        $(document).ready(function() {
-            $.sweetModal({
-                content: `{{ session('success') }}`,
-                title: 'Thông báo',
-                icon: $.sweetModal.ICON_SUCCESS,
-                theme: $.sweetModal.THEME_DARK,
-                buttons: {
-                    'OK': {
-                        classes: 'redB'
+    @if (session('success'))
+        <script>
+            $(document).ready(function() {
+                $.sweetModal({
+                    content: `{{ session('success') }}`,
+                    title: 'Thông báo',
+                    icon: $.sweetModal.ICON_SUCCESS,
+                    theme: $.sweetModal.THEME_DARK,
+                    buttons: {
+                        'OK': {
+                            classes: 'redB'
+                        }
                     }
+                });
+            });
+        </script>
+    @endif
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const passwordInput = document.getElementById('password-input');
+            const togglePassword = document.getElementById('toggle-password');
+            const eyeIcon = document.getElementById('eye-icon');
+
+            togglePassword.addEventListener('click', function() {
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    eyeIcon.classList.remove('bi-eye');
+                    eyeIcon.classList.add('bi-eye-slash');
+                } else {
+                    passwordInput.type = "password";
+                    eyeIcon.classList.remove('bi-eye-slash');
+                    eyeIcon.classList.add('bi-eye');
                 }
             });
         });
     </script>
-@endif
 @stop
