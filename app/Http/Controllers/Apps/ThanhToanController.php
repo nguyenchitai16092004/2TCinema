@@ -168,11 +168,11 @@ class ThanhToanController extends Controller
                 'ID_TaiKhoan' => session('user_id'),
                 'TrangThaiXacNhanHoaDon' => 0,
                 'TrangThaiXacNhanThanhToan' => 0,
+                'SoLuongVe' => count($orderData['selectedSeats']),
             ]);
 
             foreach ($orderData['seatDetails'] as $seatDetail) {
                 VeXemPhim::create([
-                    'SoLuong' => 1,
                     'TenGhe' => $seatDetail['TenGhe'],
                     'TenPhim' => $orderData['ten_phim'],
                     'NgayXem' => $orderData['ngay_xem'],

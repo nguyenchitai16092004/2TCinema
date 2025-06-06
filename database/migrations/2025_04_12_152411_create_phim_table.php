@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('MoTaPhim');
             $table->string('Trailer', 255)->nullable();
             $table->string('HinhAnh', 255)->nullable();
-            $table->integer('DoTuoi');
+            $table->string('DoTuoi',3);
             $table->string('DoHoa', 3);
             $table->string('NgonNgu', 50);
             $table->boolean('TrangThai');

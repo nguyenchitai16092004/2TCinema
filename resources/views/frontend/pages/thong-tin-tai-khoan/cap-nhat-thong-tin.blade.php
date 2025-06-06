@@ -23,7 +23,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="rgFullName" name="HoTen"
-                                                value="{{ $thongTin->HoTen ?? '' }}" placeholder="Họ & tên(*)">
+                                                value="{{ $thongTin->HoTen ?? '' }}" placeholder="Họ & tên(*)" >
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="rgCMND" name="ID_CCCD"
@@ -38,24 +38,24 @@
                                         <div class="form-group">
                                             <input type="text" id="rgBirthDay" class="form-control" name="NgaySinh"
                                                 placeholder="Ngày sinh"
-                                                value="{{ $thongTin->NgaySinh ? \Carbon\Carbon::parse($thongTin->NgaySinh)->format('d/m/Y') : '' }}">
+                                                value="{{ $thongTin->NgaySinh ? \Carbon\Carbon::parse($thongTin->NgaySinh)->format('d/m/Y') : '' }}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <input type="tel" minlength="10" maxlength="10" id="rgPhone"
                                                 name="SDT" class="form-control" placeholder="Điện thoại(*)"
-                                                value="{{ $thongTin->SDT ?? '' }}">
+                                                value="{{ $thongTin->SDT ?? '' }}" >
                                         </div>
                                         
                                         <div class="form-group">
                                             <div class="maxl">
                                                 <label class="radio inline">
                                                     <input type="radio" id="rgGenderTrue" name="GioiTinh" value="1"
-                                                        {{ ($thongTin->GioiTinh ?? 1) == 1 ? 'checked' : '' }}>
+                                                        {{ ($thongTin->GioiTinh ?? 1) == 1 ? 'checked' : '' }} >
                                                     <span> Nam </span>
                                                 </label>
                                                 <label class="radio inline">
                                                     <input type="radio" id="rgGenderFalse" name="GioiTinh" value="0"
-                                                        {{ ($thongTin->GioiTinh ?? 1) == 0 ? 'checked' : '' }}>
+                                                        {{ ($thongTin->GioiTinh ?? 1) == 0 ? 'checked' : '' }} >
                                                     <span> Nữ </span>
                                                 </label>
                                             </div>
@@ -63,8 +63,7 @@
 
                                         <button type="submit" class="btnRegister">Cập nhật</button>
                                     </div>
-                                    <p style="color: #333;">Vui lòng nhập đầy đủ thông tin vào các trường có đánh dấu <b
-                                            style="color: red;">(*)</b></p>
+
                                 </div>
                             </form>
                         </div>

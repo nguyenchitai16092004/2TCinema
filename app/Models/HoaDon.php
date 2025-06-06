@@ -23,6 +23,7 @@ class HoaDon extends Model
         'TrangThaiXacNhanThanhToan',
         'payment_link',
         'order_code',
+        'SoLuongVe',
     ];
     
     // Quan hệ với TaiKhoan - một hóa đơn thuộc về một tài khoản

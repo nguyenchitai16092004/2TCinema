@@ -21,7 +21,7 @@
                         <a href="#" class="trailer-btn" id="trailerBtn">
                             <i class="fas fa-play"></i>
                         </a>
-                        <span class="age-badge">T{{ $phim->DoTuoi }}</span>
+                        <span class="age-badge">{{ $phim->DoTuoi }}</span>
                     </div>
                 </div>
 

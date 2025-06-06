@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\HoaDon;
 
 class AuthController extends Controller
 {
@@ -135,6 +136,7 @@ class AuthController extends Controller
         session([
             'user_id' => $user->ID_TaiKhoan,
             'user_name' => $user->TenDN,
+            'cccd_id' => $user->ID_CCCD,
             'user_role' => $user->VaiTro,
             'user_fullname' => $user->thongTin->HoTen ?? 'Người dùng',
             'user_email' => $user->thongTin->Email ?? 'Chưa cập nhật',
@@ -260,4 +262,17 @@ class AuthController extends Controller
 
         return back()->with('success', 'Cập nhật thông tin thành công!');
     }
+    public function dsHoaDonNguoiDung()
+    {
+        $userId = session('user_id');
+        $hoaDons = HoaDon::where('ID_TaiKhoan', $userId)
+            ->orderByDesc('created_at')
+            ->get();
+
+        $taiKhoan = TaiKhoan::find($userId);
+        $thongTin = $taiKhoan->thongTin ?? null;
+
+        return view('frontend.pages.thong-tin-tai-khoan.info', compact('hoaDons', 'thongTin'));
+    }
+    
 }

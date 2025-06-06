@@ -43,10 +43,10 @@ Route::prefix('auth')->group(function () {
 
 // --- Thông tin tài khoản ---
 Route::prefix('tai-khoan')->group(function () {
-    Route::get('/info', fn() => view('frontend.pages.thong-tin-tai-khoan.info'))->name('user.info');
-    Route::get('/lich-su-giao-dich', fn() => view('frontend.pages.thong-tin-tai-khoan.lich-su-giao-dich'))->name('user.lichsugiaodich');
+    Route::get('/info', [AuthController::class, 'dsHoaDonNguoiDung'])->name('user.info');
     Route::get('/cap-nhat-thong-tin', [AuthController::class, 'showUpdateInfo'])->name('user.updateInfo.get');
     Route::post('/cap-nhat-thong-tin', [AuthController::class, 'updateInfo'])->name('user.updateInfo.post');
+    Route::get('/kiem-tra-thanh-toan', [ThanhToanController::class, 'checkoutStatus'])->name('checkout_status');
 });
 
 // --- Phim ---

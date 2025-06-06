@@ -36,34 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedDate = "";
     let selectedTime = "";
 
-    // Fake movie data
-    const movieData = {
-        "BUỒN THÂN BẠN THÂN": {
-            duration: "120 phút",
-            genre: "Hài, Tình cảm",
-            rating: "P - PHIM DÀNH CHO MỌI ĐỐI TƯỢNG",
-        },
-        "GODZILLA X KONG: ĐẾ QUỐC MỚI": {
-            duration: "115 phút",
-            genre: "Hành động, Viễn tưởng",
-            rating: "C13 - PHIM CẤM KHÁN GIẢ DƯỚI 13 TUỔI",
-        },
-        "KUNG FU PANDA 4": {
-            duration: "94 phút",
-            genre: "Hoạt hình, Hài",
-            rating: "P - PHIM DÀNH CHO MỌI ĐỐI TƯỢNG",
-        },
-        "THANH GƯƠM DIỆT QUỶ: LÀNG RÈN KIẾM": {
-            duration: "108 phút",
-            genre: "Hoạt hình, Hành động",
-            rating: "C13 - PHIM CẤM KHÁN GIẢ DƯỚI 13 TUỔI",
-        },
-        "GIA ĐÌNH CROODS": {
-            duration: "95 phút",
-            genre: "Hoạt hình, Phiêu lưu",
-            rating: "P - PHIM DÀNH CHO MỌI ĐỐI TƯỢNG",
-        },
-    };
+
 
     // Close all dropdowns
     function closeAllDropdowns() {
@@ -222,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (selectedMovie) {
             summaryMovieTitle.textContent = selectedMovie;
-            const movieInfo = movieData[selectedMovie];
             if (movieInfo) {
                 summaryMovieDetails.textContent = `${movieInfo.duration} | ${movieInfo.genre} | ${movieInfo.rating}`;
             }
@@ -477,7 +449,6 @@ class CinemaCarousel {
         if (window.innerWidth <= 768) return 1;
         if (window.innerWidth <= 1024) return 2;
         if (window.innerWidth <= 1200) return 3;
-        if (window.innerWidth <= 1400) return 4;
         return 5;
     }
     renderDots() {
@@ -544,7 +515,10 @@ class CinemaCarousel {
         // Resize handler
         window.addEventListener("resize", () => {
             this.itemsPerView = this.getItemsPerView();
-            this.maxIndex = Math.max(0, this.totalItems - this.itemsPerView);
+            this.maxIndex = Math.max(
+                0,
+                Math.ceil(this.totalItems / this.itemsPerView) - 1
+            );
             this.currentIndex = Math.min(this.currentIndex, this.maxIndex);
             this.updateCarousel();
         });
@@ -561,7 +535,18 @@ class CinemaCarousel {
     updateCarousel() {
         const cardWidth = 280;
         const gap = 30;
-        const offset = this.currentIndex * (cardWidth + gap);
+        const visibleCards = this.itemsPerView;
+        const slideWidth = cardWidth + gap;
+        const totalPages = Math.ceil(this.totalItems / visibleCards);
+
+        let offset;
+        if (this.currentIndex === totalPages - 1) {
+            // Trang cuối, chỉ còn lại số phim chưa đủ 5
+            offset = (this.totalItems - visibleCards) * slideWidth;
+            if (this.totalItems <= visibleCards) offset = 0;
+        } else {
+            offset = this.currentIndex * slideWidth * visibleCards;
+        }
 
         this.moviesGrid.style.transform = `translateX(-${offset}px)`;
         this.updateDots();
@@ -720,7 +705,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <iframe width="800" height="450" src="https://www.youtube.com/embed/${videoId}" 
                         frameborder="0" allowfullscreen style="border-radius:12px;max-width:90vw;max-height:80vh;"></iframe>
                     <button class="close-trailer-btn" style="
-                        position:absolute;top:-20px;right:-20px;background:#fff;border:none;
+                        position:absolute;top:0px;right:-1px;background:#fff;border:none;
                         border-radius:50%;width:40px;height:40px;font-size:1.5rem;cursor:pointer;
                         box-shadow:0 2px 8px rgba(0,0,0,0.2);">×</button>
                 </div>
