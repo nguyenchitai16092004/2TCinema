@@ -11,7 +11,7 @@ class TheLoaiPhim extends Model
 
     protected $table = 'the_loai_phim';
     protected $primaryKey = 'ID_TheLoaiPhim';
-    
+
     protected $fillable = [
         'TenTheLoai',
     ];
@@ -19,6 +19,11 @@ class TheLoaiPhim extends Model
     // Quan hệ với bảng phim
     public function phims()
     {
-        return $this->hasMany(Phim::class, 'ID_TheLoaiPhim', 'ID_TheLoaiPhim');
+        return $this->belongsToMany(
+            Phim::class,
+            'the_loai_cua_phim', 
+            'ID_TheLoaiPhim',
+            'ID_Phim'
+        );
     }
 }

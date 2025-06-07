@@ -25,22 +25,24 @@ class Phim extends Model
         'HinhAnh',
         'DoTuoi',
         'DoHoa',
-        'NgonNgu',  
-        'ID_TheLoaiPhim'
+        'QuocGia'
+    ];
+    protected $casts = [
+        'QuocGia' => 'array',  // <-- thêm dòng này
     ];
 
     // Quan hệ với bảng thể loại phim
     public function theLoai()
     {
-        return $this->belongsTo(TheLoaiPhim::class, 'ID_TheLoaiPhim', 'ID_TheLoaiPhim');
+        return $this->belongsToMany(TheLoaiPhim::class, 'the_loai_cua_phim', 'ID_Phim', 'ID_TheLoaiPhim');
     }
+
 
     public function suatChieu()
     {
         return $this->hasMany(SuatChieu::class, 'ID_Phim', 'ID_Phim');
     }
 
-    // ✅ THÊM dòng này để tránh lỗi
     public function binhLuan()
     {
         return $this->hasMany(BinhLuan::class, 'ID_Phim', 'ID_Phim');

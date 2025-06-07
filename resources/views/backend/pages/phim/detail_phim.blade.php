@@ -51,17 +51,17 @@
                                             <div class="form-group">
                                                 <label for="ID_TheLoaiPhim">Thể loại phim <span
                                                         class="text-danger">*</span></label>
-                                                <select name="ID_TheLoaiPhim" id="ID_TheLoaiPhim" class="form-control"
-                                                    required>
-                                                    <option value="">-- Chọn thể loại --</option>
+                                                <select name="ID_TheLoaiPhim[]" id="ID_TheLoaiPhim" class="form-control"
+                                                    required multiple>
                                                     @foreach ($theLoais as $theLoai)
                                                         <option value="{{ $theLoai->ID_TheLoaiPhim }}"
-                                                            {{ old('ID_TheLoaiPhim', $phim->ID_TheLoaiPhim) == $theLoai->ID_TheLoaiPhim ? 'selected' : '' }}>
+                                                            {{ collect(old('ID_TheLoaiPhim', $phim->theLoai->pluck('ID_TheLoaiPhim') ?? []))->contains($theLoai->ID_TheLoaiPhim) ? 'selected' : '' }}>
                                                             {{ $theLoai->TenTheLoai }}
                                                         </option>
                                                     @endforeach
                                                     <option value="create_new">+ Thêm thể loại mới</option>
                                                 </select>
+
                                             </div>
 
                                             <div class="form-group">
@@ -121,18 +121,40 @@
                                                 </select>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="NgonNgu">Ngôn ngữ <span class="text-danger">*</span></label>
-                                                <select name="NgonNgu" id="NgonNgu" class="form-control" required>
-                                                    <option value="">-- Chọn ngôn ngữ --</option>
-                                                    @foreach (['vi' => 'Tiếng Việt', 'en' => 'Tiếng Anh', 'es' => 'Tây Ban Nha', 'fr' => 'Pháp', 'de' => 'Đức', 'it' => 'Ý', 'ja' => 'Nhật', 'ko' => 'Hàn', 'zh' => 'Trung', 'ru' => 'Nga'] as $key => $lang)
-                                                        <option value="{{ $key }}"
-                                                            {{ old('NgonNgu', $phim->NgonNgu) == $key ? 'selected' : '' }}>
-                                                            {{ $lang }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                            <label for="QuocGia">Quốc gia <span class="text-danger">*</span></label>
+                                            <select name="QuocGia" id="QuocGia" class="form-control" required>
+                                                <option value="">-- Chọn quốc gia --</option>
+
+                                                <option value="Việt Nam"
+                                                    {{ $phim->QuocGia == 'Việt Nam' ? 'selected' : '' }}>Việt Nam
+                                                </option>
+                                                <option value="Hoa Kỳ"
+                                                    {{ $phim->QuocGia == 'Hoa Kỳ' ? 'selected' : '' }}>Hoa Kỳ</option>
+                                                <option value="Tây Ban Nha"
+                                                    {{ $phim->QuocGia == 'Tây Ban Nha' ? 'selected' : '' }}>Tây Ban Nha
+                                                </option>
+                                                <option value="Pháp" {{ $phim->QuocGia == 'Pháp' ? 'selected' : '' }}>
+                                                    Pháp</option>
+                                                <option value="Đức" {{ $phim->QuocGia == 'Đức' ? 'selected' : '' }}>
+                                                    Đức</option>
+                                                <option value="Ý" {{ $phim->QuocGia == 'Ý' ? 'selected' : '' }}>Ý
+                                                </option>
+                                                <option value="Nhật Bản"
+                                                    {{ $phim->QuocGia == 'Nhật Bản' ? 'selected' : '' }}>Nhật Bản
+                                                </option>
+                                                <option value="Hàn Quốc"
+                                                    {{ $phim->QuocGia == 'Hàn Quốc' ? 'selected' : '' }}>Hàn Quốc
+                                                </option>
+                                                <option value="Trung Quốc"
+                                                    {{ $phim->QuocGia == 'Trung Quốc' ? 'selected' : '' }}>Trung Quốc
+                                                </option>
+                                                <option value="Nga" {{ $phim->QuocGia == 'Nga' ? 'selected' : '' }}>
+                                                    Nga</option>
+                                            </select>
+
+
+
+
 
                                             <div class="form-group">
                                                 <label for="DoTuoi">Độ tuổi <span class="text-danger">*</span></label>

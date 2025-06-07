@@ -23,15 +23,10 @@ return new class extends Migration
             $table->text('MoTaPhim');
             $table->string('Trailer', 255)->nullable();
             $table->string('HinhAnh', 255)->nullable();
-            $table->string('DoTuoi',3);
+            $table->string('DoTuoi', 100);
             $table->string('DoHoa', 3);
-            $table->string('NgonNgu', 50);
-            $table->boolean('TrangThai');
-            $table->unsignedBigInteger('ID_TheLoaiPhim');
-
+            $table->string('QuocGia', 100);
             $table->timestamps();
-
-            $table->foreign('ID_TheLoaiPhim')->references('ID_TheLoaiPhim')->on('the_loai_phim')->onDelete('cascade');
         });
     }
 
