@@ -748,24 +748,32 @@
             </div>
             <div class="tab-pane fade show active" id="home" role="tabpanel">
                 <div class="register-form">
-                    <div class="form-group">
+                    <div class="form-group" style="position:relative;">
                         <input type="password" minlength="6" maxlength="50" class="form-control" id="lgPassword"
-                            placeholder="Mật khẩu hiện tại">
+                            placeholder="Mật khẩu hiện tại" style="padding-right: 40px;">
+                        <button type="button" class="password-toggle" tabindex="-1"
+                            onclick="togglePassword('lgPassword', this)"
+                            style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">
+                            <i class="fa fa-eye"></i>
+                        </button>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="position:relative;">
                         <input type="password" minlength="6" maxlength="50" class="form-control" id="lgPasswordNew"
-                            placeholder="Mật khẩu mới">
+                            placeholder="Mật khẩu mới" style="padding-right: 40px;">
+                        <button type="button" class="password-toggle" tabindex="-1"
+                            onclick="togglePassword('lgPasswordNew', this)"
+                            style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">
+                            <i class="fa fa-eye"></i>
+                        </button>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="position:relative;">
                         <input type="password" minlength="6" maxlength="50" class="form-control" id="lgRePasswordNew"
-                            placeholder="Xác nhận mật khẩu mới">
-                    </div>
-                    <div class="form-group">
-                        <ul style="display:flex">
-                            <li>
-                                <a href="{{ route('quen-mat-khau.get') }}">Quên mật khẩu?</a>
-                            </li>
-                        </ul>
+                            placeholder="Xác nhận mật khẩu mới" style="padding-right: 40px;">
+                        <button type="button" class="password-toggle" tabindex="-1"
+                            onclick="togglePassword('lgRePasswordNew', this)"
+                            style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">
+                            <i class="fa fa-eye"></i>
+                        </button>
                     </div>
                     <input type="button" class="btn btn-primary" onclick="changePass()" value="Đổi mật khẩu">
                 </div>
@@ -773,54 +781,54 @@
         </div>
     </div>
     <!-- Modal cập nhật thông tin -->
-<div class="modal" id="updateInfoModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div class="modal-title">Cập nhật thông tin tài khoản</div>
-            <button class="close-btn" onclick="closeUpdateInfoModal()">&times;</button>
-        </div>
-        <form id="updateInfoFormModal">
-            @csrf
-            <div class="form-group">
-                <input type="text" class="form-control" id="modalFullName" name="HoTen"
-                    value="{{ $thongTin->HoTen ?? '' }}" placeholder="Họ & tên(*)" >
+    <div class="modal" id="updateInfoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Cập nhật thông tin tài khoản</div>
+                <button class="close-btn" onclick="closeUpdateInfoModal()">&times;</button>
             </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="modalCMND" name="ID_CCCD"
-                    value="{{ $thongTin->ID_CCCD ?? '' }}" placeholder="CMND(*)" readonly>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="modalEmail" name="Email"
-                    placeholder="Email (*)" value="{{ $thongTin->Email ?? '' }}" readonly>
-            </div>
-            <div class="form-group">
-                <input type="text" id="modalBirthDay" class="form-control" name="NgaySinh"
-                    placeholder="Ngày sinh"
-                    value="{{ $thongTin->NgaySinh ? \Carbon\Carbon::parse($thongTin->NgaySinh)->format('d/m/Y') : '' }}" readonly>
-            </div>
-            <div class="form-group">
-                <input type="tel" minlength="10" maxlength="10" id="modalPhone"
-                    name="SDT" class="form-control" placeholder="Điện thoại(*)"
-                    value="{{ $thongTin->SDT ?? '' }}" >
-            </div>
-            <div class="form-group">
-                <div class="maxl">
-                    <label class="radio inline">
-                        <input type="radio" id="modalGenderTrue" name="GioiTinh" value="1"
-                            {{ ($thongTin->GioiTinh ?? 1) == 1 ? 'checked' : '' }} >
-                        <span> Nam </span>
-                    </label>
-                    <label class="radio inline">
-                        <input type="radio" id="modalGenderFalse" name="GioiTinh" value="0"
-                            {{ ($thongTin->GioiTinh ?? 1) == 0 ? 'checked' : '' }} >
-                        <span> Nữ </span>
-                    </label>
+            <form id="updateInfoFormModal">
+                @csrf
+                <div class="form-group">
+                    <input type="text" class="form-control" id="modalFullName" name="HoTen"
+                        value="{{ $thongTin->HoTen ?? '' }}" placeholder="Họ & tên(*)">
                 </div>
-            </div>
-            <button type="button" class="btn btn-primary" onclick="submitUpdateInfo()">Lưu thay đổi</button>
-        </form>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="modalCMND" name="ID_CCCD"
+                        value="{{ $thongTin->ID_CCCD ?? '' }}" placeholder="CMND(*)" readonly>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="modalEmail" name="Email" placeholder="Email (*)"
+                        value="{{ $thongTin->Email ?? '' }}" readonly>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="modalBirthDay" class="form-control" name="NgaySinh"
+                        placeholder="Ngày sinh"
+                        value="{{ $thongTin->NgaySinh ? \Carbon\Carbon::parse($thongTin->NgaySinh)->format('d/m/Y') : '' }}"
+                        readonly>
+                </div>
+                <div class="form-group">
+                    <input type="tel" minlength="10" maxlength="10" id="modalPhone" name="SDT"
+                        class="form-control" placeholder="Điện thoại(*)" value="{{ $thongTin->SDT ?? '' }}">
+                </div>
+                <div class="form-group">
+                    <div class="maxl">
+                        <label class="radio inline">
+                            <input type="radio" id="modalGenderTrue" name="GioiTinh" value="1"
+                                {{ ($thongTin->GioiTinh ?? 1) == 1 ? 'checked' : '' }}>
+                            <span> Nam </span>
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" id="modalGenderFalse" name="GioiTinh" value="0"
+                                {{ ($thongTin->GioiTinh ?? 1) == 0 ? 'checked' : '' }}>
+                            <span> Nữ </span>
+                        </label>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitUpdateInfo()">Lưu thay đổi</button>
+            </form>
+        </div>
     </div>
-</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         const tabs = document.querySelectorAll(".tab");
@@ -866,9 +874,11 @@
         function closeTransactionDetail() {
             document.getElementById("transactionModal").classList.remove("show");
         }
+
         function openChangePasswordModal() {
             document.getElementById("changePasswordModal").classList.add("show");
         }
+
         function closeChangePasswordModal() {
             document.getElementById("changePasswordModal").classList.remove("show");
         }
@@ -916,20 +926,28 @@
                             title: 'Thông báo',
                             icon: $.sweetModal.ICON_SUCCESS,
                             theme: $.sweetModal.THEME_DARK,
-                            buttons: { 'OK': { classes: 'redB' } }
+                            buttons: {
+                                'OK': {
+                                    classes: 'redB'
+                                }
+                            }
                         });
                     } else {
                         let msg = '';
-                        if(result==="1") msg = 'Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại.';
-                        else if(result==="2") msg = 'Mật khẩu cũ không chính xác!';
-                        else if(result==="3") msg = 'Mật khẩu mới nhập lại không trùng khớp!';
+                        if (result === "1") msg = 'Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại.';
+                        else if (result === "2") msg = 'Mật khẩu cũ không chính xác!';
+                        else if (result === "3") msg = 'Mật khẩu mới nhập lại không trùng khớp!';
                         else msg = result;
                         $.sweetModal({
                             content: msg,
                             title: 'Lỗi',
                             icon: $.sweetModal.ICON_WARNING,
                             theme: $.sweetModal.THEME_DARK,
-                            buttons: { 'OK': { classes: 'redB' } }
+                            buttons: {
+                                'OK': {
+                                    classes: 'redB'
+                                }
+                            }
                         });
                     }
                 },
@@ -939,65 +957,98 @@
                         title: 'Lỗi',
                         icon: $.sweetModal.ICON_WARNING,
                         theme: $.sweetModal.THEME_DARK,
-                        buttons: { 'OK': { classes: 'redB' } }
+                        buttons: {
+                            'OK': {
+                                classes: 'redB'
+                            }
+                        }
                     });
                 }
             });
         }
+
         function sweetModalWarn(msg, focusSelector) {
             $.sweetModal({
                 content: msg,
                 title: '',
                 icon: $.sweetModal.ICON_WARNING,
                 theme: $.sweetModal.THEME_DARK,
-                buttons: { 'OK': { classes: 'redB' } }
+                buttons: {
+                    'OK': {
+                        classes: 'redB'
+                    }
+                }
             });
-            if (focusSelector) setTimeout(function() { $(focusSelector).focus(); }, 300);
+            if (focusSelector) setTimeout(function() {
+                $(focusSelector).focus();
+            }, 300);
         }
-        function openUpdateInfoModal() {
-    document.getElementById("updateInfoModal").classList.add("show");
-}
-function closeUpdateInfoModal() {
-    document.getElementById("updateInfoModal").classList.remove("show");
-}
 
-function submitUpdateInfo() {
-    var data = {
-        HoTen: $("#modalFullName").val(),
-        ID_CCCD: $("#modalCMND").val(),
-        Email: $("#modalEmail").val(),
-        NgaySinh: $("#modalBirthDay").val(),
-        SDT: $("#modalPhone").val(),
-        GioiTinh: $("input[name='GioiTinh']:checked", "#updateInfoFormModal").val(),
-        _token: $('meta[name="csrf-token"]').attr('content')
-    };
-    $.ajax({
-        url: "{{ route('user.updateInfo.post') }}",
-        type: "POST",
-        data: data,
-        success: function(res) {
-            closeUpdateInfoModal();
-            $.sweetModal({
-                content: "Cập nhật thông tin thành công!",
-                title: "Thông báo",
-                icon: $.sweetModal.ICON_SUCCESS,
-                theme: $.sweetModal.THEME_DARK,
-                buttons: { 'OK': { classes: 'redB' } }
-            });
-            // Cập nhật lại trên giao diện nếu cần
-            // location.reload(); // hoặc tự cập nhật các field hiển thị
-        },
-        error: function(xhr) {
-            let msg = xhr.responseJSON?.message || "Có lỗi xảy ra!";
-            $.sweetModal({
-                content: msg,
-                title: "Lỗi",
-                icon: $.sweetModal.ICON_WARNING,
-                theme: $.sweetModal.THEME_DARK,
-                buttons: { 'OK': { classes: 'redB' } }
+        function openUpdateInfoModal() {
+            document.getElementById("updateInfoModal").classList.add("show");
+        }
+
+        function closeUpdateInfoModal() {
+            document.getElementById("updateInfoModal").classList.remove("show");
+        }
+
+        function submitUpdateInfo() {
+            var data = {
+                HoTen: $("#modalFullName").val(),
+                ID_CCCD: $("#modalCMND").val(),
+                Email: $("#modalEmail").val(),
+                NgaySinh: $("#modalBirthDay").val(),
+                SDT: $("#modalPhone").val(),
+                GioiTinh: $("input[name='GioiTinh']:checked", "#updateInfoFormModal").val(),
+                _token: $('meta[name="csrf-token"]').attr('content')
+            };
+            $.ajax({
+                url: "{{ route('user.updateInfo.post') }}",
+                type: "POST",
+                data: data,
+                success: function(res) {
+                    closeUpdateInfoModal();
+                    $.sweetModal({
+                        content: "Cập nhật thông tin thành công!",
+                        title: "Thông báo",
+                        icon: $.sweetModal.ICON_SUCCESS,
+                        theme: $.sweetModal.THEME_DARK,
+                        buttons: {
+                            'OK': {
+                                classes: 'redB'
+                            }
+                        }
+                    });
+                    // Cập nhật lại trên giao diện nếu cần
+                    // location.reload(); // hoặc tự cập nhật các field hiển thị
+                },
+                error: function(xhr) {
+                    let msg = xhr.responseJSON?.message || "Có lỗi xảy ra!";
+                    $.sweetModal({
+                        content: msg,
+                        title: "Lỗi",
+                        icon: $.sweetModal.ICON_WARNING,
+                        theme: $.sweetModal.THEME_DARK,
+                        buttons: {
+                            'OK': {
+                                classes: 'redB'
+                            }
+                        }
+                    });
+                }
             });
         }
-    });
+        function togglePassword(inputId, btn) {
+    var input = document.getElementById(inputId);
+    if (input.type === "password") {
+        input.type = "text";
+        btn.querySelector('i').classList.remove('fa-eye');
+        btn.querySelector('i').classList.add('fa-eye-slash');
+    } else {
+        input.type = "password";
+        btn.querySelector('i').classList.remove('fa-eye-slash');
+        btn.querySelector('i').classList.add('fa-eye');
+    }
 }
     </script>
 @stop

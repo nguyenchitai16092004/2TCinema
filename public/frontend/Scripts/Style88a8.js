@@ -2333,7 +2333,6 @@ function V2movieCarousel2() {
             radio: !0,
             checkbox: !0,
             file: !0,
-            password: !0,
             image: !0,
         })
             t.pseudos[rt] = ar(rt);
@@ -5432,7 +5431,6 @@ function V2movieCarousel2() {
                                 t.url,
                                 t.async,
                                 t.username,
-                                t.password
                             ),
                             t.xhrFields)
                         )
@@ -28501,12 +28499,7 @@ jQuery(document).ready(function () {
             window.performance.navigation.TYPE_BACK_FORWARD &&
         (location.href = "/lich-chieu.html?lg=vi");
 });
-jQuery(document).ready(function () {
-    var n = document.getElementById("lgPassword");
-    n.addEventListener("keyup", function (n) {
-        n.keyCode === 13 && (n.preventDefault(), logIn());
-    });
-});
+
 
 $(document).ready(function () {
     var k = $("#pagination").length,

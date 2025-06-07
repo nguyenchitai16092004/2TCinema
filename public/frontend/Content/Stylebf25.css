@@ -25,7 +25,7 @@
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
-    --font-family-sans-serif: "Nunito Sans", sans-serif;
+    --font-family-sans-serif: "Josefin Sans", sans-serif;
 }
 *,
 *::before,
@@ -35,7 +35,7 @@
 }
 
 html {
-    font-family: sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -62,7 +62,7 @@ section {
 
 body {
     margin: 0 auto;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     text-align: left;
     background-color: #171e38;
@@ -6742,7 +6742,7 @@ button.close {
     z-index: 1070;
     display: block;
     margin: 0;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
@@ -6868,7 +6868,7 @@ button.close {
     z-index: 1060;
     display: block;
     max-width: 276px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
@@ -10988,9 +10988,7 @@ a.text-dark:focus {
     color: #212529 !important;
 }
 
-.text-muted {
-    color: #6c757d !important;
-}
+
 
 .text-black-50 {
     color: rgba(0, 0, 0, 0.5) !important;
@@ -17066,7 +17064,7 @@ h6 {
 .filmoja-btn {
     background-image: -webkit-linear-gradient(left, #f37a3b, #f37a3b);
     background-image: linear-gradient(to right, #f37a3b, #f37a3b);
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     font-size: 16px;
     color: #fff;
@@ -17152,7 +17150,7 @@ li {
 }
 
 .filmoja-heading h2 {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     text-transform: uppercase;
     font-weight: bold;
     color: #111;
@@ -17393,7 +17391,7 @@ li {
 .breadcrumb-box h2 {
     color: #fff;
     text-transform: capitalize;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 2px;
     font-size: 38px;
     font-weight: 400;
@@ -17851,7 +17849,7 @@ li {
 
 .slider-text h2 {
     color: #fff;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-size: 50px;
     font-weight: 500;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -17863,7 +17861,7 @@ li {
 .slider-text h4 {
     color: #fff;
     font-size: 17px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     letter-spacing: 7px;
     margin-bottom: 15px;
@@ -17926,7 +17924,7 @@ li {
 .slider-play .popup-youtube {
     background-image: -webkit-linear-gradient(left, #f37a3b, #f37a3b);
     background-image: linear-gradient(to right, #f37a3b, #f37a3b);
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     font-size: 16px;
     color: #fff;
@@ -18057,7 +18055,7 @@ li {
     border: medium none !important;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
 }
 
 .top-movie-details p {
@@ -18322,7 +18320,7 @@ li {
 
 .theater-text h3 {
     color: #fff;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-size: 37px;
     font-weight: 500;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -18335,7 +18333,7 @@ li {
     text-align: center;
     font-size: 17px;
     color: #fe9052;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 2px;
     margin-bottom: 10px;
 }
@@ -18359,7 +18357,7 @@ li {
     position: relative;
     color: #111 !important;
     text-transform: uppercase;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 1px;
     font-weight: 400;
 }
@@ -18457,14 +18455,14 @@ li {
     text-align: center;
     font-size: 17px;
     color: #fe9052;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 2px;
     margin-bottom: 15px;
 }
 
 .quote-box h3 {
     color: #fff;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-size: 40px;
     font-weight: 500;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -18497,7 +18495,7 @@ li {
 .quote-box form button {
     background-image: -webkit-linear-gradient(left, #f37a3b, #f37a3b);
     background-image: linear-gradient(to right, #f37a3b, #f37a3b);
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     font-size: 16px;
     color: #fff;
@@ -18612,7 +18610,7 @@ li {
     width: auto;
     padding: 15px 20px;
     text-transform: uppercase;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     color: #f37a3b;
     font-weight: 600;
     text-align: center;
@@ -18981,7 +18979,7 @@ ul.company-desc-list li i {
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #f37a3b;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     margin-bottom: 15px;
 }
 
@@ -19074,7 +19072,7 @@ ul.company-desc-list li i {
 .copyright-box p {
     color: #eee;
     text-transform: capitalize;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 1px;
 }
 
@@ -19094,7 +19092,7 @@ ul.company-desc-list li i {
     position: relative;
     font-weight: 500;
     margin-bottom: 20px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 1px;
 }
 
@@ -19217,7 +19215,7 @@ ul.company-desc-list li i {
 .top-action a {
     border: 1px solid #ddd;
     color: #111;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     font-size: 15px;
     text-align: center;
@@ -19773,7 +19771,7 @@ ul.company-desc-list li i {
     color: #eee;
     text-transform: capitalize;
     font-weight: 500;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 1px;
     margin-bottom: 5px;
     margin-top: 5px;
@@ -19781,7 +19779,7 @@ ul.company-desc-list li i {
 
 .details-time-left {
     color: #eee;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 0.5px;
 }
 
@@ -20136,7 +20134,7 @@ ul.company-desc-list li i {
     position: relative;
     font-weight: 500;
     margin-bottom: 30px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 1px;
 }
 
@@ -20286,7 +20284,7 @@ ul.company-desc-list li i {
     color: #eee;
     text-transform: capitalize;
     font-size: 22px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     letter-spacing: 2px;
     font-weight: 400;
 }
@@ -20322,7 +20320,7 @@ ul.company-desc-list li i {
 
 .price-action a {
     color: #fff;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     font-size: 15px;
     text-align: center;
@@ -20475,7 +20473,7 @@ ul.company-desc-list li i {
 .notfound-box a {
     border: 1px solid #ddd;
     color: #111;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     font-size: 15px;
     text-align: center;
@@ -20522,7 +20520,7 @@ ul.company-desc-list li i {
 .notfound-box form button {
     background-image: -webkit-linear-gradient(left, #f37a3b, #f37a3b);
     background-image: linear-gradient(to right, #f37a3b, #f37a3b);
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     font-size: 16px;
     color: #fff;
@@ -20776,7 +20774,7 @@ ul.company-desc-list li i {
     display: block;
     width: 100%;
     margin: 0 auto;
-    font-family: "Nunito Sans", sans-serif !important;
+    font-family: "Josefin Sans", sans-serif !important;
     font-size: 18px;
     color: #60666d;
 }
@@ -20919,7 +20917,7 @@ ul.company-desc-list li i {
     padding: 5px 10px;
     border-radius: 2px;
     color: #fbfbfb;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     margin-right: 5px;
     min-width: 67px;
     text-align: center;
@@ -21816,7 +21814,7 @@ ul.company-desc-list li i {
     display: inline-block;
     padding: 8px 10px 6px 10px;
     background: #fe7900;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-size: 14px;
     color: #fff;
     line-height: 11px;
@@ -21830,7 +21828,7 @@ ul.company-desc-list li i {
     border-radius: 50%;
     text-align: center;
     background: #fe7900;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: bold;
     font-size: 15px;
     color: #fff;
@@ -21840,7 +21838,7 @@ ul.company-desc-list li i {
 
 .amy-movie-item-meta {
     margin-bottom: 15px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-size: 14px;
 }
 
@@ -22138,7 +22136,7 @@ ul.company-desc-list li i {
 }
 
 .amy-text-block .title {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: bold;
     font-size: 50px;
     color: #fff;
@@ -22154,7 +22152,7 @@ ul.company-desc-list li i {
 }
 
 .amy-text-block .subtitle {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: bold;
     color: #fff;
     font-size: 22px;
@@ -22188,7 +22186,7 @@ ul.company-desc-list li i {
     -ms-user-select: none;
     user-select: none;
     line-height: 1.5;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: bold;
     font-size: 14px;
     color: #fff;
@@ -22426,7 +22424,7 @@ ul.company-desc-list li i {
     .amy-movie-list-server
     .amy-movie-serve-item
     .amy-movie-serve-name {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     color: #202020;
     min-width: 135px;
 }
@@ -22483,7 +22481,7 @@ ul.company-desc-list li i {
 
 .movie-steaming .amy-movie-item-tags .tag-label {
     font-size: 15px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     color: #202020;
     text-transform: uppercase;
     margin-right: 5px;
@@ -23527,7 +23525,7 @@ h3.no-underline {
     }
 }
 .sweet-modal-box {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-size: 14px;
     position: absolute;
     width: 64%;
@@ -23585,7 +23583,7 @@ h3.no-underline {
 .sweet-modal-title h2 {
     margin: 0;
     padding: 0;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 500;
     font-size: 21px;
     color: #292c34;
@@ -23769,7 +23767,7 @@ h3.no-underline {
     border: 1px solid #006b8f;
     color: #fff;
     font-size: 13px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 500;
     text-align: center;
     text-decoration: none;
