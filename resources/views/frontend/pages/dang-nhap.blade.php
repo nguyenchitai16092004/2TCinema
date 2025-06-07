@@ -26,9 +26,10 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <input type="password" class="form-control" name="MatKhau"
-                                                    placeholder="Mật khẩu" required minlength="6" id="password-input"  autocomplete="new-password">
+                                                    placeholder="Mật khẩu" required minlength="6" id="password-input"
+                                                    autocomplete="new-password">
                                                 <button type="button" id="toggle-password" tabindex="-1">
-                                                    <i class="bi bi-eye" id="eye-icon"></i>
+                                                    <i class="fa fa-eye" id="eye-icon"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -87,24 +88,23 @@
             });
         </script>
     @endif
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const passwordInput = document.getElementById('password-input');
             const togglePassword = document.getElementById('toggle-password');
             const eyeIcon = document.getElementById('eye-icon');
-
+        
             togglePassword.addEventListener('click', function() {
                 if (passwordInput.type === "password") {
                     passwordInput.type = "text";
-                    eyeIcon.classList.remove('bi-eye');
-                    eyeIcon.classList.add('bi-eye-slash');
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
                 } else {
                     passwordInput.type = "password";
-                    eyeIcon.classList.remove('bi-eye-slash');
-                    eyeIcon.classList.add('bi-eye');
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
                 }
             });
         });
-    </script>
+        </script>
 @stop

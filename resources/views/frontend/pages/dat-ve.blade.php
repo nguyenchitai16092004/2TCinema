@@ -18,25 +18,20 @@
 
             <!-- Left Panel - Seating -->
             <div class="left-panel">
-                {{-- <div class="time-selection">
-                    <label>Đổi suất chiếu</label>
-                    @if ($suatChieuCungNgay->isEmpty())
-                        <p>Không có suất chiếu nào cùng ngày và cùng rạp.</p>
-                    @else
-                        @foreach ($suatChieuCungNgay as $suat)
-                            <button class="time-btn {{ $suat->ID_SuatChieu == $suatChieu->ID_SuatChieu ? 'active' : '' }}"
-                                data-id="{{ $suat->ID_SuatChieu }}" data-gio="{{ substr($suat->GioChieu, 0, 5) }}"
-                                data-gia="{{ $suat->GiaVe }}">
-                                {{ substr($suat->GioChieu, 0, 5) }}
-                            </button>
-                        @endforeach
-                    @endif
-                </div> --}}
-
-                {{-- Cột sơ đồ ghế --}}
-                <h5 class="card-title fw-bold text-center text-dark mb-3">
-                    <i class="bi bi-grid-3x3-gap-fill me-1"></i> Màn hình
-                </h5>
+                <div class="booking-note-pro" style="display: flex; align-items: center; gap: 10px;">
+                    <div class="booking-note-icon-tooltip" style="position: relative;">
+                        <i class="fa-solid fa-circle-info" style="font-size: 1.5rem; color: #1976d2; cursor: pointer;"></i>
+                        <div class="booking-note-tooltip">
+                            <div><b>Số ghế:</b> {{ $phongChieu->SoLuongGhe }} ghế/phòng</div>
+                            <div><b>Tối đa:</b> 8 ghế/lần đặt</div>
+                            <div><b>Ghế VIP:</b> +20% giá vé so với ghế thường</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-wrapper" style="display: flex; flex-direction: column; align-items: center;">
+                    <img src="{{ asset('frontend/Content/img/img-screen.png') }}" alt="Screen" class="screen-image">
+                    <div class="screen-text">Màn hình</div>
+                </div>
                 <div id="seatLayout" class="seat-container">
                     {{-- Sơ đồ ghế được render bằng JavaScript --}}
                 </div>
@@ -55,25 +50,27 @@
                     </div>
                     <div class="legend-item">
                         <div class="legend-box legend-booked"></div>
-                        <span>Đã đặt</span>
+                        <span>Ghế đã đặt</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-box legend-disabled"></div>
-                        <span>Không hoạt động</span>
+                        <span>Ghế đang bảo trì</span>
                     </div>
                 </div>
-                <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <small id="seatCount" class="text-muted">Số ghế: {{ $phongChieu->SoLuongGhe }}</small>
-                    <small class="text-muted">Tối đa 8 ghế/lần đặt</small>
-                    <small class="text-muted">Ghế VIP sẽ thêm 20% giá vé so với ghế thường</small>
-                </div>
-            </div>
 
+            </div>
+            <div class="floating-elements">
+                <div class="floating-circle"></div>
+                <div class="floating-circle"></div>
+                <div class="floating-circle"></div>
+                <div class="floating-circle"></div>
+            </div>
             <!-- Right Panel - Movie Info & Summary -->
             <div class="right-panel">
                 <div class="movie-info">
                     <div class="movie-poster">
-                        <img src="{{ $suatChieu->phim->HinhAnh ? asset('storage/' . $suatChieu->phim->HinhAnh) : asset('images/no-image.jpg') }}" alt="{{ $suatChieu->phim->TenPhim }}">
+                        <img src="{{ $suatChieu->phim->HinhAnh ? asset('storage/' . $suatChieu->phim->HinhAnh) : asset('images/no-image.jpg') }}"
+                            alt="{{ $suatChieu->phim->TenPhim }}">
                         <div class="movie-badge">{{ $suatChieu->phim->DoTuoi }}</div>
                     </div>
                     <div class="movie-name">
@@ -82,8 +79,8 @@
                     </div>
                     <p class="cinema-info">{{ $suatChieu->rap->TenRap }} - {{ $suatChieu->rap->DiaChi }}</p>
                     <p class="showtime-info">
-                        <span>Suất: {{ substr($suatChieu->GioChieu, 0, 5) }}</span> -
-                        {{ ucfirst(\Carbon\Carbon::parse($suatChieu->NgayChieu)->translatedFormat('l, d/m/Y')) }}
+                        <span>Suất: {{ substr($suatChieu->GioChieu, 0, 5) }} -
+                            {{ ucfirst(\Carbon\Carbon::parse($suatChieu->NgayChieu)->translatedFormat('l, d/m/Y')) }}</span>
                     </p>
                 </div>
 
@@ -147,8 +144,7 @@
                 buttons: {
                     'Từ chối': {
                         classes: 'grayB',
-                        action: function() {
-                        },
+                        action: function() {},
                     },
                     'Xác nhận': {
                         classes: 'orangeB',

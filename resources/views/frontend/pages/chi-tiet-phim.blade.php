@@ -95,6 +95,12 @@
             </div>
         </div>
     </section>
+    <div class="floating-elements">
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+
+    </div>
 
     <div class="trailer-modal" id="trailerModal">
         <div class="trailer-container">
