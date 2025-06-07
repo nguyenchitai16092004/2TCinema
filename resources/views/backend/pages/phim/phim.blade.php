@@ -68,7 +68,12 @@
                                                     width="80" class="img-thumbnail" alt="{{ $phim->TenPhim }}">
                                             </td>
                                             <td>{{ $phim->TenPhim }}</td>
-                                            <td>{{ $phim->theLoai->TenTheLoai ?? 'N/A' }}</td>
+                                            <td>
+                                                @foreach ($phim->theLoai as $theLoai)
+                                                    <span >{{ $theLoai->TenTheLoai }},</span>
+                                                @endforeach
+                                            </td>
+
                                             <td>{{ date('d/m/Y', strtotime($phim->NgayKhoiChieu)) }}</td>
                                             <td>{{ date('d/m/Y', strtotime($phim->NgayKetThuc)) }}</td>
                                             <td>{{ $phim->ThoiLuong }} phút</td>

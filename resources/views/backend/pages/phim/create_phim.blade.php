@@ -38,15 +38,14 @@
 
                                     <div class="form-group">
                                         <label for="ID_TheLoaiPhim">Thể loại phim <span class="text-danger">*</span></label>
-                                        <select name="ID_TheLoaiPhim" id="ID_TheLoaiPhim" class="form-control" required>
-                                            <option value="">-- Chọn thể loại --</option>
+                                        <select name="ID_TheLoaiPhim[]" id="ID_TheLoaiPhim" class="form-control" multiple
+                                            required>
                                             @foreach ($theLoais as $theLoai)
                                                 <option value="{{ $theLoai->ID_TheLoaiPhim }}"
-                                                    {{ old('ID_TheLoaiPhim') == $theLoai->ID_TheLoaiPhim ? 'selected' : '' }}>
+                                                    {{ collect(old('ID_TheLoaiPhim'))->contains($theLoai->ID_TheLoaiPhim) ? 'selected' : '' }}>
                                                     {{ $theLoai->TenTheLoai }}
                                                 </option>
                                             @endforeach
-                                            <option value="create_new">+ Thêm thể loại mới</option>
                                         </select>
                                     </div>
 
@@ -99,22 +98,24 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="NgonNgu">Ngôn ngữ <span class="text-danger">*</span></label>
-                                        <select name="NgonNgu" id="NgonNgu" class="form-control" required>
-                                            <option value="">-- Chọn ngôn ngữ --</option>
-                                            @foreach (['vi' => 'Tiếng Việt', 'en' => 'Tiếng Anh', 'es' => 'Tây Ban Nha', 'fr' => 'Pháp', 'de' => 'Đức', 'it' => 'Ý', 'ja' => 'Nhật', 'ko' => 'Hàn', 'zh' => 'Trung', 'ru' => 'Nga'] as $key => $lang)
-                                                <option value="{{ $key }}"
-                                                    {{ old('NgonNgu') == $key ? 'selected' : '' }}>{{ $lang }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <label for="QuocGia">Quốc gia <span class="text-danger">*</span></label>
+                                    <select name="QuocGia" id="QuocGia" class="form-control" required>
+                                        <option value="">-- Chọn quốc gia --</option>
+                                        <option value="Việt Nam">Việt Nam</option>
+                                        <option value="Hoa Kỳ">Hoa Kỳ</option>
+                                        <option value="Tây Ban Nha">Tây Ban Nha</option>
+                                        <option value="Pháp">Pháp</option>
+                                        <option value="Đức">Đức</option>
+                                        <option value="Ý">Ý</option>
+                                        <option value="Nhật Bản">Nhật Bản</option>
+                                        <option value="Hàn Quốc">Hàn Quốc</option>
+                                        <option value="Trung Quốc">Trung Quốc</option>
+                                        <option value="Nga">Nga</option>
+                                    </select>
 
                                     <div class="form-group">
                                         <label for="DoTuoi">Độ tuổi <span class="text-danger">*</span></label>
                                         <select name="DoTuoi" id="DoTuoi" class="form-control" required>
-                                            <option value="">-- Chọn độ tuổi --</option>
                                             <option value="Loại P">Loại P - Cho mọi lứa tuổi</option>
                                             <option value="Loại K">Loại K - Dưới 13 tuổi (cần giám hộ)</option>
                                             <option value="Loại T13 (13+)">Loại T13 (13+)</option>
@@ -158,11 +159,6 @@
 @endsection
 @section('js')
     <script>
-        document.getElementById('ID_TheLoaiPhim').addEventListener('change', function() {
-            if (this.value === 'create_new') {
-                window.location.href = "{{ route('the-loai.create') }}";
-            }
-        });
         $(document).ready(function() {
             // Hiển thị tên file khi chọn ảnh
             $('.custom-file-input').on('change', function() {
