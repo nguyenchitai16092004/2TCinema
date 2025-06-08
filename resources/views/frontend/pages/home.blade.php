@@ -272,11 +272,12 @@
                     @foreach ($dsPhimDangChieu as $phim)
                         <div class="movie-card">
                             <div class="movie-poster">
-                                 <img src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
+                                <img
+                                    src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
                                 <div class="play-button" data-trailer="{{ $phim->Trailer }}">
                                     <div class="play-icon"></div>
                                 </div>
-                                <div class="age-rating">T{{ $phim->DoTuoi }}</div>
+                                <div class="age-rating">{{ $phim->DoTuoi }}</div>
                             </div>
                             <div class="movie-info">
                                 <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
@@ -330,12 +331,13 @@
                     @foreach ($dsPhimSapChieu as $phim)
                         <div class="movie-card">
                             <div class="movie-poster">
-                                <img src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
+                                <img
+                                    src="{{ $phim->HinhAnh ? asset('storage/' . $phim->HinhAnh) : asset('images/no-image.jpg') }}">
                                 <div class="play-button" data-trailer="{{ $phim->Trailer }}">
                                     <div class="play-icon"></div>
                                 </div>
 
-                                <div class="age-rating">T{{ $phim->DoTuoi }}</div>
+                                <div class="age-rating">{{ $phim->DoTuoi }}</div>
                             </div>
                             <div class="movie-info">
                                 <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
@@ -549,7 +551,7 @@
                 const rap = document.querySelector('#theater-content .dropdown-item.selected')?.dataset
                     .value;
                 const phim = document.querySelector('#movie-content .dropdown-item.selected')?.dataset
-                .value;
+                    .value;
                 const ngay = document.querySelector('#date-content .dropdown-item.selected')?.dataset.value;
                 const gio = document.querySelector('#time-content .dropdown-item.selected')?.dataset.value;
 

@@ -2,7 +2,6 @@
 @section('title', 'Kiểm tra thanh toán')
 @section('main')
 <style>
-    /* KẾT HỢP CSS TỪ HAI VIEW, CHỈNH SỬA LẠI ĐỂ TRÁNH TRÙNG LẶP VÀ ĐẢM BẢO TƯƠNG THÍCH */
     .container-payment-status {
         max-width: 1200px;
         margin: 0 auto;
@@ -387,7 +386,7 @@
                 <div class="ticket-header @if(session('status') !== 'success') failure @endif">
                     <div class="movie-title @if(session('status') !== 'success') failure @endif">
                         @if(isset($suatChieu->phim))
-                            T{{ $suatChieu->phim->DoTuoi ?? '' }} {{ $suatChieu->phim->TenPhim ?? '' }}
+                            {{ $suatChieu->phim->DoTuoi ?? '' }} {{ $suatChieu->phim->TenPhim ?? '' }}
                         @else
                             {{ $movieTitle ?? '---' }}
                         @endif

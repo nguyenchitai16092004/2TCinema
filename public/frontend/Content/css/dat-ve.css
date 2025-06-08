@@ -668,3 +668,18 @@ span, small{
     left: 20%;
     animation-delay: 4s;
 }
+
+.seat.held {
+    background-color: #ffd700;
+    cursor: not-allowed;
+}
+
+.seat.held.current-user {
+    background-color: #ffa500;
+    cursor: pointer;
+}
+
+.seat.booked {
+    background-color: #ff0000;
+    cursor: not-allowed;
+}

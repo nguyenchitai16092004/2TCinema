@@ -566,7 +566,7 @@
                 <div class="profile-name">{{ session('user_fullname') }}</div>
             </div>
             <div class="spending-info">
-                <div class="spending-title">Tổng chi tiêu 2025 ℹ️</div>
+                <div class="spending-title">Tổng chi tiêu 2025 <i class="fa-solid fa-circle-info"></i></div>
                 <div class="spending-amount">0 đ</div>
                 <div class="spending-slider">
                     <div class="spending-progress"></div>
