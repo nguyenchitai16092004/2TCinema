@@ -128,8 +128,8 @@
                                                 <option value="Việt Nam"
                                                     {{ $phim->QuocGia == 'Việt Nam' ? 'selected' : '' }}>Việt Nam
                                                 </option>
-                                                <option value="Hoa Kỳ"
-                                                    {{ $phim->QuocGia == 'Hoa Kỳ' ? 'selected' : '' }}>Hoa Kỳ</option>
+                                                <option value="Hoa Kỳ" {{ $phim->QuocGia == 'Hoa Kỳ' ? 'selected' : '' }}>
+                                                    Hoa Kỳ</option>
                                                 <option value="Tây Ban Nha"
                                                     {{ $phim->QuocGia == 'Tây Ban Nha' ? 'selected' : '' }}>Tây Ban Nha
                                                 </option>
@@ -160,24 +160,21 @@
                                                 <label for="DoTuoi">Độ tuổi <span class="text-danger">*</span></label>
                                                 <select name="DoTuoi" id="DoTuoi" class="form-control" required>
                                                     <option value="">-- Chọn độ tuổi --</option>
-                                                    <option value="Loại P"
-                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'Loại P' ? 'selected' : '' }}>
+                                                    <option value="P"
+                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'P' ? 'selected' : '' }}>
                                                         Loại P - Cho mọi lứa tuổi</option>
-                                                    <option value="Loại K"
-                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'Loại K' ? 'selected' : '' }}>
+                                                    <option value="K"
+                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'K' ? 'selected' : '' }}>
                                                         Loại K - Dưới 13 tuổi (cần giám hộ)</option>
-                                                    <option value="Loại T13 (13+)"
-                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'Loại T13 (13+)' ? 'selected' : '' }}>
+                                                    <option value="T13 (13+)"
+                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'T13 (13+)' ? 'selected' : '' }}>
                                                         Loại T13 (13+)</option>
-                                                    <option value="Loại T16 (16+)"
-                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'Loại T16 (16+)' ? 'selected' : '' }}>
+                                                    <option value="T16 (16+)"
+                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'T16 (16+)' ? 'selected' : '' }}>
                                                         Loại T16 (16+)</option>
-                                                    <option value="Loại T18 (18+)"
-                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'Loại T18 (18+)' ? 'selected' : '' }}>
+                                                    <option value="T18 (18+)"
+                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'T18 (18+)' ? 'selected' : '' }}>
                                                         Loại T18 (18+)</option>
-                                                    <option value="Loại C"
-                                                        {{ old('DoTuoi', $phim->DoTuoi) == 'Loại C' ? 'selected' : '' }}>
-                                                        Loại C - Không được phổ biến</option>
                                                 </select>
                                             </div>
 

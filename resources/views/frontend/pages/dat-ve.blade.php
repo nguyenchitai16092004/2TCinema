@@ -97,7 +97,7 @@
 
                     <div class="total-section">
                         <div class="total-title">Tổng cộng</div>
-                        <div class="total-price">0 đ</div>
+                        <div class="total-price">0 VNĐ</div>
                     </div>
 
                     <div class="button-group">
