@@ -66,6 +66,9 @@ Route::prefix('dat-ve')->group(function () {
 });
 
 
+Route::post('/hold-seat', [DatVeController::class, 'holdSeat'])->name('hold-seat');
+Route::post('/release-seat', [DatVeController::class, 'releaseSeat'])->name('release-seat');
+
 // --- Thanh toán ---
 Route::prefix('thanh-toan')->group(function () {
     // Route thanh toán chính
@@ -73,22 +76,16 @@ Route::prefix('thanh-toan')->group(function () {
 
     // Routes cho PayOS embedded payment
     Route::post('/payos-embedded/create', [PayOSController::class, 'createEmbeddedPaymentLink'])->name('payos.embedded.create');
-
     // Routes xử lý callback từ PayOS
     Route::get('/payos-return', [PayOSController::class, 'handleReturn'])->name('payos.return');
     Route::get('/payos-cancel', [PayOSController::class, 'handleCancel'])->name('payos.cancel');
-
     // Route kiểm tra trạng thái thanh toán
     Route::get('/status/{orderCode}', [PayOSController::class, 'checkPaymentStatus'])->name('payos.status');
-
     // Route hiển thị trang trạng thái checkout
     Route::get('/checkout-status', [ThanhToanController::class, 'checkoutStatus'])->name('checkout_status');
 
-    // Routes bổ sung cho PayOS webhook (nếu cần)
-    Route::post('/payos-webhook', [PayOSController::class, 'handleWebhook'])->name('payos.webhook');
 
-    // Route để lấy thông tin payment link (AJAX)
-    Route::get('/payos-info/{orderCode}', [PayOSController::class, 'getPaymentInfo'])->name('payos.info');
+
 });
 
 

@@ -309,4 +309,85 @@ class DatVeController extends Controller
         });
         return response()->json($result);
     }
+    public function holdSeat(Request $request)
+{
+    try {
+        $request->validate([
+            'showtimeId' => 'required|integer',
+            'seat' => 'required|string',
+        ]);
+
+        $userId = session('user_id');
+        if (!$userId) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Check if seat is already booked
+        $isBooked = VeXemPhim::where('ID_SuatChieu', $request->showtimeId)
+            ->where('TenGhe', $request->seat)
+            ->whereHas('hoaDon', function($query) {
+                $query->where('TrangThaiXacNhanThanhToan', 1);
+            })
+            ->exists();
+
+        if ($isBooked) {
+            return response()->json(['error' => 'Ghế đã được đặt'], 400);
+        }
+
+        // Check if seat is held by someone else
+        $heldSeat = HeldSeat::where('ID_SuatChieu', $request->showtimeId)
+            ->where('TenGhe', $request->seat)
+            ->where('held_until', '>', now())
+            ->first();
+
+        if ($heldSeat && $heldSeat->user_id !== $userId) {
+            return response()->json(['error' => 'Ghế đang được giữ bởi người khác'], 400);
+        }
+
+        // Hold the seat
+        $heldUntil = now()->addMinutes(6);
+        HeldSeat::updateOrCreate(
+            [
+                'ID_SuatChieu' => $request->showtimeId,
+                'TenGhe' => $request->seat,
+            ],
+            [
+                'user_id' => $userId,
+                'held_until' => $heldUntil,
+            ]
+        );
+
+        // Broadcast the event
+        event(new SeatHeld($request->showtimeId, $request->seat, $userId, $heldUntil));
+
+        return response()->json(['success' => true, 'held_until' => $heldUntil]);
+    } catch (\Exception $e) {
+        \Log::error('Error holding seat: ' . $e->getMessage());
+        return response()->json(['error' => 'Có lỗi xảy ra'], 500);
+    }
+}
+
+public function releaseSeat(Request $request)
+{
+    try {
+        $request->validate([
+            'showtimeId' => 'required|integer',
+            'seat' => 'required|string',
+        ]);
+
+        $userId = session('user_id');
+        
+        HeldSeat::where('ID_SuatChieu', $request->showtimeId)
+            ->where('TenGhe', $request->seat)
+            ->where('user_id', $userId)
+            ->delete();
+
+        event(new SeatReleased($request->showtimeId, $request->seat));
+
+        return response()->json(['success' => true]);
+    } catch (\Exception $e) {
+        \Log::error('Error releasing seat: ' . $e->getMessage());
+        return response()->json(['error' => 'Có lỗi xảy ra'], 500);
+    }
+}
 }

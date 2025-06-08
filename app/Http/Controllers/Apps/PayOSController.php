@@ -11,6 +11,7 @@ use TJGazel\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Apps\ThanhToanController;
 use App\Models\SuatChieu;
+use Illuminate\Support\Facades\DB;
 
 
 class PayOSController extends Controller
@@ -35,7 +36,7 @@ class PayOSController extends Controller
      */
     public function createPaymentLink(array $orderData)
     {
-        // Validate dữ liệu đầu vào
+        // Validate đầu vào
         if (
             empty($orderData['tong_tien']) ||
             empty($orderData['ten_khach_hang']) ||
@@ -47,42 +48,8 @@ class PayOSController extends Controller
             return response()->json(['error' => 'Thiếu thông tin đơn hàng!'], 400);
         }
 
-        // Tạo mã hóa đơn random 7 ký tự
-        $maHoaDon = HoaDon::generateMaHoaDon();
-
-        // Tạo hóa đơn
-        $hoaDon = HoaDon::create([
-            'ID_HoaDon'   => $maHoaDon,
-            'TongTien'    => $orderData['tong_tien'],
-            'PTTT'        => 'PayOS',
-            'ID_TaiKhoan' => session('user_id'),
-            'TrangThaiXacNhanHoaDon'     => 0,
-            'TrangThaiXacNhanThanhToan'  => 0,
-            'SoLuongVe'   => count($orderData['selectedSeats']),
-            'created_at'  => now(),
-            'updated_at'  => now(),
-        ]);
-
-        $soLuongGhe = count($orderData['selectedSeats']);
-
-        $suatChieu = SuatChieu::with(['rap'])->find($orderData['ID_SuatChieu']);
-        $diaChiRap = $suatChieu->rap->DiaChi ?? '';
-
-        foreach ($orderData['seatDetails'] as $seat) {
-            VeXemPhim::create([
-                'TenGhe'       => $seat['TenGhe'],
-                'TenPhim'      => $orderData['ten_phim'] ?? '',
-                'NgayXem'      => $orderData['ngay_xem'] ?? '',
-                'DiaChi'       => $diaChiRap,
-                'GiaVe'        => $seat['GiaVe'],
-                'TrangThai'    => 0,
-                'ID_SuatChieu' => $orderData['ID_SuatChieu'],
-                'ID_HoaDon'    => $maHoaDon, // Đã là string random
-                'ID_Ghe'       => $seat['ID_Ghe'],
-                'created_at'   => now(),
-                'updated_at'   => now(),
-            ]);
-        }
+        // chỉ tạo orderCode tạm thời (random hoặc time-based) để gửi cho PayOS
+        $orderCodeNum = rand(100000000, 999999999);
 
         $items = array_map(function ($ghe) use ($orderData) {
             $seat = collect($orderData['seatDetails'])->firstWhere('TenGhe', $ghe);
@@ -96,42 +63,30 @@ class PayOSController extends Controller
                 'price'    => $price,
             ];
         }, $orderData['selectedSeats']);
-        Log::info('PayOS items:', $items);
-
-        // Lấy order_code là duy nhất (dùng số hóa đơn hoặc random số từ chuỗi mã)
-        preg_match_all('!\d+!', $maHoaDon, $matches);
-        $orderCodeNum = $matches ? (int)implode('', $matches[0]) : time();
 
         try {
             $response = $this->payOS->createPaymentLink([
                 'orderCode'   => $orderCodeNum,
-                'amount'      => (int) $hoaDon->TongTien,
+                'amount'      => (int) $orderData['tong_tien'],
                 'description' => substr("Thanh toán vé xem phim", 0, 255),
-                'returnUrl'   => route('payos.return'),
-                'cancelUrl'   => route('payos.cancel'),
+                'returnUrl'   => route('payos.return') . '?orderCode=' . $orderCodeNum,
+                'cancelUrl'   => route('payos.cancel') . '?orderCode=' . $orderCodeNum,
                 'buyerName'   => session('user_fullname') ?? '',
                 'buyerEmail'  => session('user_email') ?? '',
                 'items'       => $items,
                 'expiredAt'   => now()->addMinutes(15)->timestamp,
             ]);
-            HoaDon::where('ID_HoaDon', $maHoaDon)->update([
-                'payment_link' => $response['checkoutUrl'] ?? null,
-                'order_code'   => $orderCodeNum
-            ]);
-            if (empty($response['checkoutUrl'])) {
-                Log::error('PayOS không trả về checkoutUrl', $response);
-                return response()->json(['error' => 'Không lấy được link thanh toán từ PayOS!'], 500);
-            }
+            // Lưu orderData vào session theo orderCodeNum để lấy lại khi callback/return
+            session(['payos_order_' . $orderCodeNum => $orderData]);
+
             return response()->json([
                 'checkoutUrl' => $response['checkoutUrl'],
                 'orderCode' => $orderCodeNum,
             ]);
         } catch (\Exception $e) {
-            Log::error('Tạo yêu cầu thanh toán thất bại: ' . $e->getMessage());
             return response()->json(['error' => 'Tạo yêu cầu thanh toán thất bại: ' . $e->getMessage()], 500);
         }
-    }
-    /**
+    }    /**
      * Lấy thông tin link thanh toán
      * @param int|string $orderCode
      * @return array|null
@@ -193,17 +148,11 @@ class PayOSController extends Controller
             if ($paymentInfo && $paymentInfo['status'] === 'PAID') {
                 $this->updatePaymentSuccess($orderCode);
             }
-
-            // Lấy lại hóa đơn từ DB theo order_code
-            $hoaDon = HoaDon::where('order_code', $orderCode)->first();
-            $maHoaDon = $hoaDon ? $hoaDon->ID_HoaDon : null;
-
             return redirect()->route('checkout_status')
-                ->with('status', 'success')
-                ->with('maHoaDon', $maHoaDon);
+                ->with('status', $paymentInfo && $paymentInfo['status'] === 'PAID' ? 'success' : 'fail')
+                ->with('maHoaDon', session('maHoaDon', null));
         }
 
-        // Nếu không có orderCode, vẫn redirect nhưng không có mã hóa đơn
         return redirect()->route('checkout_status')
             ->with('status', 'fail')
             ->with('error_message', 'Không tìm thấy mã hóa đơn thanh toán!');
@@ -211,28 +160,69 @@ class PayOSController extends Controller
 
     protected function updatePaymentSuccess($orderCode)
     {
+        // kiểm tra nếu đã tạo hóa đơn rồi thì thôi
         $hoaDon = HoaDon::where('order_code', $orderCode)->first();
+        if ($hoaDon) {
+            session(['maHoaDon' => $hoaDon->ID_HoaDon]);
+            return;
+        }
 
-        // Lấy tất cả vé thuộc hóa đơn này
-        $veXemPhims = $hoaDon ? VeXemPhim::where('ID_HoaDon', $hoaDon->ID_HoaDon)->get() : collect();
+        // Lấy lại orderData từ session
+        $orderData = session('payos_order_' . $orderCode, null);
+        if (!$orderData) {
+            // fallback: có thể lấy từ cache/database nếu cần
+            return;
+        }
 
-        if ($hoaDon && $hoaDon->TrangThaiXacNhanThanhToan != 1) {
-            $hoaDon->TrangThaiXacNhanThanhToan = 1; // Đã thanh toán
-            $hoaDon->TrangThaiXacNhanHoaDon = 1;    // Đã xác nhận
-            $hoaDon->save();
+        DB::beginTransaction();
+        try {
+            $maHoaDon = HoaDon::generateMaHoaDon();
 
-            $email = $hoaDon->Email ?? session('user_email');
-            Log::info('Email gửi đi hóa đơn:', ['email' => $email, 'hoaDonId' => $hoaDon->ID_HoaDon]);
-            if (!$email) {
-                Log::error('Không xác định được email khách hàng để gửi hóa đơn');
-                return;
+            $hoaDon = HoaDon::create([
+                'ID_HoaDon'   => $maHoaDon,
+                'TongTien'    => $orderData['tong_tien'],
+                'PTTT'        => 'PayOS',
+                'ID_TaiKhoan' => session('user_id'),
+                'order_code'  => $orderCode,
+                'TrangThaiXacNhanHoaDon'     => 1, // đã xác nhận
+                'TrangThaiXacNhanThanhToan'  => 1, // đã thanh toán
+                'SoLuongVe'   => count($orderData['selectedSeats']),
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]);
+
+            $suatChieu = SuatChieu::with(['rap'])->find($orderData['ID_SuatChieu']);
+            $diaChiRap = $suatChieu->rap->DiaChi ?? '';
+
+            foreach ($orderData['seatDetails'] as $seat) {
+                VeXemPhim::create([
+                    'TenGhe'       => $seat['TenGhe'],
+                    'TenPhim'      => $orderData['ten_phim'] ?? '',
+                    'NgayXem'      => $orderData['ngay_xem'] ?? '',
+                    'DiaChi'       => $diaChiRap,
+                    'GiaVe'        => $seat['GiaVe'],
+                    'TrangThai'    => 1, // đã thanh toán
+                    'ID_SuatChieu' => $orderData['ID_SuatChieu'],
+                    'ID_HoaDon'    => $maHoaDon,
+                    'ID_Ghe'       => $seat['ID_Ghe'],
+                    'created_at'   => now(),
+                    'updated_at'   => now(),
+                ]);
             }
 
+            DB::commit();
+
+            // Xóa orderData khỏi session
+            session()->forget('payos_order_' . $orderCode);
+            session(['maHoaDon' => $maHoaDon]);
+
+            // Gửi email
             $sendEmail = new ThanhToanController();
-            $sendEmail->sendEmailForOrder($hoaDon, $veXemPhims);
+            $sendEmail->sendEmailForOrder($hoaDon, VeXemPhim::where('ID_HoaDon', $maHoaDon)->get());
+        } catch (\Exception $e) {
+            DB::rollBack();
         }
-    }
-    public function handleCancel(Request $request)
+    }    public function handleCancel(Request $request)
     {
         $orderCode = $request->input('orderCode');
 

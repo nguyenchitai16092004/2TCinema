@@ -23,68 +23,42 @@ class ThanhToanController extends Controller
      */
     public function payment(Request $request)
     {
-        Log::info($request->all());
         try {
-            // Validate dữ liệu đầu vào (KHÔNG CẦN totalPrice từ client)
-            try {
-                $validated = $request->validate([
-                    'ten_khach_hang' => 'required|string|max:255',
-                    'email' => 'required|email|max:255',
-                    'ID_SuatChieu' => 'required|integer|exists:suat_chieu,ID_SuatChieu',
-                    'selectedSeats' => 'required|string',
-                    'paymentMethod' => 'required|in:COD,PAYOS'
-                ]);
-            } catch (ValidationException $e) {
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response()->json([
-                        'error' => $e->validator->errors()->first()
-                    ], 422);
-                }
-                throw $e;
-            }
-
-            // Kiểm tra đăng nhập
+            $validated = $request->validate([
+                'ten_khach_hang' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'ID_SuatChieu' => 'required|integer|exists:suat_chieu,ID_SuatChieu',
+                'selectedSeats' => 'required|string',
+                'paymentMethod' => 'required|in:COD,PAYOS'
+            ]);
             if (!session()->has('user_id')) {
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response()->json(['error' => 'Vui lòng đăng nhập để đặt vé!'], 401);
-                }
-                return redirect()->route('login.form')->with('error', 'Vui lòng đăng nhập để đặt vé!');
+                return response()->json(['error' => 'Vui lòng đăng nhập để đặt vé!'], 401);
             }
 
-            // Parse selected seats
             $selectedSeats = array_filter(explode(',', $request->input('selectedSeats')));
             if (empty($selectedSeats)) {
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response()->json(['error' => 'Vui lòng chọn ít nhất một ghế!'], 400);
-                }
-                return redirect()->back()->with('error', 'Vui lòng chọn ít nhất một ghế!');
+                return response()->json(['error' => 'Vui lòng chọn ít nhất một ghế!'], 400);
             }
 
-            // Lấy thông tin suất chiếu
             $suatChieu = SuatChieu::with(['phim', 'rap', 'phongChieu'])
                 ->findOrFail($request->ID_SuatChieu);
 
-            // Kiểm tra ghế còn trống
+            // Kiểm tra ghế đã bị giữ/trùng (check vé đã thanh toán hoặc chờ thanh toán ở DB, hoặc check cache nếu có)
             $bookedSeats = VeXemPhim::where('ID_SuatChieu', $suatChieu->ID_SuatChieu)
                 ->whereIn('TenGhe', $selectedSeats)
-                ->where('TrangThai', '!=', 0)
+                ->where('TrangThai', '!=', 2) // chỉ ghế chưa hủy
                 ->pluck('TenGhe')
                 ->toArray();
 
             if (!empty($bookedSeats)) {
                 $message = 'Một số ghế đã được đặt: ' . implode(', ', $bookedSeats);
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response()->json(['error' => $message], 409);
-                }
-                return redirect()->back()->with('error', $message);
+                return response()->json(['error' => $message], 409);
             }
 
-            // Lấy thông tin ghế để tính giá
             $gheNgoi = GheNgoi::where('ID_PhongChieu', $suatChieu->ID_PhongChieu)
                 ->whereIn('TenGhe', $selectedSeats)
                 ->get();
 
-            // Tính tổng tiền và chi tiết ghế (lưu ý ghế VIP)
             $calculatedTotal = 0;
             $seatDetails = [];
             foreach ($selectedSeats as $seatName) {
@@ -92,7 +66,6 @@ class ThanhToanController extends Controller
                 if ($seat) {
                     $giaVe = $suatChieu->GiaVe;
                     if ($seat->LoaiTrangThaiGhe == 2) {
-                        // Phụ phí VIP: +20% giá vé gốc
                         $giaVe += $giaVe * 0.2;
                     }
                     $calculatedTotal += $giaVe;
@@ -105,7 +78,6 @@ class ThanhToanController extends Controller
                 }
             }
 
-            // Chuẩn bị dữ liệu đơn hàng
             $orderData = [
                 'ten_khach_hang' => $validated['ten_khach_hang'],
                 'email'          => $validated['email'],
@@ -120,36 +92,28 @@ class ThanhToanController extends Controller
                 'ten_phong'      => $suatChieu->phongChieu->TenPhongChieu,
             ];
 
-            // Xử lý theo phương thức thanh toán
+            // CHỈ với COD thì tạo hóa đơn/vé ngay
             if ($request->paymentMethod === 'COD') {
                 return $this->processCODTicket($orderData);
             }
 
+            // PAYOS: KHÔNG tạo hóa đơn/vé ở đây, chỉ trả về link thanh toán
             if ($request->paymentMethod === 'PAYOS') {
+                // Lưu thông tin order tạm thời vào session/cache để xử lý sau khi thanh toán thành công
+                session([
+                    'pending_payment' => $orderData
+                ]);
                 $payosController = app()->make(PayOSController::class);
-                $response = $payosController->createPaymentLink($orderData);
-                if ($response instanceof RedirectResponse) {
-                    if ($request->ajax() || $request->wantsJson()) {
-                        return response()->json(['error' => 'Thiếu thông tin đơn hàng!'], 400);
-                    }
-                    return $response;
-                }
+                $response = $payosController->createPaymentLink($orderData); // sửa lại ở dưới
                 return $response;
             }
 
-            $message = 'Phương thức thanh toán không hợp lệ.';
-            if ($request->ajax() || $request->wantsJson()) {
-                return response()->json(['error' => $message], 400);
-            }
-            return redirect()->back()->with('error', $message);
+            return response()->json(['error' => 'Phương thức thanh toán không hợp lệ.'], 400);
         } catch (\Exception $e) {
-            Log::error('Error in payment: ' . $e->getMessage());
-            if ($request->ajax() || $request->wantsJson()) {
-                return response()->json(['error' => 'Có lỗi xảy ra, vui lòng thử lại!'], 500);
-            }
-            return redirect()->back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+            return response()->json(['error' => 'Có lỗi xảy ra, vui lòng thử lại!'], 500);
         }
     }
+
 
     /**
      * Xử lý thanh toán COD cho vé xem phim
