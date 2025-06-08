@@ -57,8 +57,9 @@ class PayOSController extends Controller
             if ($price > 10000000000) {
                 $price = 10000000000;
             }
+            $formattedPrice = number_format($price, 0, ',', '.') . ' VNĐ';
             return [
-                'name'     => 'Vé ' . ($orderData['ten_phim'] ?? '') . ' - Ghế ' . $ghe,
+                'name'     => 'Vé ' . ($orderData['ten_phim'] ?? '') . ' - Ghế ' . $ghe . ' (' . $formattedPrice . ')',
                 'quantity' => 1,
                 'price'    => $price,
             ];

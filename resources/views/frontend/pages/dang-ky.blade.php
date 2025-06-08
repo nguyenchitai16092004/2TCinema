@@ -70,16 +70,26 @@
                                 </div>
                                 <!-- Mật khẩu -->
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="rgPassword" name="MatKhau"
-                                        placeholder="Mật khẩu(*)" required>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="rgPassword" name="MatKhau"
+                                            placeholder="Mật khẩu(*)" required>
+                                        <button type="button" class="toggle-password" data-target="rgPassword" tabindex="-1">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </div>
                                     @error('MatKhau')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <!-- Mật khẩu nhập lại -->
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="rgPasswordConfirm"
-                                        name="MatKhau_confirmation" placeholder="Mật khẩu nhập lại(*)" required>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="rgPasswordConfirm"
+                                            name="MatKhau_confirmation" placeholder="Mật khẩu nhập lại(*)" required>
+                                        <button type="button" class="toggle-password" data-target="rgPasswordConfirm" tabindex="-1">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </div>
                                     @error('MatKhau_confirmation')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -128,4 +138,24 @@
             });
         </script>
     @endif
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.toggle-password').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const targetId = btn.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const icon = btn.querySelector('i');
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = "password";
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+    });
+    </script>
 @stop

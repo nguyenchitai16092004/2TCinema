@@ -38,7 +38,7 @@
             <div class="ticket-details">
                 <div class="ticket-row" style="display: flex; justify-content: space-between;">
                     <div><strong><span>{{ count($selectedSeats) }}x Vé {{ $suatChieu->phim->DoHoa }}</span></strong></div>
-                    <div><strong> {{ number_format($totalPrice, 0, ',', '.') }} đ</strong>
+                    <div><strong> {{ number_format($totalPrice, 0, ',', '.') }} VNĐ</strong>
                     </div>
                 </div>
                 <div style="margin-top: 2px;">
@@ -57,7 +57,7 @@
             <div class="total-row">
                 <div>Tổng cộng</div>
                 <div class="total-price">
-                    {{ number_format($totalPrice, 0, ',', '.') }} đ
+                    {{ number_format($totalPrice, 0, ',', '.') }} VNĐ
                 </div>
             </div>
         </div>
@@ -220,7 +220,7 @@
                     </div>
                     <div class="payment-info-row">
                         <span class="label">Tổng tiền:</span>
-                        <span class="value" style="color: #f7941d; font-weight: bold;">{{ number_format($totalPrice, 0, ',', '.') }} đ</span>
+                        <span class="value" style="color: #f7941d; font-weight: bold;">{{ number_format($totalPrice, 0, ',', '.') }} VNĐ</span>
                     </div>
                 </div>
             </div>

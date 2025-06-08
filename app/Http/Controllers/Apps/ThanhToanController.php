@@ -43,7 +43,6 @@ class ThanhToanController extends Controller
             $suatChieu = SuatChieu::with(['phim', 'rap', 'phongChieu'])
                 ->findOrFail($request->ID_SuatChieu);
 
-            // Kiểm tra ghế đã bị giữ/trùng (check vé đã thanh toán hoặc chờ thanh toán ở DB, hoặc check cache nếu có)
             $bookedSeats = VeXemPhim::where('ID_SuatChieu', $suatChieu->ID_SuatChieu)
                 ->whereIn('TenGhe', $selectedSeats)
                 ->where('TrangThai', '!=', 2) // chỉ ghế chưa hủy

@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (totalPriceElement) {
             totalPriceElement.textContent =
-                totalPrice.toLocaleString("vi-VN") + " đ";
+                totalPrice.toLocaleString("vi-VN") + " VNĐ";
         }
 
         // Update continue button state

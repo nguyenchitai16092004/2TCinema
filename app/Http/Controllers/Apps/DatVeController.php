@@ -9,8 +9,10 @@ use App\Models\PhongChieu;
 use App\Models\Rap;
 use App\Models\GheNgoi;
 use App\Models\VeXemPhim;
+use App\Models\HeldSeat;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use App\Events\SeatHeld;
 
 class DatVeController extends Controller
 {
@@ -309,6 +311,7 @@ class DatVeController extends Controller
         });
         return response()->json($result);
     }
+    /*
     public function holdSeat(Request $request)
 {
     try {
@@ -362,7 +365,7 @@ class DatVeController extends Controller
 
         return response()->json(['success' => true, 'held_until' => $heldUntil]);
     } catch (\Exception $e) {
-        \Log::error('Error holding seat: ' . $e->getMessage());
+        Log::error('Error holding seat: ' . $e->getMessage());
         return response()->json(['error' => 'Có lỗi xảy ra'], 500);
     }
 }
@@ -386,8 +389,9 @@ public function releaseSeat(Request $request)
 
         return response()->json(['success' => true]);
     } catch (\Exception $e) {
-        \Log::error('Error releasing seat: ' . $e->getMessage());
+        Log::error('Error releasing seat: ' . $e->getMessage());
         return response()->json(['error' => 'Có lỗi xảy ra'], 500);
     }
 }
+    */
 }

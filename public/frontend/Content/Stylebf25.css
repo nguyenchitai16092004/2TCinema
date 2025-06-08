@@ -26563,3 +26563,36 @@ h3.no-underline {
     padding: 7px 12px;
     height: 44px;
 }
+/* Đảm bảo input-group có vị trí tương đối */
+.input-group {
+    position: relative;
+}
+
+/* Style cho button eye */
+.input-group .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Ẩn viền khi focus */
+.input-group .toggle-password:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Đảm bảo icon không bị to quá */
+.input-group .toggle-password i {
+    font-size: 1.1em;
+    color: #888;
+}
