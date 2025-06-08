@@ -283,7 +283,11 @@
                                 <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
                                     <h3 class="movie-title">{{ $phim->TenPhim }}</h3>
                                 </a>
-                                <p class="movie-genre">{{ $phim->theLoai->TenTheLoai ?? '' }}</p>
+                                <p class="movie-genre">
+                                    @foreach ($phim->theLoai as $index => $theLoai)
+                                        {{ $theLoai->TenTheLoai }}{{ $index < count($phim->theLoai) - 1 ? ', ' : '' }}
+                                    @endforeach
+                                </p>
                                 <div class="movie-rating">
                                     <div class="stars">
                                         <span class="star">★</span>
@@ -343,7 +347,11 @@
                                 <a href="{{ route('phim.chiTiet', ['slug' => $phim->Slug]) }}">
                                     <h3 class="movie-title">{{ $phim->TenPhim }}</h3>
                                 </a>
-                                <p class="movie-genre">{{ $phim->theLoai->TenTheLoai ?? '' }}</p>
+                                <p class="movie-genre">
+                                    @foreach ($phim->theLoai as $index => $theLoai)
+                                        {{ $theLoai->TenTheLoai }}{{ $index < count($phim->theLoai) - 1 ? ', ' : '' }}
+                                    @endforeach
+                                </p>
                                 <div class="movie-rating">
                                     <div class="stars">
                                         <span class="star">★</span>

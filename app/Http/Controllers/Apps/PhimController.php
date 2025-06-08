@@ -16,9 +16,10 @@ class PhimController extends Controller
         $currentYear = now()->year;
 
         $raps = Rap::all();
-        $phims = Phim::whereDate('NgayKhoiChieu', '<=', $today)
-            ->whereDate('NgayKetThuc', '>=', $today)
-            ->get();
+        $phims = Phim::with('theLoai')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10);
+
 
         // PHIM ĐANG CHIẾU: Ngày khởi chiếu <= hôm nay và ngày kết thúc >= hôm nay
         $dsPhimDangChieu = Phim::whereDate('NgayKhoiChieu', '<=', $today)

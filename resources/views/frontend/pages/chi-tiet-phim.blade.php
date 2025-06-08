@@ -77,7 +77,9 @@
                                 Thể loại
                             </div>
                             <div class="meta-value">
-                                {{ $phim->theLoai->TenTheLoai ?? '' }}
+                                @foreach ($phim->theLoai as $key => $theLoai)
+                                    {{ $theLoai->TenTheLoai }}{{ !$loop->last ? ', ' : '' }}
+                                @endforeach
                             </div>
                         </div>
                     </div>
